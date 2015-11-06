@@ -13,7 +13,7 @@ private:
 	~BoundingObjectManager();
 	std::map<uint, BoundingObject*> boundingObjs;
 
-	SpatialPartition* spactialPartition;
+	SpatialPartition* spatialPartition;
 	std::map<uint, std::vector<uint>> collInd;
 
 	int addIndex;
