@@ -4,6 +4,8 @@
 BoundingObjectManager::BoundingObjectManager()
 {
 	boundingObjs = std::map<uint, BoundingObject*>();
+	spactialPartition = new SPBruteForce();
+
 	addIndex = 1;
 }
 
@@ -14,6 +16,11 @@ BoundingObjectManager::~BoundingObjectManager() {
 			delete boundingObjs[iterator->first];
 			boundingObjs[iterator->first] = nullptr;
 		}
+	}
+
+	if (spactialPartition != nullptr) {
+		delete spactialPartition;
+		spactialPartition = nullptr;
 	}
 }
 
@@ -81,7 +88,36 @@ void BoundingObjectManager::RenderSetting(uint id, bool visible)
 }
 void BoundingObjectManager::CheckCollisions()
 {
+	collInd = spactialPartition->CalculateColisions(boundingObjs);
 	std::map<uint, BoundingObject*>::iterator i;
+	std::map<uint, BoundingObject*>::iterator j;
+	for (i = boundingObjs.begin(); i != boundingObjs.end(); i++) {
+		j = i;
+		j++;
+		for (; j != boundingObjs.end(); j++)
+		{
+			SetColor(i->first, REWHITE);
+			SetColor(j->first, REWHITE);
+		}
+	}
+	std::map<uint, BoundingObject*>::iterator col;
+	for (col = boundingObjs.begin(); col != boundingObjs.end(); col++) {
+		for (int i = 0; i < collInd[col->first].size(); i++) {
+			SetColor(collInd[col->first][i], RERED);
+			SetColor(col->first, RERED);
+			/*if (boundingObjs[collInd[v][i]]->IsColliding(boundingObjs[j->first]))
+			{
+				SetColor(i->first, RERED);
+				SetColor(j->first, RERED);
+			}
+			else
+			{
+				SetColor(i->first, REWHITE);
+				SetColor(j->first, REWHITE);
+			}*/
+		}
+	}
+	/*std::map<uint, BoundingObject*>::iterator i;
 	std::map<uint, BoundingObject*>::iterator j;
 	for (i = boundingObjs.begin(); i != boundingObjs.end(); i++) {
 		j = i;
@@ -99,7 +135,7 @@ void BoundingObjectManager::CheckCollisions()
 				SetColor(j->first, REWHITE);
 			}
 		}
-	}
+	}*/
 }
 void BoundingObjectManager::Draw()
 {
