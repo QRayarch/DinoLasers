@@ -18,6 +18,9 @@ class AppClass : public ReEngAppClass
 	vector3 m_v3O1 = vector3(-2.5f, 0.0f, 0.0f);
 	vector3 m_v3O2 = vector3( 2.5f, 0.0f, 0.0f);
 
+	float spacing;
+	vector3 cameraTarget;
+
 	uint steve;
 	uint creeper;
 public:
@@ -81,6 +84,8 @@ public:
 	IF INHERITED AND OVERRIDEN MAKE SURE TO RELEASE BASE POINTERS (OR CALL BASED CLASS RELEASE)
 	*/
 	virtual void Release(void) final;
+
+	virtual void CameraFollow(vector3 target);
 };
 
 #endif //__APPLICATION_H_

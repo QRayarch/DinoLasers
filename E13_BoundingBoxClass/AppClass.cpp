@@ -20,6 +20,11 @@ void AppClass::InitVariables(void)
 	m_v3O1 = vector3(-2.5f, 0.0f, 0.0f);
 	m_v3O2 = vector3(2.5f, 0.0f, 0.0f);
 
+	cameraTarget = m_v3O1;
+	spacing = 5.0f;
+
+	m_pCameraMngr->SetPositionAndTarget(vector3(cameraTarget.x, cameraTarget.y, cameraTarget.z - spacing), cameraTarget);
+
 	//Load Models
 	m_pMeshMngr->LoadModel("Minecraft\\MC_Steve.obj", "Steve");
 	m_pMeshMngr->LoadModel("Minecraft\\MC_Creeper.obj", "Creeper");
