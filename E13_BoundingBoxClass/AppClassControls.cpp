@@ -42,7 +42,20 @@ void AppClass::ProcessKeyboard(void)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 		m_pCameraMngr->MoveVertical(fSpeed);
 #pragma endregion
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	//	m_pCameraMngr->MoveForward(fSpeed);
+	//
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	//	m_pCameraMngr->MoveForward(-fSpeed);
+	//
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	//	m_pCameraMngr->MoveSideways(-fSpeed);
+	//
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	//	m_pCameraMngr->MoveSideways(fSpeed);
+#pragma region Camera Control
 
+#pragma endregion
 #pragma region Creeper Control
 	if (bModifier)
 		fSpeed *= 10.0f;
