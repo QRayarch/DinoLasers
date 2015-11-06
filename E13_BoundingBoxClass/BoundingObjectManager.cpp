@@ -4,7 +4,7 @@
 BoundingObjectManager::BoundingObjectManager()
 {
 	boundingObjs = std::map<uint, BoundingObject*>();
-	spactialPartition = new SPBruteForce();
+	spatialPartition = new SPBruteForce();
 
 	addIndex = 1;
 }
@@ -18,9 +18,9 @@ BoundingObjectManager::~BoundingObjectManager() {
 		}
 	}
 
-	if (spactialPartition != nullptr) {
-		delete spactialPartition;
-		spactialPartition = nullptr;
+	if (spatialPartition != nullptr) {
+		delete spatialPartition;
+		spatialPartition = nullptr;
 	}
 }
 
@@ -88,7 +88,7 @@ void BoundingObjectManager::RenderSetting(uint id, bool visible)
 }
 void BoundingObjectManager::CheckCollisions()
 {
-	collInd = spactialPartition->CalculateColisions(boundingObjs);
+	collInd = spatialPartition->CalculateColisions(boundingObjs);
 	std::map<uint, BoundingObject*>::iterator i;
 	std::map<uint, BoundingObject*>::iterator j;
 	for (i = boundingObjs.begin(); i != boundingObjs.end(); i++) {
