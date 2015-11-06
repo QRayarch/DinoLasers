@@ -2,6 +2,8 @@
 
 #include "RE\ReEngAppClass.h"
 #include "BoundingObject.h"
+#include "SpatialPartition.h"
+#include "SPBruteForce.h"
 
 class BoundingObjectManager
 {
@@ -10,6 +12,10 @@ private:
 	BoundingObjectManager();
 	~BoundingObjectManager();
 	std::map<uint, BoundingObject*> boundingObjs;
+
+	SpatialPartition* spactialPartition;
+	std::map<uint, std::vector<uint>> collInd;
+
 	int addIndex;
 public:
 	static BoundingObjectManager* instance;
