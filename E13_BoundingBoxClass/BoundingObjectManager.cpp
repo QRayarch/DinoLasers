@@ -7,6 +7,16 @@ BoundingObjectManager::BoundingObjectManager()
 	addIndex = 1;
 }
 
+BoundingObjectManager::~BoundingObjectManager() {
+	std::map<uint, BoundingObject*>::iterator iterator;
+	for (iterator = boundingObjs.begin(); iterator != boundingObjs.end(); iterator++) {
+		if (boundingObjs[iterator->first] != nullptr) {
+			delete boundingObjs[iterator->first];
+			boundingObjs[iterator->first] = nullptr;
+		}
+	}
+}
+
 BoundingObjectManager* BoundingObjectManager::GetInstance()
 {
 	if (instance == nullptr)
@@ -64,45 +74,48 @@ void BoundingObjectManager::RenderSetting(bool visible)
 		boundingObjs[iterator->first]->SetVisibility(visible);
 	}
 }
-void BoundingObjectManager::RenderSetting(bool visible, int bo)
+void BoundingObjectManager::RenderSetting(uint id, bool visible)
 {
-	if (!IsInBounds(bo)) return;
-	boundingObjList[bo]->SetVisibility(visible);
+	if (!IsInBounds(id)) return;
+	boundingObjs[id]->SetVisibility(visible);
 }
 void BoundingObjectManager::CheckCollisions()
 {
-	for (int i = 0; i < boundingObjList.size(); i++)
-	{
-		for (int j = i + 1; j < boundingObjList.size(); j++)
+	std::map<uint, BoundingObject*>::iterator i;
+	std::map<uint, BoundingObject*>::iterator j;
+	for (i = boundingObjs.begin(); i != boundingObjs.end(); i++) {
+		j = i;
+		j++;
+		for (; j != boundingObjs.end(); j++)
 		{
-			if (boundingObjList[i]->IsColliding(boundingObjList[j]))
+			if (boundingObjs[i->first]->IsColliding(boundingObjs[j->first]))
 			{
-				SetColor(i, RERED);
-				SetColor(j, RERED);
+				SetColor(i->first, RERED);
+				SetColor(j->first, RERED);
 			}
 			else
 			{
-				SetColor(i, REWHITE);
-				SetColor(j, REWHITE);
+				SetColor(i->first, REWHITE);
+				SetColor(j->first, REWHITE);
 			}
 		}
 	}
 }
 void BoundingObjectManager::Draw()
 {
-	for (int i = 0; i < boundingObjList.size(); i++)
-	{
-		boundingObjList[i]->Draw();
+	std::map<uint, BoundingObject*>::iterator iterator;
+	for (iterator = boundingObjs.begin(); iterator != boundingObjs.end(); iterator++) {
+		boundingObjs[iterator->first]->Draw();
 	}
 }
 
 
-void BoundingObjectManager::SetModelMatrix(int bo, matrix4 model)
+void BoundingObjectManager::SetModelMatrix(uint id, matrix4 model)
 {
-	if (!IsInBounds(bo)) return;
-	boundingObjList[bo]->SetModelMatrix(model);
+	if (!IsInBounds(id)) return;
+	boundingObjs[id]->SetModelMatrix(model);
 }
 
-bool BoundingObjectManager::IsInBounds(int bo) {
-	return bo > -1 && bo < boundingObjList.size();
+bool BoundingObjectManager::IsInBounds(uint id) {
+	return boundingObjs.find(id) != boundingObjs.end();
 }

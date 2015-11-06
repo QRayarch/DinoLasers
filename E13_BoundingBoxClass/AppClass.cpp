@@ -26,8 +26,8 @@ void AppClass::InitVariables(void)
 
 	std::cout << "Dsgfee " << m_pMeshMngr->GetVertexList("Steve").size() << std::endl;
 
-	BoundingObjectManager::GetInstance()->AddBox(m_pMeshMngr->GetVertexList("Steve"));
-	BoundingObjectManager::GetInstance()->AddBox(m_pMeshMngr->GetVertexList("Creeper"));
+	steve = BoundingObjectManager::GetInstance()->AddBox(m_pMeshMngr->GetVertexList("Steve"));
+	creeper = BoundingObjectManager::GetInstance()->AddBox(m_pMeshMngr->GetVertexList("Creeper"));
 }
 
 void AppClass::Update(void)
@@ -50,8 +50,8 @@ void AppClass::Update(void)
 	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O1) * ToMatrix4(m_qArcBall), "Steve");
 	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O2), "Creeper");
 
-	BoundingObjectManager::GetInstance()->SetModelMatrix(0, m_pMeshMngr->GetModelMatrix("Steve"));
-	BoundingObjectManager::GetInstance()->SetModelMatrix(1, m_pMeshMngr->GetModelMatrix("Creeper"));
+	BoundingObjectManager::GetInstance()->SetModelMatrix(steve, m_pMeshMngr->GetModelMatrix("Steve"));
+	BoundingObjectManager::GetInstance()->SetModelMatrix(creeper, m_pMeshMngr->GetModelMatrix("Creeper"));
 
 	//m_pBB1->SetModelMatrix(m_pMeshMngr->GetModelMatrix("Steve"));
 	//reAlign->RealignBox(m_pBB1);

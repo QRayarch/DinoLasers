@@ -8,6 +8,7 @@ class BoundingObjectManager
 	
 private:
 	BoundingObjectManager();
+	~BoundingObjectManager();
 	std::map<uint, BoundingObject*> boundingObjs;
 	int addIndex;
 public:
@@ -20,11 +21,11 @@ public:
 	int GetBoundingObjNumber();
 	void SetColor(uint, vector3);
 	void RenderSetting(bool);
-	void RenderSetting(bool, int);
+	void RenderSetting(uint, bool);
 	void CheckCollisions();
 	void Draw();
 	void SetModelMatrix(uint, matrix4);
 
-	bool IsInBounds(int);
+	bool IsInBounds(uint);
 };
 
