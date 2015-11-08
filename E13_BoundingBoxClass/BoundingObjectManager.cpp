@@ -89,6 +89,8 @@ void BoundingObjectManager::RenderSetting(uint id, bool visible)
 void BoundingObjectManager::CheckCollisions()
 {
 	collInd = spatialPartition->CalculateColisions(boundingObjs);
+
+	//Everything down is temp for testing
 	std::map<uint, BoundingObject*>::iterator i;
 	std::map<uint, BoundingObject*>::iterator j;
 	for (i = boundingObjs.begin(); i != boundingObjs.end(); i++) {
@@ -105,37 +107,8 @@ void BoundingObjectManager::CheckCollisions()
 		for (int i = 0; i < collInd[col->first].size(); i++) {
 			SetColor(collInd[col->first][i], RERED);
 			SetColor(col->first, RERED);
-			/*if (boundingObjs[collInd[v][i]]->IsColliding(boundingObjs[j->first]))
-			{
-				SetColor(i->first, RERED);
-				SetColor(j->first, RERED);
-			}
-			else
-			{
-				SetColor(i->first, REWHITE);
-				SetColor(j->first, REWHITE);
-			}*/
 		}
 	}
-	/*std::map<uint, BoundingObject*>::iterator i;
-	std::map<uint, BoundingObject*>::iterator j;
-	for (i = boundingObjs.begin(); i != boundingObjs.end(); i++) {
-		j = i;
-		j++;
-		for (; j != boundingObjs.end(); j++)
-		{
-			if (boundingObjs[i->first]->IsColliding(boundingObjs[j->first]))
-			{
-				SetColor(i->first, RERED);
-				SetColor(j->first, RERED);
-			}
-			else
-			{
-				SetColor(i->first, REWHITE);
-				SetColor(j->first, REWHITE);
-			}
-		}
-	}*/
 }
 void BoundingObjectManager::Draw()
 {
