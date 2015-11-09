@@ -52,8 +52,8 @@ void AppClass::Update(void)
 	ArcBall();
 
 	//Set the model matrices for both objects and Bounding Spheres
-	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O1) * ToMatrix4(m_qArcBall), "Steve");
-	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O2), "Creeper");
+	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O2) * ToMatrix4(m_qArcBall), "Steve");
+	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O1) * ToMatrix4(playerRotation), "Creeper");
 
 	BoundingObjectManager::GetInstance()->SetModelMatrix(steve, m_pMeshMngr->GetModelMatrix("Steve"));
 	BoundingObjectManager::GetInstance()->SetModelMatrix(creeper, m_pMeshMngr->GetModelMatrix("Creeper"));
