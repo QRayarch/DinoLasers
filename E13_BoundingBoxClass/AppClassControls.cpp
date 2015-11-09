@@ -42,34 +42,41 @@ void AppClass::ProcessKeyboard(void)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 		m_pCameraMngr->MoveVertical(fSpeed);
 #pragma endregion
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-	//	m_pCameraMngr->MoveForward(fSpeed);
-	//
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-	//	m_pCameraMngr->MoveForward(-fSpeed);
-	//
+	
+#pragma region Camera Control
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::U))
+		//m_pCameraMngr->MoveForward(-fSpeed);
+	
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::I))
+		m_pCameraMngr->MoveForward(-fSpeed);
+	
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::J))
+	{
+		steveMatrix *= glm::rotate(matrix4(IDENTITY_M4), -1.0f, vector3(0.0f, 1.0f, 0.0f));
+		//CameraFollow();
+	}
+	
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::K))
+	{
+		//steveMatrix *= glm::rotate(matrix4(IDENTITY_M4), 1.0f, vector3(0.0f, 1.0f, 0.0f));
+		//CameraFollow();
+	}
+#pragma endregion
+
+#pragma region Creeper Control
+	//if (bModifier)
+	//	fSpeed *= 10.0f;
 	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-	//	m_pCameraMngr->MoveSideways(-fSpeed);
+	//	m_v3O1.x -= 0.1f;
 	//
 	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-	//	m_pCameraMngr->MoveSideways(fSpeed);
-#pragma region Camera Control
-
-#pragma endregion
-#pragma region Creeper Control
-	if (bModifier)
-		fSpeed *= 10.0f;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		m_v3O1.x -= 0.1f;
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		m_v3O1.x += 0.1f;
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		m_v3O1.y -= 0.1f;
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		m_v3O1.y += 0.1f;
+	//	m_v3O1.x += 0.1f;
+	//
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	//	m_v3O1.y -= 0.1f;
+	//
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	//	m_v3O1.y += 0.1f;
 #pragma endregion
 
 #pragma region Other Actions

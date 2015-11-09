@@ -20,6 +20,9 @@ class AppClass : public ReEngAppClass
 
 	float spacing;
 	vector3 cameraTarget;
+	vector3 cameraPosition;
+
+	matrix4 steveMatrix;
 
 	uint steve;
 	uint creeper;
@@ -85,7 +88,7 @@ public:
 	*/
 	virtual void Release(void) final;
 
-	virtual void CameraFollow(vector3 target);
+	virtual void CameraFollow();
 };
 
 #endif //__APPLICATION_H_

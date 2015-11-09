@@ -20,10 +20,15 @@ void AppClass::InitVariables(void)
 	m_v3O1 = vector3(-2.5f, 0.0f, 0.0f);
 	m_v3O2 = vector3(2.5f, 0.0f, 0.0f);
 
-	cameraTarget = m_v3O1;
 	spacing = 5.0f;
+	cameraTarget = m_v3O1;
+	cameraPosition = vector3(cameraTarget.x, cameraTarget.y, cameraTarget.z - spacing);
+	steveMatrix = glm::translate(m_v3O1);
 
-	//m_pCameraMngr->SetPositionAndTarget(vector3(cameraTarget.x, 1, cameraTarget.z - spacing), cameraTarget);
+	m_pCameraMngr->SetPosition(cameraPosition);
+	//m_pCameraMngr->ChangeRoll(180.0f);
+	m_pCameraMngr->SetTarget(cameraTarget);
+	//m_pCameraMngr->SetPositionAndTarget(vector3(1, 1, 1), cameraTarget);
 
 	//Load Models
 	m_pMeshMngr->LoadModel("Minecraft\\MC_Steve.obj", "Steve");
@@ -51,8 +56,10 @@ void AppClass::Update(void)
 
 	ArcBall();
 
+	steveMatrix = glm::translate(m_v3O1);
+
 	//Set the model matrices for both objects and Bounding Spheres
-	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O1) * ToMatrix4(m_qArcBall), "Steve");
+	m_pMeshMngr->SetModelMatrix(steveMatrix, "Steve");
 	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O2), "Creeper");
 
 	BoundingObjectManager::GetInstance()->SetModelMatrix(steve, m_pMeshMngr->GetModelMatrix("Steve"));
@@ -111,6 +118,10 @@ void AppClass::Release(void)
 	BoundingObjectManager::Release();
 }
 
-void AppClass::CameraFollow(vector3 target){
-
+void AppClass::CameraFollow()
+{
+	cameraTarget = m_v3O1;
+	cameraPosition = cameraTarget;
+	m_pCameraMngr->SetPositionAndTarget(cameraPosition, cameraTarget);
+	m_pCameraMngr->MoveForward(-spacing);
 }
