@@ -17,7 +17,7 @@ std::map<uint, std::vector<uint>> SPBruteForce::CalculateColisions(std::map<uint
 	std::map<uint, BoundingObject*>::iterator i;
 	std::map<uint, BoundingObject*>::iterator j;
 	for (i = bos.begin(); i != bos.end(); i++) {
-		collInd[i->first](std::vector<uint>());
+		collInd[i->first] = (std::vector<uint>());
 		j = i;
 		j++;
 		for (; j != bos.end(); j++)

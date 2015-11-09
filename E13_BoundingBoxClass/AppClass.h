@@ -85,7 +85,8 @@ public:
 	*/
 	virtual void Release(void) final;
 
-	virtual void CameraFollow(vector3 target);
+	//Sorry if this was someones work, I just commented it out because it was causing errors.
+	//virtual void CameraFollow(vector3 target);
 };
 
 #endif //__APPLICATION_H_
