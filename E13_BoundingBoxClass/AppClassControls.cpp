@@ -46,23 +46,23 @@ void AppClass::ProcessKeyboard(void)
 #pragma endregion
 	
 #pragma region Camera Control
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::U))
-		//m_pCameraMngr->MoveForward(-fSpeed);
-	
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::I))
-		m_pCameraMngr->MoveForward(-fSpeed);
-	
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::J))
-	{
-		steveMatrix *= glm::rotate(matrix4(IDENTITY_M4), -1.0f, vector3(0.0f, 1.0f, 0.0f));
-		//CameraFollow();
-	}
-	
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::K))
-	{
-		//steveMatrix *= glm::rotate(matrix4(IDENTITY_M4), 1.0f, vector3(0.0f, 1.0f, 0.0f));
-		//CameraFollow();
-	}
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::U))
+	//	//m_pCameraMngr->MoveForward(-fSpeed);
+	//
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::I))
+	//	m_pCameraMngr->MoveForward(-fSpeed);
+	//
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::J))
+	//{
+	//	steveMatrix *= glm::rotate(matrix4(IDENTITY_M4), -1.0f, vector3(0.0f, 1.0f, 0.0f));
+	//	//CameraFollow();
+	//}
+	//
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::K))
+	//{
+	//	//steveMatrix *= glm::rotate(matrix4(IDENTITY_M4), 1.0f, vector3(0.0f, 1.0f, 0.0f));
+	//	//CameraFollow();
+	//}
 #pragma endregion
 
 #pragma region Creeper Control

@@ -27,9 +27,10 @@ void AppClass::InitVariables(void)
 	cameraPosition = vector3(cameraTarget.x, cameraTarget.y, cameraTarget.z - spacing);
 	steveMatrix = glm::translate(m_v3O1);
 
-	m_pCameraMngr->SetPosition(cameraPosition);
+	
 	//m_pCameraMngr->ChangeRoll(180.0f);
 	m_pCameraMngr->SetTarget(cameraTarget);
+	m_pCameraMngr->SetPosition(cameraPosition);
 	//m_pCameraMngr->SetPositionAndTarget(vector3(1, 1, 1), cameraTarget);
 
 	//Load Models
@@ -63,14 +64,14 @@ void AppClass::Update(void)
 	GameObjectManager::GetInstance()->Update(0);//TODO: ADD DELTA TIME
 
 	ArcBall();
+	//m_pCameraMngr->SetPosition(cameraPosition);
+
 
 	steveMatrix = glm::translate(m_v3O1);
 
 	//Set the model matrices for both objects and Bounding Spheres
-	m_pMeshMngr->SetModelMatrix(steveMatrix, "Steve");
+	m_pMeshMngr->SetModelMatrix(steveMatrix * ToMatrix4(playerRotation), "Steve");
 	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O2), "Creeper");
-	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O2) * ToMatrix4(m_qArcBall), "Steve");
-	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O1) * ToMatrix4(playerRotation), "Creeper");
 
 	BoundingObjectManager::GetInstance()->SetModelMatrix(steve, m_pMeshMngr->GetModelMatrix("Steve"));
 	BoundingObjectManager::GetInstance()->SetModelMatrix(creeper, m_pMeshMngr->GetModelMatrix("Creeper"));
@@ -139,5 +140,4 @@ void AppClass::CameraFollow()
 	cameraPosition = cameraTarget;
 	m_pCameraMngr->SetPositionAndTarget(cameraPosition, cameraTarget);
 	m_pCameraMngr->MoveForward(-spacing);
-	GameObjectManager::ReleaseInstance();
 }
