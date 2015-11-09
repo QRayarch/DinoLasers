@@ -23,7 +23,7 @@ void AppClass::InitVariables(void)
 	cameraTarget = m_v3O1;
 	spacing = 5.0f;
 
-	m_pCameraMngr->SetPositionAndTarget(vector3(cameraTarget.x, cameraTarget.y, cameraTarget.z - spacing), cameraTarget);
+	//m_pCameraMngr->SetPositionAndTarget(vector3(cameraTarget.x, 1, cameraTarget.z - spacing), cameraTarget);
 
 	//Load Models
 	m_pMeshMngr->LoadModel("Minecraft\\MC_Steve.obj", "Steve");
@@ -109,4 +109,8 @@ void AppClass::Release(void)
 {
 	super::Release(); //release the memory of the inherited fields
 	BoundingObjectManager::Release();
+}
+
+void AppClass::CameraFollow(vector3 target){
+
 }
