@@ -9,6 +9,10 @@ Date: 2015/09
 #include <SFML\Graphics.hpp>
 #include "MyBoundingBoxClass.h"
 #include "BoundingObjectManager.h"
+#include "GameObject.h"
+#include "Renderable.h"
+#include "Updateable.h"
+#include "ModelRender.h"
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
