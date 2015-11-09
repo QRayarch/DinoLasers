@@ -1,6 +1,7 @@
 #include "AppClass.h"
 
 BoundingObjectManager* BoundingObjectManager::instance = nullptr;
+GameObjectManager* GameObjectManager::instance = nullptr;
 
 void AppClass::InitWindow(String a_sWindowName)
 {
@@ -31,11 +32,12 @@ void AppClass::InitVariables(void)
 	steve = BoundingObjectManager::GetInstance()->AddBox(m_pMeshMngr->GetVertexList("Steve"));
 	creeper = BoundingObjectManager::GetInstance()->AddBox(m_pMeshMngr->GetVertexList("Creeper"));
 
+	//
 	Component* mR = new ModelRender("Minecraft\\MC_Steve.obj", "Steve");
-
 	GameObject go;
 	go.AddComponent(mR);
 
+	//GameObjectManager::GetInstance()->AddGameObject(go);
 }
 
 void AppClass::Update(void)
@@ -51,6 +53,7 @@ void AppClass::Update(void)
 		CameraRotation();
 
 	BoundingObjectManager::GetInstance()->CheckCollisions();
+	GameObjectManager::GetInstance()->Update(0);//TODO: ADD DELTA TIME
 
 	ArcBall();
 
@@ -73,6 +76,7 @@ void AppClass::Update(void)
 
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
+
 
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();
@@ -105,6 +109,7 @@ void AppClass::Display(void)
 		break;
 	}
 	
+	GameObjectManager::GetInstance()->Render();
 	BoundingObjectManager::GetInstance()->Draw();
 
 	m_pMeshMngr->Render(); //renders the render list
@@ -116,4 +121,5 @@ void AppClass::Release(void)
 {
 	super::Release(); //release the memory of the inherited fields
 	BoundingObjectManager::Release();
+	GameObjectManager::ReleaseInstance();
 }

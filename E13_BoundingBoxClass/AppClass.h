@@ -9,6 +9,7 @@ Date: 2015/09
 #include <SFML\Graphics.hpp>
 #include "MyBoundingBoxClass.h"
 #include "BoundingObjectManager.h"
+#include "GameObjectManager.h"
 #include "GameObject.h"
 #include "Renderable.h"
 #include "Updateable.h"

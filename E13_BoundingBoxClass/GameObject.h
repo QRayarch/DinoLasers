@@ -14,6 +14,8 @@ public:
 	GameObject& operator=(const GameObject&);
 
 	void AddComponent(Component*);
+	Component* GetComponent(String);
+	std::map<String, Component*> GetComponents();
 
 	matrix4 GetWorldMatrix();
 	void SetWorldMatrix(matrix4);

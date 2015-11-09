@@ -38,6 +38,14 @@ void GameObject::AddComponent(Component* newComponent) {
 	}
 }
 
+std::map<String, Component*> GameObject::GetComponents() {
+	return components;
+}
+
+Component* GameObject::GetComponent(String componentLookingFor) {
+	return components[componentLookingFor];
+}
+
 matrix4 GameObject::GetWorldMatrix() {
 	return worldMatrix;
 }
