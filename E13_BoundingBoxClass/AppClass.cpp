@@ -26,7 +26,7 @@ void AppClass::InitVariables(void)
 	cameraTarget = m_v3O1;
 	cameraPosition = vector3(cameraTarget.x, cameraTarget.y, cameraTarget.z - spacing);
 	steveMatrix = glm::translate(m_v3O1);
-
+	cameraRotation = quaternion(vector3(0.0f));
 	
 	//m_pCameraMngr->ChangeRoll(180.0f);
 	m_pCameraMngr->SetTarget(cameraTarget);
@@ -75,10 +75,12 @@ void AppClass::Update(void)
 
 	BoundingObjectManager::GetInstance()->SetModelMatrix(steve, m_pMeshMngr->GetModelMatrix("Steve"));
 	BoundingObjectManager::GetInstance()->SetModelMatrix(creeper, m_pMeshMngr->GetModelMatrix("Creeper"));
-
-	vector3 pos = static_cast<vector3>(m_pMeshMngr->GetModelMatrix("Steve")[3]);
-
-	m_pCameraMngr->SetPositionAndTarget(static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 0, -spacing))[3]), pos);
+	
+	cameraTarget = static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 0, 0))[3]);
+	matrix4 temp = m_pMeshMngr->GetModelMatrix("Steve") * glm::mat4_cast(cameraRotation);
+	cameraPosition = static_cast<vector3>(temp[3]);
+	
+	m_pCameraMngr->SetPositionAndTarget(static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 0, -spacing))[3]), cameraTarget);
 
 	//m_pBB1->SetModelMatrix(m_pMeshMngr->GetModelMatrix("Steve"));
 	//reAlign->RealignBox(m_pBB1);
@@ -134,10 +136,7 @@ void AppClass::Release(void)
 	BoundingObjectManager::Release();
 }
 
-void AppClass::CameraFollow()
+void AppClass::CameraRotateUp(float degrees)
 {
-	cameraTarget = m_v3O1;
-	cameraPosition = cameraTarget;
-	m_pCameraMngr->SetPositionAndTarget(cameraPosition, cameraTarget);
-	m_pCameraMngr->MoveForward(-spacing);
+	cameraRotation = quaternion(glm::rotate(matrix4(IDENTITY_M4), degrees, vector3(0.0f, 0.0f, 0.0f)));
 }
