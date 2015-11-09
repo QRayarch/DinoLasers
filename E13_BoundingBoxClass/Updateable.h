@@ -1,5 +1,7 @@
 #pragma once
-class Updateable
+#include "Component.h"
+
+class Updateable : public Component
 {
 public:
 	Updateable();

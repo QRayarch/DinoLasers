@@ -23,16 +23,19 @@ void AppClass::InitVariables(void)
 	cameraTarget = m_v3O1;
 	spacing = 5.0f;
 
-	m_pCameraMngr->SetPositionAndTarget(vector3(cameraTarget.x, cameraTarget.y, cameraTarget.z - spacing), cameraTarget);
 
 	//Load Models
 	m_pMeshMngr->LoadModel("Minecraft\\MC_Steve.obj", "Steve");
 	m_pMeshMngr->LoadModel("Minecraft\\MC_Creeper.obj", "Creeper");
 
-	std::cout << "Dsgfee " << m_pMeshMngr->GetVertexList("Steve").size() << std::endl;
-
 	steve = BoundingObjectManager::GetInstance()->AddBox(m_pMeshMngr->GetVertexList("Steve"));
 	creeper = BoundingObjectManager::GetInstance()->AddBox(m_pMeshMngr->GetVertexList("Creeper"));
+
+	Component* mR = new ModelRender("Minecraft\\MC_Steve.obj", "Steve");
+
+	GameObject go;
+	go.AddComponent(mR);
+
 }
 
 void AppClass::Update(void)
@@ -57,6 +60,10 @@ void AppClass::Update(void)
 
 	BoundingObjectManager::GetInstance()->SetModelMatrix(steve, m_pMeshMngr->GetModelMatrix("Steve"));
 	BoundingObjectManager::GetInstance()->SetModelMatrix(creeper, m_pMeshMngr->GetModelMatrix("Creeper"));
+
+	vector3 pos = static_cast<vector3>(m_pMeshMngr->GetModelMatrix("Steve")[3]);
+
+	m_pCameraMngr->SetPositionAndTarget(static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 0, -spacing))[3]), pos);
 
 	//m_pBB1->SetModelMatrix(m_pMeshMngr->GetModelMatrix("Steve"));
 	//reAlign->RealignBox(m_pBB1);
