@@ -9,6 +9,11 @@ Date: 2015/09
 #include <SFML\Graphics.hpp>
 #include "MyBoundingBoxClass.h"
 #include "BoundingObjectManager.h"
+#include "GameObjectManager.h"
+#include "GameObject.h"
+#include "Renderable.h"
+#include "Updateable.h"
+#include "ModelRender.h"
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
@@ -17,6 +22,7 @@ class AppClass : public ReEngAppClass
 
 	vector3 m_v3O1 = vector3(-2.5f, 0.0f, 0.0f);
 	vector3 m_v3O2 = vector3( 2.5f, 0.0f, 0.0f);
+	quaternion playerRotation;
 
 	float spacing;
 	vector3 cameraTarget;

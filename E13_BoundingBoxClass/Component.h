@@ -1,23 +1,20 @@
 #pragma once
-#ifndef Component_h  
-#define Component_h  
+#include "RE\ReEngAppClass.h"
 
 class GameObject;
-
-#include "GameObject.h"
 
 class Component
 {
 private:
-	GameObject gameObject;
+	GameObject* gameObject;
 public:
 	Component();
 	Component(const Component&);
 	~Component();
 
-	GameObject GetGameObject();
-	void SetGameObject(GameObject);
-};
+	GameObject* GetGameObject();
+	void SetGameObject(GameObject*);
 
-#endif
+	virtual String GetType() = 0;
+};
 

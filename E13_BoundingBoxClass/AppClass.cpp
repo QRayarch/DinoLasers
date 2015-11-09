@@ -1,6 +1,7 @@
 #include "AppClass.h"
 
 BoundingObjectManager* BoundingObjectManager::instance = nullptr;
+GameObjectManager* GameObjectManager::instance = nullptr;
 
 void AppClass::InitWindow(String a_sWindowName)
 {
@@ -19,6 +20,7 @@ void AppClass::InitVariables(void)
 	//Initialize positions
 	m_v3O1 = vector3(-2.5f, 0.0f, 0.0f);
 	m_v3O2 = vector3(2.5f, 0.0f, 0.0f);
+	playerRotation = quaternion(vector3(0.0f));
 
 	spacing = 5.0f;
 	cameraTarget = m_v3O1;
@@ -34,10 +36,15 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->LoadModel("Minecraft\\MC_Steve.obj", "Steve");
 	m_pMeshMngr->LoadModel("Minecraft\\MC_Creeper.obj", "Creeper");
 
-	std::cout << "Dsgfee " << m_pMeshMngr->GetVertexList("Steve").size() << std::endl;
-
 	steve = BoundingObjectManager::GetInstance()->AddBox(m_pMeshMngr->GetVertexList("Steve"));
 	creeper = BoundingObjectManager::GetInstance()->AddBox(m_pMeshMngr->GetVertexList("Creeper"));
+
+	//
+	Component* mR = new ModelRender("Minecraft\\MC_Steve.obj", "Steve");
+	GameObject go;
+	go.AddComponent(mR);
+
+	//GameObjectManager::GetInstance()->AddGameObject(go);
 }
 
 void AppClass::Update(void)
@@ -53,6 +60,7 @@ void AppClass::Update(void)
 		CameraRotation();
 
 	BoundingObjectManager::GetInstance()->CheckCollisions();
+	GameObjectManager::GetInstance()->Update(0);//TODO: ADD DELTA TIME
 
 	ArcBall();
 
@@ -61,9 +69,15 @@ void AppClass::Update(void)
 	//Set the model matrices for both objects and Bounding Spheres
 	m_pMeshMngr->SetModelMatrix(steveMatrix, "Steve");
 	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O2), "Creeper");
+	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O2) * ToMatrix4(m_qArcBall), "Steve");
+	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O1) * ToMatrix4(playerRotation), "Creeper");
 
 	BoundingObjectManager::GetInstance()->SetModelMatrix(steve, m_pMeshMngr->GetModelMatrix("Steve"));
 	BoundingObjectManager::GetInstance()->SetModelMatrix(creeper, m_pMeshMngr->GetModelMatrix("Creeper"));
+
+	vector3 pos = static_cast<vector3>(m_pMeshMngr->GetModelMatrix("Steve")[3]);
+
+	m_pCameraMngr->SetPositionAndTarget(static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 0, -spacing))[3]), pos);
 
 	//m_pBB1->SetModelMatrix(m_pMeshMngr->GetModelMatrix("Steve"));
 	//reAlign->RealignBox(m_pBB1);
@@ -105,6 +119,7 @@ void AppClass::Display(void)
 		break;
 	}
 	
+	GameObjectManager::GetInstance()->Render();
 	BoundingObjectManager::GetInstance()->Draw();
 
 	m_pMeshMngr->Render(); //renders the render list
@@ -124,4 +139,5 @@ void AppClass::CameraFollow()
 	cameraPosition = cameraTarget;
 	m_pCameraMngr->SetPositionAndTarget(cameraPosition, cameraTarget);
 	m_pCameraMngr->MoveForward(-spacing);
+	GameObjectManager::ReleaseInstance();
 }

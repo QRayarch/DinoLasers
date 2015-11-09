@@ -13,12 +13,37 @@ GameObject::GameObject(const GameObject& other) {
 
 GameObject::~GameObject()
 {
+	std::map<String, Component*>::iterator iterator;
+	for (iterator = components.begin(); iterator != components.end(); iterator++) {
+		if (components[iterator->first] != nullptr) {
+			delete components[iterator->first];
+			components[iterator->first] = nullptr;
+		}
+	}
 }
 
 GameObject& GameObject::operator=(const GameObject& other) {
 	worldMatrix = other.worldMatrix;
 	components = other.components;
 	return *this;
+}
+
+void GameObject::AddComponent(Component* newComponent) {
+	String className = newComponent->GetType();
+	if ((components[className] == nullptr)) {
+		components[className] = newComponent;
+	}
+	else {
+		printf("Trying to add a duplicate component type");
+	}
+}
+
+std::map<String, Component*> GameObject::GetComponents() {
+	return components;
+}
+
+Component* GameObject::GetComponent(String componentLookingFor) {
+	return components[componentLookingFor];
 }
 
 matrix4 GameObject::GetWorldMatrix() {
