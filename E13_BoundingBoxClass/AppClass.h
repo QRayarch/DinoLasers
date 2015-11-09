@@ -33,6 +33,10 @@ class AppClass : public ReEngAppClass
 
 	uint steve;
 	uint creeper;
+	uint ground;
+
+	std::vector<vector3> groundPoints;
+
 public:
 	typedef ReEngAppClass super;
 

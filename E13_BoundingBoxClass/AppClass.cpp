@@ -22,6 +22,12 @@ void AppClass::InitVariables(void)
 	m_v3O2 = vector3(2.5f, 0.0f, 0.0f);
 	playerRotation = quaternion(vector3(0.0f));
 
+	groundPoints.push_back(vector3(100.0f, 0.0f, 100.0f));
+	groundPoints.push_back(vector3(-100.0f, 0.0f, 100.0f));
+	groundPoints.push_back(vector3(-100.0f, 0.0f, -100.0f));
+	groundPoints.push_back(vector3(100.0f, 0.0f, -100.0f));
+
+
 	spacing = 5.0f;
 	cameraTarget = m_v3O1;
 	cameraPosition = vector3(cameraTarget.x, cameraTarget.y, cameraTarget.z - spacing);
@@ -35,10 +41,11 @@ void AppClass::InitVariables(void)
 
 	//Load Models
 	m_pMeshMngr->LoadModel("Minecraft\\MC_Steve.obj", "Steve");
-	m_pMeshMngr->LoadModel("Minecraft\\MC_Creeper.obj", "Creeper");
+	m_pMeshMngr->LoadModel("Minecraft\\MC_Creeper.obj", "Creeper");	
 
 	steve = BoundingObjectManager::GetInstance()->AddBox(m_pMeshMngr->GetVertexList("Steve"));
 	creeper = BoundingObjectManager::GetInstance()->AddBox(m_pMeshMngr->GetVertexList("Creeper"));
+	ground = BoundingObjectManager::GetInstance()->AddBox(groundPoints);
 
 	//
 	Component* mR = new ModelRender("Minecraft\\MC_Steve.obj", "Steve");
@@ -121,6 +128,8 @@ void AppClass::Display(void)
 		m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::XY, REBLUE * 0.75f); //renders the XY grid with a 100% scale
 		break;
 	}
+
+	m_pMeshMngr->AddPlaneToQueue(matrix4(IDENTITY_M4) * glm::rotate(matrix4(IDENTITY_M4), 90.0f, vector3(1.0f, 0.0f, 0.0f)) *glm::scale(vector3(100.0f)), REBROWN);
 	
 	GameObjectManager::GetInstance()->Render();
 	BoundingObjectManager::GetInstance()->Draw();
