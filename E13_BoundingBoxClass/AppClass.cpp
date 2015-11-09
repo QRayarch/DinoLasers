@@ -19,6 +19,7 @@ void AppClass::InitVariables(void)
 	//Initialize positions
 	m_v3O1 = vector3(-2.5f, 0.0f, 0.0f);
 	m_v3O2 = vector3(2.5f, 0.0f, 0.0f);
+	playerRotation = quaternion(vector3(0.0f));
 
 	cameraTarget = m_v3O1;
 	spacing = 5.0f;
