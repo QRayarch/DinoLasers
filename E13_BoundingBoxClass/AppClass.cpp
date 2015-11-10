@@ -80,6 +80,7 @@ void AppClass::Update(void)
 	m_pMeshMngr->SetModelMatrix(steveMatrix * ToMatrix4(playerRotation), "Steve");
 	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O2), "Creeper");
 
+
 	BoundingObjectManager::GetInstance()->SetModelMatrix(steve, m_pMeshMngr->GetModelMatrix("Steve"));
 	BoundingObjectManager::GetInstance()->SetModelMatrix(creeper, m_pMeshMngr->GetModelMatrix("Creeper"));
 	
@@ -87,7 +88,7 @@ void AppClass::Update(void)
 	matrix4 temp = m_pMeshMngr->GetModelMatrix("Steve") * glm::mat4_cast(cameraRotation);
 	cameraPosition = static_cast<vector3>(temp[3]);
 	
-	m_pCameraMngr->SetPositionAndTarget(static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 0, -spacing))[3]), cameraTarget);
+	m_pCameraMngr->SetPositionTargetAndView(static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 0, -spacing))[3]), cameraTarget, vector3(0, 1, 0));
 
 	//m_pBB1->SetModelMatrix(m_pMeshMngr->GetModelMatrix("Steve"));
 	//reAlign->RealignBox(m_pBB1);
