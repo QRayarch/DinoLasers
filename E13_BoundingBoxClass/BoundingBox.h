@@ -2,11 +2,13 @@
 Programmer: Alberto Bobadilla (labigm@gmail.com)
 Date: 2015/10
 ----------------------------------------------*/
+#pragma once
 #ifndef __BOUNDINGBOX_H_
 #define __BOUNDINGBOX_H_
 
 #include "RE\ReEng.h"
-#include "SATBoundingBox.h"
+
+class SATBoundingBox;
 
 
 //System Class
@@ -139,6 +141,7 @@ private:
 	bool CheckAABBCollision(BoundingBox* const);
 protected:
 	bool CheckSATCollision(BoundingBox* const);
+	virtual bool DoesUseSAT();
 };
 
 #endif //__BoundingBox_H__

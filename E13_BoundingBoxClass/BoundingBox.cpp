@@ -144,7 +144,7 @@ vector3 BoundingBox::ToGlobal(vector3 vec) {
 //--- Non Standard Singleton Methods
 bool BoundingBox::IsColliding(BoundingBox* const colliding)
 {
-	if (dynamic_cast<SATBoundingBox*>(colliding)) {
+	if (colliding->DoesUseSAT()) {
 		return CheckSATCollision(colliding);
 	}
 	return CheckAABBCollision(colliding);
@@ -187,6 +187,10 @@ bool BoundingBox::CheckAABBCollision(BoundingBox* const colliding) {
 
 bool BoundingBox::CheckSATCollision(BoundingBox* const colliding) {
 	return true;
+}
+
+bool BoundingBox::DoesUseSAT() {
+	return false;
 }
 
 vector3 BoundingBox::GetMin() { return m_v3Min; }

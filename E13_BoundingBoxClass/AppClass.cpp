@@ -5,7 +5,7 @@ GameObjectManager* GameObjectManager::instance = nullptr;
 
 void AppClass::InitWindow(String a_sWindowName)
 {
-	super::InitWindow("MyBoundingSphereClass example"); // Window Name
+	super::InitWindow("DINO LASERS"); // Window Name
 
 	BoundingObjectManager* boundingObjMngr = BoundingObjectManager::GetInstance();
 
