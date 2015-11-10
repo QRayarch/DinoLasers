@@ -141,6 +141,8 @@ private:
 	void RecalculateBounds(std::vector<vector3>);
 
 	bool CheckAABBCollision(BoundingBox* const);
+
+	vector2 Project(vector3);
 protected:
 	bool CheckSATCollision(BoundingBox* const);
 	virtual bool DoesUseSAT();
