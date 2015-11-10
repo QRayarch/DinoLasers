@@ -196,15 +196,15 @@ vector2 BoundingBox::Project(vector3 normal) {
 	vector2 bounds;
 
 	std::vector<vector3> vertices;
-	vertices.push_back(box->ToGlobal(box->m_v3Min));
-	vertices.push_back(box->ToGlobal(vector3(box->m_v3Max.x, box->m_v3Min.y, box->m_v3Min.z)));
-	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x, box->m_v3Min.y, box->m_v3Max.z)));
-	vertices.push_back(box->ToGlobal(vector3(box->m_v3Max.x, box->m_v3Min.y, box->m_v3Max.z)));
+	vertices.push_back(ToGlobal(m_v3Min));
+	vertices.push_back(ToGlobal(vector3(m_v3Max.x, m_v3Min.y, m_v3Min.z)));
+	vertices.push_back(ToGlobal(vector3(m_v3Min.x, m_v3Min.y, m_v3Max.z)));
+	vertices.push_back(ToGlobal(vector3(m_v3Max.x, m_v3Min.y, m_v3Max.z)));
 
-	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x, box->m_v3Max.y, box->m_v3Min.z)));
-	vertices.push_back(box->ToGlobal(vector3(box->m_v3Max.x, box->m_v3Max.y, box->m_v3Min.z)));
-	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x, box->m_v3Max.y, box->m_v3Max.z)));
-	vertices.push_back(box->ToGlobal(box->m_v3Max));
+	vertices.push_back(ToGlobal(vector3(m_v3Min.x, m_v3Max.y, m_v3Min.z)));
+	vertices.push_back(ToGlobal(vector3(m_v3Max.x, m_v3Max.y, m_v3Min.z)));
+	vertices.push_back(ToGlobal(vector3(m_v3Min.x, m_v3Max.y, m_v3Max.z)));
+	vertices.push_back(ToGlobal(m_v3Max));
 
 	bounds.x = glm::dot(normal, vertices[0]);
 
