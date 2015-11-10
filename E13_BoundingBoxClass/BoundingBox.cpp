@@ -207,7 +207,17 @@ vector2 BoundingBox::Project(vector3 normal) {
 	vertices.push_back(ToGlobal(m_v3Max));
 
 	bounds.x = glm::dot(normal, vertices[0]);
+	bounds.y = bounds.x;
 
+	for (int v = 1; v < vertices.size(); v++) {
+		float proj = glm::dot(normal, vertices[v]);
+		if (proj > bounds.y) {
+			bounds.y = proj;
+		}
+		else if (proj < bounds.x) {
+			bounds.x = proj;
+		}
+	}
 
 	return bounds;
 }
