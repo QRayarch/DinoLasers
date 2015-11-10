@@ -195,14 +195,14 @@ bool BoundingBox::CheckSATCollision(BoundingBox* const colliding) {
 		vector2 p1 = Project(objectANormals[i]);
 		vector2 p2 = Project(objectBNormals[i]);
 
-		if (!IsOverlapping) return false;
+		if (!IsOverlapping(p1, p2)) return false;
 	}
 	for (int i = 0; i < objectBNormals.size(); i++)
 	{
 		vector2 p1 = Project(objectANormals[i]);
 		vector2 p2 = Project(objectBNormals[i]);
 
-		if (!IsOverlapping) return false;
+		if (!IsOverlapping(p1, p2)) return false;
 	}
 
 

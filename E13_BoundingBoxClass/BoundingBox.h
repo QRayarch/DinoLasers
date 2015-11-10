@@ -146,7 +146,7 @@ private:
 
 	vector2 Project(vector3);
 
-	bool IsOverlapping(vector2 a, vector2 b);
+	//bool IsOverlapping(vector2 a, vector2 b);
 
 protected:
 	bool CheckSATCollision(BoundingBox* const);
