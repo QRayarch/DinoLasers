@@ -120,6 +120,8 @@ public:
 
 	std::vector<vector3> GetGlobalNormals();
 
+	bool IsOverlapping(vector2 a, vector2 b);
+
 private:
 	/*
 	Method: Release
@@ -143,6 +145,9 @@ private:
 	bool CheckAABBCollision(BoundingBox* const);
 
 	vector2 Project(vector3);
+
+	bool IsOverlapping(vector2 a, vector2 b);
+
 protected:
 	bool CheckSATCollision(BoundingBox* const);
 	virtual bool DoesUseSAT();
