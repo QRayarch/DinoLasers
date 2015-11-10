@@ -79,14 +79,14 @@ void BoundingBox::RealignBox(BoundingBox* const box) {
 	fullWidth.z *= 2;
 
 	vertices.push_back(box->ToGlobal(box->m_v3Min));
-	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x + fullWidth.x, box->m_v3Min.y, box->m_v3Min.z)));
-	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x, box->m_v3Min.y, box->m_v3Min.z + fullWidth.z)));
-	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x + fullWidth.x, box->m_v3Min.y, box->m_v3Min.z + fullWidth.z)));
+	vertices.push_back(box->ToGlobal(vector3(box->m_v3Max.x, box->m_v3Min.y, box->m_v3Min.z)));
+	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x, box->m_v3Min.y, box->m_v3Max.z)));
+	vertices.push_back(box->ToGlobal(vector3(box->m_v3Max.x, box->m_v3Min.y, box->m_v3Max.z)));
 
 	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x, box->m_v3Max.y, box->m_v3Min.z)));
-	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x + fullWidth.x, box->m_v3Max.y, box->m_v3Min.z)));
-	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x, box->m_v3Max.y, box->m_v3Min.z + fullWidth.z)));
-	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x + fullWidth.x, box->m_v3Max.y, box->m_v3Min.z + fullWidth.z)));
+	vertices.push_back(box->ToGlobal(vector3(box->m_v3Max.x, box->m_v3Max.y, box->m_v3Min.z)));
+	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x, box->m_v3Max.y, box->m_v3Max.z)));
+	vertices.push_back(box->ToGlobal(box->m_v3Max));
 
 	RecalculateBounds(vertices);
 }
@@ -188,6 +188,26 @@ bool BoundingBox::CheckAABBCollision(BoundingBox* const colliding) {
 bool BoundingBox::CheckSATCollision(BoundingBox* const colliding) {
 
 	return true;
+}
+
+vector2 BoundingBox::Project(vector3 normal) {
+	vector2 bounds;
+
+	std::vector<vector3> vertices;
+	vertices.push_back(box->ToGlobal(box->m_v3Min));
+	vertices.push_back(box->ToGlobal(vector3(box->m_v3Max.x, box->m_v3Min.y, box->m_v3Min.z)));
+	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x, box->m_v3Min.y, box->m_v3Max.z)));
+	vertices.push_back(box->ToGlobal(vector3(box->m_v3Max.x, box->m_v3Min.y, box->m_v3Max.z)));
+
+	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x, box->m_v3Max.y, box->m_v3Min.z)));
+	vertices.push_back(box->ToGlobal(vector3(box->m_v3Max.x, box->m_v3Max.y, box->m_v3Min.z)));
+	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x, box->m_v3Max.y, box->m_v3Max.z)));
+	vertices.push_back(box->ToGlobal(box->m_v3Max));
+
+	bounds.x = glm::dot(normal, vertices[0]);
+
+
+	return bounds;
 }
 
 bool BoundingBox::DoesUseSAT() {
