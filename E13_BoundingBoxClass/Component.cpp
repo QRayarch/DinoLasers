@@ -7,15 +7,15 @@ Component::Component()
 }
 
 Component::Component(const Component& other) {
-	
+	gameObject = other.gameObject;
 }
 
 Component::~Component()
 {
-	if (gameObject != nullptr) {
+	/*if (gameObject != nullptr) {
 		delete gameObject;
 		gameObject = nullptr;
-	}
+	}*/
 }
 
 GameObject* Component::GetGameObject() {

@@ -37,19 +37,20 @@ void GameObjectManager::Render() {
 void GameObjectManager::AddGameObject(GameObject gameObject) {
 	gameObjects.push_back(gameObject);
 
-	std::map<String, Component*> components = gameObject.GetComponents();
-	std::map<String, Component*>::iterator iterator;
-	for (iterator = components.begin(); iterator != components.end(); iterator++) {
+	std::vector<Component*> components = gameObject.GetComponents();
+	for (int v = 0; v < components.size(); v++) {
 		//Check for render
-		if (dynamic_cast<Renderable*>(components[iterator->first])) {
-			printf("foundRend");
-			renderables.push_back(dynamic_cast<Renderable*>(components[iterator->first]));
+		Renderable* ren = dynamic_cast<Renderable*>(components[v]);
+		if (ren != nullptr) {
+			printf("foundRend ");
+			renderables.push_back(ren);
 		}
 
 		//Check for update
-		if (dynamic_cast<Updateable*>(components[iterator->first])) {
-			printf("foundUp");
-			updateables.push_back(dynamic_cast<Updateable*>(components[iterator->first]));
+		Updateable* up = dynamic_cast<Updateable*>(components[v]);
+		if (up != nullptr) {
+			printf("foundUp ");
+			updateables.push_back(up);
 		}
 	}
 }

@@ -46,11 +46,11 @@ void AppClass::ProcessKeyboard(void)
 #pragma endregion
 	
 #pragma region Camera Control
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		CameraRotateUp(90.0f);
 	
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		CameraRotateUp(-90.0f);
+		CameraRotateUp(-90.0f);*/
 		
 #pragma endregion
 
