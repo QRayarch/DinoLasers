@@ -189,6 +189,28 @@ bool BoundingBox::CheckSATCollision(BoundingBox* const colliding) {
 	std::vector<vector3> objectANormals = GetGlobalNormals();
 	std::vector<vector3> objectBNormals = colliding->GetGlobalNormals();
 
+
+	int AONSize = objectANormals.size();
+	int BONSize = objectBNormals.size();
+
+	std::vector<vector3> crossProd;
+
+	for (int x = 0 ; x < AONSize ; x++)
+	{
+		for (int y = 0 ; y < BONSize ; y++)
+		{
+			crossProd.push_back(  glm::cross(objectANormals[x], objectBNormals[y])  );
+		}
+	}
+
+	int CPSize = crossProd.size();
+
+	for (int z = 0; z < CPSize; z++)
+	{
+		vector2 pA;
+		vector2 pB; //and j
+	}
+
 	return true;
 }
 
