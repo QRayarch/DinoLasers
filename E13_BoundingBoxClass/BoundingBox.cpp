@@ -186,6 +186,7 @@ bool BoundingBox::CheckAABBCollision(BoundingBox* const colliding) {
 }
 
 bool BoundingBox::CheckSATCollision(BoundingBox* const colliding) {
+
 	return true;
 }
 
@@ -198,4 +199,14 @@ vector3 BoundingBox::GetMax() { return m_v3Max; }
 
 void BoundingBox::SetVisibility(bool newVisibility) {
 	isVisible = newVisibility;
+}
+
+std::vector<vector3> BoundingBox::GetGlobalNormals()
+{
+	std::vector<vector3> gNormals = std::vector<vector3>();
+	for (int i = 0; i < normals.size(); i++)
+	{
+		gNormals.push_back(ToGlobal(normals[i]));
+	}
+	return gNormals;
 }

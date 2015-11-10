@@ -109,7 +109,7 @@ public:
 	BoundingBox* const a_pOther -> Other object to check collision with
 	Output: bool -> check of the collision
 	*/
-	virtual bool IsColliding(BoundingBox* const);
+	virtual bool IsColliding(BoundingBox* const );
 
 	void RealignBox(BoundingBox* const);
 
@@ -117,6 +117,8 @@ public:
 	vector3 GetMax();
 
 	void SetVisibility(bool);
+
+	std::vector<vector3> GetGlobalNormals();
 
 private:
 	/*
