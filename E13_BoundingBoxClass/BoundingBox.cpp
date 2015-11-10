@@ -186,6 +186,8 @@ bool BoundingBox::CheckAABBCollision(BoundingBox* const colliding) {
 }
 
 bool BoundingBox::CheckSATCollision(BoundingBox* const colliding) {
+	std::vector<vector3> objectANormals = GetGlobalNormals();
+	std::vector<vector3> objectBNormals = colliding->GetGlobalNormals();
 
 	return true;
 }
