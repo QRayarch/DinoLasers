@@ -6,7 +6,7 @@
 class GameObjectManager
 {
 private:
-	std::vector<GameObject> gameObjects;
+	std::vector<GameObject*> gameObjects;
 	std::vector<Updateable*> updateables;
 	std::vector<Renderable*> renderables;
 public:
@@ -17,7 +17,7 @@ public:
 	static GameObjectManager* GetInstance();
 	static void ReleaseInstance();
 
-	void AddGameObject(GameObject);
+	void AddGameObject(GameObject*);
 
 	void Update(float);
 	void Render();

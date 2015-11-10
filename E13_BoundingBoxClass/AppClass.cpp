@@ -47,10 +47,10 @@ void AppClass::InitVariables(void)
 
 	//
 	Component* mR = new ModelRender("Minecraft\\MC_Steve.obj", "Steve");
-	GameObject go;
-	go.AddComponent(mR);
+	GameObject* go = new GameObject();
+	go->AddComponent(mR);
 
-	//GameObjectManager::GetInstance()->AddGameObject(go);
+	GameObjectManager::GetInstance()->AddGameObject(go);
 }
 
 void AppClass::Update(void)
@@ -81,7 +81,7 @@ void AppClass::Update(void)
 	BoundingObjectManager::GetInstance()->SetModelMatrix(creeper, m_pMeshMngr->GetModelMatrix("Creeper"));
 	
 	cameraTarget = static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 0, 0))[3]);
-	cameraPosition = static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 0, -spacing))[3]);
+	cameraPosition = static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 2, -spacing))[3]);
 	
 	m_pCameraMngr->SetPositionTargetAndView(cameraPosition, cameraTarget, vector3(0, 1, 0));
 
@@ -102,6 +102,10 @@ void AppClass::Update(void)
 	m_pMeshMngr->PrintLine(m_pSystem->GetAppName(), REYELLOW);
 	m_pMeshMngr->Print("FPS:");
 	m_pMeshMngr->Print(std::to_string(nFPS), RERED);
+
+
+
+	m_pMeshMngr->AddPlaneToQueue(glm::rotate(matrix4(IDENTITY_M4), 90.0f, vector3(1.0f, 0.0f, 0.0f)) * glm::scale(vector3(100.0f)), REGRAY);
 }
 
 void AppClass::Display(void)
@@ -124,8 +128,6 @@ void AppClass::Display(void)
 		m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::XY, REBLUE * 0.75f); //renders the XY grid with a 100% scale
 		break;
 	}
-
-	m_pMeshMngr->AddPlaneToQueue(matrix4(IDENTITY_M4) * glm::rotate(matrix4(IDENTITY_M4), 90.0f, vector3(1.0f, 0.0f, 0.0f)) *glm::scale(vector3(100.0f)), REBROWN);
 	
 	GameObjectManager::GetInstance()->Render();
 	BoundingObjectManager::GetInstance()->Draw();

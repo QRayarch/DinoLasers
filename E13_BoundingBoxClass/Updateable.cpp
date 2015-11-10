@@ -5,7 +5,6 @@ Updateable::Updateable()
 {
 }
 
-
 Updateable::~Updateable()
 {
 }
