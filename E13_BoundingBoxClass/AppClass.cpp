@@ -30,14 +30,12 @@ void AppClass::InitVariables(void)
 
 	spacing = 5.0f;
 	cameraTarget = m_v3O1;
-	cameraPosition = vector3(cameraTarget.x, cameraTarget.y, cameraTarget.z - spacing);
+	cameraPosition = vector3(cameraTarget.x, cameraTarget.y + spacing, cameraTarget.z - spacing);
 	steveMatrix = glm::translate(m_v3O1);
-	cameraRotation = quaternion(vector3(0.0f));
 	
-	//m_pCameraMngr->ChangeRoll(180.0f);
-	m_pCameraMngr->SetTarget(cameraTarget);
-	m_pCameraMngr->SetPosition(cameraPosition);
-	//m_pCameraMngr->SetPositionAndTarget(vector3(1, 1, 1), cameraTarget);
+	//m_pCameraMngr->SetTarget(cameraTarget);
+	//m_pCameraMngr->SetPosition(cameraPosition);
+	m_pCameraMngr->SetPositionTargetAndView(cameraPosition, cameraTarget, vector3(0.0f, 1.0f, 0.0f));
 
 	//Load Models
 	m_pMeshMngr->LoadModel("Minecraft\\MC_Steve.obj", "Steve");
@@ -71,8 +69,6 @@ void AppClass::Update(void)
 	GameObjectManager::GetInstance()->Update(0);//TODO: ADD DELTA TIME
 
 	ArcBall();
-	//m_pCameraMngr->SetPosition(cameraPosition);
-
 
 	steveMatrix = glm::translate(m_v3O1);
 
@@ -85,10 +81,9 @@ void AppClass::Update(void)
 	BoundingObjectManager::GetInstance()->SetModelMatrix(creeper, m_pMeshMngr->GetModelMatrix("Creeper"));
 	
 	cameraTarget = static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 0, 0))[3]);
-	matrix4 temp = m_pMeshMngr->GetModelMatrix("Steve") * glm::mat4_cast(cameraRotation);
-	cameraPosition = static_cast<vector3>(temp[3]);
+	cameraPosition = static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 0, -spacing))[3]);
 	
-	m_pCameraMngr->SetPositionTargetAndView(static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 0, -spacing))[3]), cameraTarget, vector3(0, 1, 0));
+	m_pCameraMngr->SetPositionTargetAndView(cameraPosition, cameraTarget, vector3(0, 1, 0));
 
 	//m_pBB1->SetModelMatrix(m_pMeshMngr->GetModelMatrix("Steve"));
 	//reAlign->RealignBox(m_pBB1);
@@ -148,5 +143,8 @@ void AppClass::Release(void)
 
 void AppClass::CameraRotateUp(float degrees)
 {
-	cameraRotation = quaternion(glm::rotate(matrix4(IDENTITY_M4), degrees, vector3(0.0f, 0.0f, 0.0f)));
+	//vector3 temp = cameraPosition;
+	//cameraPosition = cameraTarget;
+	//cameraPosition *= glm::rotate(matrix4(IDENTITY_M4), degrees, vector3(1.0f, 0.0f, 0.0f));
+	//cameraPosition += temp;
 }
