@@ -1,7 +1,7 @@
 #pragma once
 
 #include "BoundingSphere.h"
-#include "MyBoundingBoxClass.h"
+#include "BoundingBox.h"
 #include "RE\ReEngAppClass.h"
 
 
@@ -9,8 +9,8 @@ class BoundingObject
 {
 private:
 	BoundingSphere* sphere;
-	MyBoundingBoxClass* ob;
-	MyBoundingBoxClass* realign;
+	BoundingBox* ob;
+	BoundingBox* realign;
 
 	bool isVisible;
 	vector3 color;

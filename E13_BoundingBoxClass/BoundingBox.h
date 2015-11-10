@@ -2,14 +2,15 @@
 Programmer: Alberto Bobadilla (labigm@gmail.com)
 Date: 2015/10
 ----------------------------------------------*/
-#ifndef __MYBOUNDINGBOXCLASS_H_
-#define __MYBOUNDINGBOXCLASS_H_
+#ifndef __BoundingBox_H_
+#define __BoundingBox_H_
 
 #include "RE\ReEng.h"
+#include "SATBoundingBox.h"
 
 
 //System Class
-class MyBoundingBoxClass
+class BoundingBox
 {
 	matrix4 m_m4ToWorld = IDENTITY_M4; //Matrix that will take us from local to world coordinate
 	vector3 m_v3Center = vector3(0.0f); //Will store the center point of the box Class
@@ -18,35 +19,36 @@ class MyBoundingBoxClass
 	vector3 m_v3HalfWidth = vector3(0.0f);//Will store half the size of all sides
 
 	bool isVisible;
+	std::vector<vector3> normals;
 public:
 	/*
-	Method: MyBoundingBoxClass
+	Method: BoundingBox
 	Usage: Constructor
 	Arguments: ---
 	Output: class object
 	*/
-	MyBoundingBoxClass(std::vector<vector3> a_lVectorList);
+	BoundingBox(std::vector<vector3> a_lVectorList);
 	/*
-	Method: MyBoundingBoxClass
+	Method: BoundingBox
 	Usage: Copy Constructor
 	Arguments: class object to copy
 	Output: class object instance
 	*/
-	MyBoundingBoxClass(MyBoundingBoxClass const& other);
+	BoundingBox(BoundingBox const& other);
 	/*
 	Method: operator=
 	Usage: Copy Assignment Operator
 	Arguments: class object to copy
 	Output: ---
 	*/
-	MyBoundingBoxClass& operator=(MyBoundingBoxClass const& other);
+	BoundingBox& operator=(BoundingBox const& other);
 	/*
-	Method: ~MyBoundingBoxClass
+	Method: ~BoundingBox
 	Usage: Destructor
 	Arguments: ---
 	Output: ---
 	*/
-	~MyBoundingBoxClass(void);
+	~BoundingBox(void);
 
 	/*
 	Method: Swap
@@ -55,7 +57,7 @@ public:
 	other -> object to swap content from
 	Output: ---
 	*/
-	void Swap(MyBoundingBoxClass& other);
+	void Swap(BoundingBox& other);
 
 	/*
 	Method: SetToWorldMatrix
@@ -102,12 +104,12 @@ public:
 	Method: IsColliding
 	Usage: Asks if there is a collision with another Bounding Box Object
 	Arguments:
-	MyBoundingBoxClass* const a_pOther -> Other object to check collision with
+	BoundingBox* const a_pOther -> Other object to check collision with
 	Output: bool -> check of the collision
 	*/
-	bool IsColliding(MyBoundingBoxClass* const a_pOther);
+	virtual bool IsColliding(BoundingBox* const );
 
-	void RealignBox(MyBoundingBoxClass* const);
+	void RealignBox(BoundingBox* const);
 
 	vector3 GetMin();
 	vector3 GetMax();
@@ -133,6 +135,10 @@ private:
 	vector3 ToGlobal(vector3);
 
 	void RecalculateBounds(std::vector<vector3>);
+
+	bool CheckAABBCollision(BoundingBox* const);
+protected:
+	bool CheckSATCollision(BoundingBox* const);
 };
 
-#endif //__MYBOUNDINGBOXCLASS_H__
+#endif //__BoundingBox_H__

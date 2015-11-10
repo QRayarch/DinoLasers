@@ -7,7 +7,7 @@ Date: 2015/09
 
 #include "RE\ReEngAppClass.h"
 #include <SFML\Graphics.hpp>
-#include "MyBoundingBoxClass.h"
+#include "BoundingBox.h"
 #include "BoundingObjectManager.h"
 #include "GameObjectManager.h"
 #include "GameObject.h"

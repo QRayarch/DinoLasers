@@ -5,8 +5,8 @@ BoundingObject::BoundingObject(std::vector<vector3> vertices)
 {
 	modelMatrix = IDENTITY_M4;
 	sphere = new BoundingSphere(vertices);
-	ob = new MyBoundingBoxClass(vertices);
-	realign = new MyBoundingBoxClass(vertices);
+	ob = new BoundingBox(vertices);
+	realign = new BoundingBox(vertices);
 
 	isVisible = true;
 	color = REWHITE;

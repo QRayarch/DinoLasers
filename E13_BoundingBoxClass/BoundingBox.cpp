@@ -1,6 +1,6 @@
-#include "MyBoundingBoxClass.h"
-//  MyBoundingBoxClass
-void MyBoundingBoxClass::Init(void)
+#include "BoundingBox.h"
+//  BoundingBox
+void BoundingBox::Init(void)
 {
 	m_m4ToWorld = IDENTITY_M4;
 	isVisible = true;
@@ -10,8 +10,13 @@ void MyBoundingBoxClass::Init(void)
 	m_v3Max = vector3(0.0f);
 
 	m_v3HalfWidth = vector3(0.0f);
+
+
+	normals.push_back(REAXISX);
+	normals.push_back(REAXISY);
+	normals.push_back(REAXISZ);
 }
-void MyBoundingBoxClass::Swap(MyBoundingBoxClass& other)
+void BoundingBox::Swap(BoundingBox& other)
 {
 	std::swap(m_m4ToWorld, other.m_m4ToWorld);
 
@@ -19,14 +24,16 @@ void MyBoundingBoxClass::Swap(MyBoundingBoxClass& other)
 	std::swap(m_v3Min, other.m_v3Min);
 	std::swap(m_v3Max, other.m_v3Max);
 
+	std::swap(normals, other.normals);
+
 	std::swap(m_v3HalfWidth, other.m_v3HalfWidth);
 }
-void MyBoundingBoxClass::Release(void)
+void BoundingBox::Release(void)
 {
 
 }
 //The big 3
-MyBoundingBoxClass::MyBoundingBoxClass(std::vector<vector3> a_lVectorList)
+BoundingBox::BoundingBox(std::vector<vector3> a_lVectorList)
 {
 	//Init the default values
 	Init();
@@ -35,7 +42,7 @@ MyBoundingBoxClass::MyBoundingBoxClass(std::vector<vector3> a_lVectorList)
 	
 }
 
-MyBoundingBoxClass::MyBoundingBoxClass(MyBoundingBoxClass const& other)
+BoundingBox::BoundingBox(BoundingBox const& other)
 {
 	m_m4ToWorld = other.m_m4ToWorld;
 	isVisible = other.isVisible;
@@ -44,22 +51,24 @@ MyBoundingBoxClass::MyBoundingBoxClass(MyBoundingBoxClass const& other)
 	m_v3Min = other.m_v3Min;
 	m_v3Max = other.m_v3Max;
 
+	normals = other.normals;
+
 	m_v3HalfWidth = other.m_v3HalfWidth;
 }
-MyBoundingBoxClass& MyBoundingBoxClass::operator=(MyBoundingBoxClass const& other)
+BoundingBox& BoundingBox::operator=(BoundingBox const& other)
 {
 	if (this != &other)
 	{
 		Release();
 		Init();
-		MyBoundingBoxClass temp(other);
+		BoundingBox temp(other);
 		Swap(temp);
 	}
 	return *this;
 }
-MyBoundingBoxClass::~MyBoundingBoxClass(){ Release(); };
+BoundingBox::~BoundingBox(){ Release(); };
 
-void MyBoundingBoxClass::RealignBox(MyBoundingBoxClass* const box) {
+void BoundingBox::RealignBox(BoundingBox* const box) {
 	std::vector<vector3> vertices;
 
 	isVisible = true;
@@ -82,7 +91,7 @@ void MyBoundingBoxClass::RealignBox(MyBoundingBoxClass* const box) {
 	RecalculateBounds(vertices);
 }
 
-void MyBoundingBoxClass::RecalculateBounds(std::vector<vector3> a_lVectorList) {
+void BoundingBox::RecalculateBounds(std::vector<vector3> a_lVectorList) {
 	//Count the points of the incoming list
 	uint nVertexCount = a_lVectorList.size();
 
@@ -122,32 +131,39 @@ void MyBoundingBoxClass::RecalculateBounds(std::vector<vector3> a_lVectorList) {
 }
 
 //Accessors
-void MyBoundingBoxClass::SetModelMatrix(matrix4 a_m4ToWorld){ m_m4ToWorld = a_m4ToWorld; }
-matrix4 MyBoundingBoxClass::GetModelMatrix(void){ return m_m4ToWorld; }
-vector3 MyBoundingBoxClass::GetCenterLocal(void){ return m_v3Center; }
-vector3 MyBoundingBoxClass::GetCenterGlobal(void){ return vector3(m_m4ToWorld * vector4(m_v3Center,1.0f)); }
-vector3 MyBoundingBoxClass::GetHalfWidth(void){ return m_v3HalfWidth; }
+void BoundingBox::SetModelMatrix(matrix4 a_m4ToWorld){ m_m4ToWorld = a_m4ToWorld; }
+matrix4 BoundingBox::GetModelMatrix(void){ return m_m4ToWorld; }
+vector3 BoundingBox::GetCenterLocal(void){ return m_v3Center; }
+vector3 BoundingBox::GetCenterGlobal(void){ return vector3(m_m4ToWorld * vector4(m_v3Center,1.0f)); }
+vector3 BoundingBox::GetHalfWidth(void){ return m_v3HalfWidth; }
 
-vector3 MyBoundingBoxClass::ToGlobal(vector3 vec) {
+vector3 BoundingBox::ToGlobal(vector3 vec) {
 	return vector3(m_m4ToWorld * vector4(vec, 1.0f));
 }
 
 //--- Non Standard Singleton Methods
-bool MyBoundingBoxClass::IsColliding(MyBoundingBoxClass* const a_pOther)
+bool BoundingBox::IsColliding(BoundingBox* const colliding)
 {
+	if (dynamic_cast<SATBoundingBox*>(colliding)) {
+		return CheckSATCollision(colliding);
+	}
+	return CheckAABBCollision(colliding);
+}
+
+bool BoundingBox::CheckAABBCollision(BoundingBox* const colliding) {
 	//Get all vectors in global space
 	vector3 v3Min = ToGlobal(m_v3Min);
 	vector3 v3Max = ToGlobal(m_v3Max);
 
-	vector3 v3MinO = a_pOther->ToGlobal(a_pOther->m_v3Min);
-	vector3 v3MaxO = a_pOther->ToGlobal(a_pOther->m_v3Max);
+	vector3 v3MinO = colliding->ToGlobal(colliding->m_v3Min);
+	vector3 v3MaxO = colliding->ToGlobal(colliding->m_v3Max);
 
 	/*
 	Are they colliding?
 	For boxes we will assume they are colliding, unless at least one of the following conditions is not met
 	*/
 	bool bColliding = true;
-	
+
 	//Check for X
 	if (v3Max.x < v3MinO.x)
 		bColliding = false;
@@ -169,9 +185,13 @@ bool MyBoundingBoxClass::IsColliding(MyBoundingBoxClass* const a_pOther)
 	return bColliding;
 }
 
-vector3 MyBoundingBoxClass::GetMin() { return m_v3Min;  }
-vector3 MyBoundingBoxClass::GetMax() { return m_v3Max; }
+bool BoundingBox::CheckSATCollision(BoundingBox* const colliding) {
+	return true;
+}
 
-void MyBoundingBoxClass::SetVisibility(bool newVisibility) {
+vector3 BoundingBox::GetMin() { return m_v3Min;  }
+vector3 BoundingBox::GetMax() { return m_v3Max; }
+
+void BoundingBox::SetVisibility(bool newVisibility) {
 	isVisible = newVisibility;
 }
