@@ -18,9 +18,11 @@ void AppClass::InitWindow(String a_sWindowName)
 void AppClass::InitVariables(void)
 {
 	//Initialize positions
-	m_v3O1 = vector3(-2.5f, 0.0f, 0.0f);
+	//m_v3O1 = vector3(-2.5f, 0.0f, 0.0f);
 	m_v3O2 = vector3(2.5f, 0.0f, 0.0f);
 	playerRotation = quaternion(vector3(0.0f));
+	playerPosition = vector3(0.0f, 0.0f, 0.0f);
+	forward = vector3(0.0f, 0.0f, 0.1f);
 
 	groundPoints.push_back(vector3(100.0f, 0.0f, 100.0f));
 	groundPoints.push_back(vector3(-100.0f, 0.0f, 100.0f));
@@ -29,9 +31,9 @@ void AppClass::InitVariables(void)
 
 
 	spacing = 5.0f;
-	cameraTarget = m_v3O1;
+	cameraTarget = playerPosition;
 	cameraPosition = vector3(cameraTarget.x, cameraTarget.y + spacing, cameraTarget.z - spacing);
-	steveMatrix = glm::translate(m_v3O1);
+	steveMatrix = glm::translate(playerPosition);
 	
 	//m_pCameraMngr->SetTarget(cameraTarget);
 	//m_pCameraMngr->SetPosition(cameraPosition);
@@ -70,7 +72,7 @@ void AppClass::Update(void)
 
 	ArcBall();
 
-	steveMatrix = glm::translate(m_v3O1);
+	steveMatrix = glm::translate(playerPosition);
 
 	//Set the model matrices for both objects and Bounding Spheres
 	m_pMeshMngr->SetModelMatrix(steveMatrix * ToMatrix4(playerRotation), "Steve");
