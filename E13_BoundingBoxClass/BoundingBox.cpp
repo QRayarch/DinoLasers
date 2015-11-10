@@ -190,6 +190,22 @@ bool BoundingBox::CheckSATCollision(BoundingBox* const colliding) {
 	std::vector<vector3> objectBNormals = colliding->GetGlobalNormals();
 
 
+	for (int i = 0; i < objectANormals.size(); i++)
+	{
+		vector2 p1 = Project(objectANormals[i]);
+		vector2 p2 = Project(objectBNormals[i]);
+
+		if (!IsOverlapping) return false;
+	}
+	for (int i = 0; i < objectBNormals.size(); i++)
+	{
+		vector2 p1 = Project(objectANormals[i]);
+		vector2 p2 = Project(objectBNormals[i]);
+
+		if (!IsOverlapping) return false;
+	}
+
+
 	int AONSize = objectANormals.size();
 	int BONSize = objectBNormals.size();
 
@@ -207,22 +223,15 @@ bool BoundingBox::CheckSATCollision(BoundingBox* const colliding) {
 
 	for (int z = 0; z < CPSize; z++)
 	{
-		vector2 pA;
-		vector2 pB; //and j
-	for (int i = 0; i < objectANormals.size(); i++)
-	{
-		vector2 p1 = Project(objectANormals[i]);
-		vector2 p2 = Project(objectBNormals[i]);
+		vector2 pA = Project(crossProd[z]);
+		vector2 pB = Project(crossProd[z]); //and j
 
-		if (!IsOverlapping) return false;
+		if (!IsOverlapping(pA,pB))
+		{
+			return false;
+		}
 	}
-	for (int i = 0; i < objectBNormals.size(); i++)
-	{
-		vector2 p1 = Project(objectANormals[i]);
-		vector2 p2 = Project(objectBNormals[i]);
 
-		if (!IsOverlapping) return false;
-	}
 
 	return true;
 }
