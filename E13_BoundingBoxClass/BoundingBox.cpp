@@ -209,6 +209,19 @@ bool BoundingBox::CheckSATCollision(BoundingBox* const colliding) {
 	{
 		vector2 pA;
 		vector2 pB; //and j
+	for (int i = 0; i < objectANormals.size(); i++)
+	{
+		vector2 p1 = Project(objectANormals[i]);
+		vector2 p2 = Project(objectBNormals[i]);
+
+		if (!IsOverlapping) return false;
+	}
+	for (int i = 0; i < objectBNormals.size(); i++)
+	{
+		vector2 p1 = Project(objectANormals[i]);
+		vector2 p2 = Project(objectBNormals[i]);
+
+		if (!IsOverlapping) return false;
 	}
 
 	return true;
@@ -263,4 +276,9 @@ std::vector<vector3> BoundingBox::GetGlobalNormals()
 		gNormals.push_back(ToGlobal(normals[i]));
 	}
 	return gNormals;
+}
+
+bool BoundingBox::IsOverlapping(vector2 a, vector2 b)
+{
+	return a.y > b.x || b.y > a.x;
 }

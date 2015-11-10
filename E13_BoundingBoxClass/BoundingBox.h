@@ -120,6 +120,8 @@ public:
 
 	std::vector<vector3> GetGlobalNormals();
 
+	bool IsOverlapping(vector2 a, vector2 b);
+
 private:
 	/*
 	Method: Release
