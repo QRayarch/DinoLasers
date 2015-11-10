@@ -5,7 +5,7 @@ BoundingObject::BoundingObject(std::vector<vector3> vertices)
 {
 	modelMatrix = IDENTITY_M4;
 	sphere = new BoundingSphere(vertices);
-	ob = new BoundingBox(vertices);
+	ob = new SATBoundingBox(vertices);
 	realign = new BoundingBox(vertices);
 
 	isVisible = true;

@@ -2,6 +2,7 @@
 
 #include "BoundingSphere.h"
 #include "BoundingBox.h"
+#include "SATBoundingBox.h"
 #include "RE\ReEngAppClass.h"
 
 
@@ -9,7 +10,7 @@ class BoundingObject
 {
 private:
 	BoundingSphere* sphere;
-	BoundingBox* ob;
+	SATBoundingBox* ob;
 	BoundingBox* realign;
 
 	bool isVisible;
