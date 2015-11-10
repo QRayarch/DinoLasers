@@ -1,12 +1,8 @@
 #pragma once
-#include "BoundingBox.h"
-
-class SATBoundingBox : public BoundingBox
+class SATBoundingBox
 {
 public:
-	SATBoundingBox(std::vector<vector3>);
+	SATBoundingBox();
 	~SATBoundingBox();
-
-	bool IsColliding(BoundingBox* const);
 };
 

@@ -113,6 +113,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
   <ItemGroup>
     <ClCompile Include="AppClass.cpp" />
     <ClCompile Include="AppClassControls.cpp" />
+    <ClCompile Include="BoundingBox.cpp" />
     <ClCompile Include="BoundingObject.cpp" />
     <ClCompile Include="BoundingObjectManager.cpp" />
     <ClCompile Include="BoundingSphere.cpp" />
@@ -120,9 +121,9 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="ModelRender.cpp" />
-    <ClCompile Include="BoundingBox.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Renderable.cpp" />
+    <ClCompile Include="SATBoundingBox.cpp" />
     <ClCompile Include="SpatialPartition.cpp" />
     <ClCompile Include="SPBruteForce.cpp" />
     <ClCompile Include="Updateable.cpp" />
@@ -130,6 +131,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
   <ItemGroup>
     <ClInclude Include="..\res\Resource.h" />
     <ClInclude Include="AppClass.h" />
+    <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="BoundingObject.h" />
     <ClInclude Include="BoundingObjectManager.h" />
     <ClInclude Include="BoundingSphere.h" />
@@ -137,8 +139,8 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="ModelRender.h" />
-    <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="Renderable.h" />
+    <ClInclude Include="SATBoundingBox.h" />
     <ClInclude Include="SpatialPartition.h" />
     <ClInclude Include="SPBruteForce.h" />
     <ClInclude Include="Updateable.h" />

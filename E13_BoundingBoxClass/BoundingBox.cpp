@@ -39,7 +39,7 @@ BoundingBox::BoundingBox(std::vector<vector3> a_lVectorList)
 	Init();
 
 	RecalculateBounds(a_lVectorList);
-	
+
 }
 
 BoundingBox::BoundingBox(BoundingBox const& other)
@@ -82,7 +82,7 @@ void BoundingBox::RealignBox(BoundingBox* const box) {
 	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x + fullWidth.x, box->m_v3Min.y, box->m_v3Min.z)));
 	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x, box->m_v3Min.y, box->m_v3Min.z + fullWidth.z)));
 	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x + fullWidth.x, box->m_v3Min.y, box->m_v3Min.z + fullWidth.z)));
-	
+
 	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x, box->m_v3Max.y, box->m_v3Min.z)));
 	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x + fullWidth.x, box->m_v3Max.y, box->m_v3Min.z)));
 	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x, box->m_v3Max.y, box->m_v3Min.z + fullWidth.z)));
@@ -134,7 +134,7 @@ void BoundingBox::RecalculateBounds(std::vector<vector3> a_lVectorList) {
 void BoundingBox::SetModelMatrix(matrix4 a_m4ToWorld){ m_m4ToWorld = a_m4ToWorld; }
 matrix4 BoundingBox::GetModelMatrix(void){ return m_m4ToWorld; }
 vector3 BoundingBox::GetCenterLocal(void){ return m_v3Center; }
-vector3 BoundingBox::GetCenterGlobal(void){ return vector3(m_m4ToWorld * vector4(m_v3Center,1.0f)); }
+vector3 BoundingBox::GetCenterGlobal(void){ return vector3(m_m4ToWorld * vector4(m_v3Center, 1.0f)); }
 vector3 BoundingBox::GetHalfWidth(void){ return m_v3HalfWidth; }
 
 vector3 BoundingBox::ToGlobal(vector3 vec) {
@@ -189,7 +189,7 @@ bool BoundingBox::CheckSATCollision(BoundingBox* const colliding) {
 	return true;
 }
 
-vector3 BoundingBox::GetMin() { return m_v3Min;  }
+vector3 BoundingBox::GetMin() { return m_v3Min; }
 vector3 BoundingBox::GetMax() { return m_v3Max; }
 
 void BoundingBox::SetVisibility(bool newVisibility) {

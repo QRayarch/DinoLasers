@@ -2,8 +2,8 @@
 Programmer: Alberto Bobadilla (labigm@gmail.com)
 Date: 2015/10
 ----------------------------------------------*/
-#ifndef __BoundingBox_H_
-#define __BoundingBox_H_
+#ifndef __BOUNDINGBOX_H_
+#define __BOUNDINGBOX_H_
 
 #include "RE\ReEng.h"
 #include "SATBoundingBox.h"
@@ -107,7 +107,7 @@ public:
 	BoundingBox* const a_pOther -> Other object to check collision with
 	Output: bool -> check of the collision
 	*/
-	virtual bool IsColliding(BoundingBox* const );
+	virtual bool IsColliding(BoundingBox* const);
 
 	void RealignBox(BoundingBox* const);
 
