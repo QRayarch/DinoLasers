@@ -131,7 +131,7 @@ void BoundingBox::RecalculateBounds(std::vector<vector3> a_lVectorList) {
 }
 
 //Accessors
-void BoundingBox::SetModelMatrix(matrix4 a_m4ToWorld){ m_m4ToWorld = a_m4ToWorld; }
+void BoundingBox::SetModelMatrix(matrix4 mat){ m_m4ToWorld = mat; }
 matrix4 BoundingBox::GetModelMatrix(void){ return m_m4ToWorld; }
 vector3 BoundingBox::GetCenterLocal(void){ return m_v3Center; }
 vector3 BoundingBox::GetCenterGlobal(void){ return vector3(m_m4ToWorld * vector4(m_v3Center, 1.0f)); }
@@ -189,20 +189,22 @@ bool BoundingBox::CheckSATCollision(BoundingBox* const colliding) {
 	std::vector<vector3> objectANormals = GetGlobalNormals();
 	std::vector<vector3> objectBNormals = colliding->GetGlobalNormals();
 
+	matrix4 m1 = GetModelMatrix();
+	matrix4 m2 = colliding->GetModelMatrix();
 
 	for (int i = 0; i < objectANormals.size(); i++)
 	{
 		vector2 p1 = Project(objectANormals[i]);
 		vector2 p2 = Project(objectBNormals[i]);
 
-		if (!IsOverlapping) return false;
+		if (!IsOverlapping(p1, p2)) return false;
 	}
 	for (int i = 0; i < objectBNormals.size(); i++)
 	{
 		vector2 p1 = Project(objectANormals[i]);
 		vector2 p2 = Project(objectBNormals[i]);
 
-		if (!IsOverlapping) return false;
+		if (!IsOverlapping(p1, p2)) return false;
 	}
 
 
@@ -282,6 +284,7 @@ std::vector<vector3> BoundingBox::GetGlobalNormals()
 	std::vector<vector3> gNormals = std::vector<vector3>();
 	for (int i = 0; i < normals.size(); i++)
 	{
+		//glm::normalize(ToGlobal(normals[i]))
 		gNormals.push_back(ToGlobal(normals[i]));
 	}
 	return gNormals;

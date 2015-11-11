@@ -18,8 +18,8 @@ void AppClass::InitWindow(String a_sWindowName)
 void AppClass::InitVariables(void)
 {
 	//Initialize positions
-	//m_v3O1 = vector3(-2.5f, 0.0f, 0.0f);
-	m_v3O2 = vector3(2.5f, 0.0f, 0.0f);
+	m_v3O1 = vector3(-2.5f, 0.0f, 0.0f);
+	m_v3O2 = vector3(2.5f, 0.0f, 1.0f);
 	playerRotation = quaternion(vector3(0.0f));
 	playerPosition = vector3(0.0f, 0.0f, 0.0f);
 	forward = vector3(0.0f, 0.0f, 0.1f);
@@ -45,7 +45,10 @@ void AppClass::InitVariables(void)
 
 	steve = BoundingObjectManager::GetInstance()->AddBox(m_pMeshMngr->GetVertexList("Steve"));
 	creeper = BoundingObjectManager::GetInstance()->AddBox(m_pMeshMngr->GetVertexList("Creeper"));
-	ground = BoundingObjectManager::GetInstance()->AddBox(groundPoints);
+	//ground = BoundingObjectManager::GetInstance()->AddBox(groundPoints);
+
+	//BoundingObjectManager::GetInstance()->SetVisibility(steve, false);
+	//BoundingObjectManager::GetInstance()->SwitchBoxVisibility(steve, true);
 
 	//
 	Component* mR = new ModelRender("Minecraft\\MC_Steve.obj", "Steve");
@@ -79,10 +82,10 @@ void AppClass::Update(void)
 	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O2), "Creeper");
 
 
-	BoundingObjectManager::GetInstance()->SetModelMatrix(steve, m_pMeshMngr->GetModelMatrix("Steve"));
-	BoundingObjectManager::GetInstance()->SetModelMatrix(creeper, m_pMeshMngr->GetModelMatrix("Creeper"));
+	BoundingObjectManager::GetInstance()->SetModelMatrix(steve, steveMatrix * ToMatrix4(playerRotation));
+	BoundingObjectManager::GetInstance()->SetModelMatrix(creeper, glm::translate(m_v3O2));
 	
-	cameraTarget = static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 0, 0))[3]);
+	cameraTarget = static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 0.8f, 0))[3]);
 	cameraPosition = static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 2, -spacing))[3]);
 	
 	m_pCameraMngr->SetPositionTargetAndView(cameraPosition, cameraTarget, vector3(0, 1, 0));

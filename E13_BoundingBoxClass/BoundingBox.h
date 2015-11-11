@@ -118,9 +118,8 @@ public:
 
 	void SetVisibility(bool);
 
+	bool CheckSATCollision(BoundingBox* const);
 	std::vector<vector3> GetGlobalNormals();
-
-	bool IsOverlapping(vector2 a, vector2 b);
 
 private:
 	/*
@@ -149,7 +148,6 @@ private:
 	bool IsOverlapping(vector2 a, vector2 b);
 
 protected:
-	bool CheckSATCollision(BoundingBox* const);
 	virtual bool DoesUseSAT();
 };
 

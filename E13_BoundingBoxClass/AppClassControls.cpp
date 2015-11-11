@@ -69,6 +69,7 @@ void AppClass::ProcessKeyboard(void)
 	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	//	m_v3O1.y += 0.1f;
 #pragma region Creeper Control
+	float speed = 0.3f;
 	if (bModifier)
 		fSpeed *= 10.0f;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
@@ -80,11 +81,11 @@ void AppClass::ProcessKeyboard(void)
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-		playerPosition -= forward;
+		playerPosition -= forward * speed;
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-		playerPosition += forward;
+		playerPosition += forward * speed;
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
