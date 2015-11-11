@@ -10,11 +10,6 @@ void BoundingBox::Init(void)
 	m_v3Max = vector3(0.0f);
 
 	m_v3HalfWidth = vector3(0.0f);
-
-
-	normals.push_back(REAXISX);
-	normals.push_back(REAXISY);
-	normals.push_back(REAXISZ);
 }
 void BoundingBox::Swap(BoundingBox& other)
 {
@@ -23,8 +18,6 @@ void BoundingBox::Swap(BoundingBox& other)
 	std::swap(m_v3Center, other.m_v3Center);
 	std::swap(m_v3Min, other.m_v3Min);
 	std::swap(m_v3Max, other.m_v3Max);
-
-	std::swap(normals, other.normals);
 
 	std::swap(m_v3HalfWidth, other.m_v3HalfWidth);
 }
@@ -50,8 +43,6 @@ BoundingBox::BoundingBox(BoundingBox const& other)
 	m_v3Center = other.m_v3Center;
 	m_v3Min = other.m_v3Min;
 	m_v3Max = other.m_v3Max;
-
-	normals = other.normals;
 
 	m_v3HalfWidth = other.m_v3HalfWidth;
 }
@@ -186,55 +177,78 @@ bool BoundingBox::CheckAABBCollision(BoundingBox* const colliding) {
 }
 
 bool BoundingBox::CheckSATCollision(BoundingBox* const colliding) {
-	std::vector<vector3> objectANormals = GetGlobalNormals();
-	std::vector<vector3> objectBNormals = colliding->GetGlobalNormals();
+	std::vector<vector3> objectANormals = GetLocalNormals();
+	std::vector<vector3> objectBNormals = colliding->GetLocalNormals();
 
-	matrix4 m1 = GetModelMatrix();
-	matrix4 m2 = colliding->GetModelMatrix();
+	float ra, rb;
+	matrix3 R, AbsR;
 
-	for (int i = 0; i < objectANormals.size(); i++)
-	{
-		vector2 p1 = Project(objectANormals[i]);
-		vector2 p2 = Project(objectBNormals[i]);
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			R[i][j] = glm::dot(objectANormals[i], objectBNormals[j]);
 
-		if (!IsOverlapping(p1, p2)) return false;
-	}
-	for (int i = 0; i < objectBNormals.size(); i++)
-	{
-		vector2 p1 = Project(objectANormals[i]);
-		vector2 p2 = Project(objectBNormals[i]);
-
-		if (!IsOverlapping(p1, p2)) return false;
-	}
-
-
-	int AONSize = objectANormals.size();
-	int BONSize = objectBNormals.size();
-
-	std::vector<vector3> crossProd;
-
-	for (int x = 0 ; x < AONSize ; x++)
-	{
-		for (int y = 0 ; y < BONSize ; y++)
-		{
-			crossProd.push_back(  glm::cross(objectANormals[x], objectBNormals[y])  );
 		}
 	}
 
-	int CPSize = crossProd.size();
+	vector3 translation = colliding->GetCenterGlobal() - GetCenterGlobal();
+	translation = vector3(glm::dot(translation, objectANormals[0]), glm::dot(translation, objectANormals[1]), glm::dot(translation, objectANormals[2]));
 
-	for (int z = 0; z < CPSize; z++)
-	{
-		vector2 pA = Project(crossProd[z]);
-		vector2 pB = Project(crossProd[z]); //and j
-
-		if (!IsOverlapping(pA,pB))
-		{
-			return false;
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			AbsR[i][j] = std::abs(R[i][j]) + std::numeric_limits<float>::epsilon();
 		}
 	}
 
+	for (int i = 0; i < 3; i++) {
+		ra = m_v3HalfWidth[i];
+		rb = colliding->GetHalfWidth()[0] * AbsR[i][0] + colliding->GetHalfWidth()[1] * AbsR[i][1] + colliding->GetHalfWidth()[2] * AbsR[i][2];
+		if (std::abs(translation[i]) > ra + rb) return false;
 
+
+	}
+
+
+	for (int i = 0; i < 3; i++) {
+		ra = m_v3HalfWidth[0] * AbsR[0][i] + m_v3HalfWidth[1] * AbsR[1][i] + m_v3HalfWidth[2] * AbsR[2][i];
+		rb = colliding->GetHalfWidth()[i];
+		if (std::abs(translation[0] * R[0][i] + translation[1] * R[1][i] + translation[2] * R[2][i]) > ra + rb) return false;
+	}
+
+	ra = m_v3HalfWidth[1] * AbsR[2][0] + m_v3HalfWidth[2] * AbsR[1][0];
+	rb = colliding->GetHalfWidth()[1] * AbsR[0][2] + colliding->GetHalfWidth()[2] * AbsR[0][1];
+	if (std::abs(translation[2] * R[1][0] - translation[1] * R[2][0]) > ra + rb) return false;
+
+	ra = m_v3HalfWidth[1] * AbsR[2][1] + m_v3HalfWidth[2] * AbsR[1][1];
+	rb = colliding->GetHalfWidth()[0] * AbsR[0][2] + colliding->GetHalfWidth()[2] * AbsR[0][0];
+	if (std::abs(translation[2] * R[1][1] - translation[1] * R[2][1]) > ra + rb) return false;
+
+	ra = m_v3HalfWidth[1] * AbsR[2][2] + m_v3HalfWidth[2] * AbsR[1][2];
+	rb = colliding->GetHalfWidth()[0] * AbsR[0][1] + colliding->GetHalfWidth()[1] * AbsR[0][0];
+	if (std::abs(translation[2] * R[1][2] - translation[1] * R[2][2]) > ra + rb) return false;
+
+	ra = m_v3HalfWidth[0] * AbsR[2][0] + m_v3HalfWidth[2] * AbsR[0][0];
+	rb = colliding->GetHalfWidth()[1] * AbsR[1][2] + colliding->GetHalfWidth()[2] * AbsR[1][1];
+	if (std::abs(translation[0] * R[2][0] - translation[2] * R[0][0]) > ra + rb) return false;
+
+	ra = m_v3HalfWidth[0] * AbsR[2][1] + m_v3HalfWidth[2] * AbsR[0][1];
+	rb = colliding->GetHalfWidth()[0] * AbsR[1][2] + colliding->GetHalfWidth()[2] * AbsR[1][0];
+	if (std::abs(translation[0] * R[2][1] - translation[2] * R[0][1]) > ra + rb) return false;
+
+	ra = m_v3HalfWidth[0] * AbsR[2][2] + m_v3HalfWidth[2] * AbsR[0][2];
+	rb = colliding->GetHalfWidth()[0] * AbsR[1][1] + colliding->GetHalfWidth()[1] * AbsR[1][0];
+	if (std::abs(translation[0] * R[2][2] - translation[2] * R[0][2]) > ra + rb) return false;
+
+	ra = m_v3HalfWidth[0] * AbsR[1][0] + m_v3HalfWidth[1] * AbsR[0][0];
+	rb = colliding->GetHalfWidth()[1] * AbsR[2][2] + colliding->GetHalfWidth()[2] * AbsR[2][1];
+	if (std::abs(translation[1] * R[0][0] - translation[0] * R[1][0]) > ra + rb) return false;
+
+	ra = m_v3HalfWidth[0] * AbsR[1][1] + m_v3HalfWidth[1] * AbsR[0][1];
+	rb = colliding->GetHalfWidth()[0] * AbsR[2][2] + colliding->GetHalfWidth()[2] * AbsR[2][0];
+	if (std::abs(translation[1] * R[0][1] - translation[0] * R[1][1]) > ra + rb) return false;
+
+	ra = m_v3HalfWidth[0] * AbsR[1][2] + m_v3HalfWidth[1] * AbsR[0][2];
+	rb = colliding->GetHalfWidth()[0] * AbsR[2][1] + colliding->GetHalfWidth()[1] * AbsR[2][0];
+	if (std::abs(translation[1] * R[0][2] - translation[0] * R[1][2]) > ra + rb) return false;
 	return true;
 }
 
@@ -246,7 +260,7 @@ vector2 BoundingBox::Project(vector3 normal) {
 	vertices.push_back(ToGlobal(vector3(m_v3Max.x, m_v3Min.y, m_v3Min.z)));
 	vertices.push_back(ToGlobal(vector3(m_v3Min.x, m_v3Min.y, m_v3Max.z)));
 	vertices.push_back(ToGlobal(vector3(m_v3Max.x, m_v3Min.y, m_v3Max.z)));
-
+	
 	vertices.push_back(ToGlobal(vector3(m_v3Min.x, m_v3Max.y, m_v3Min.z)));
 	vertices.push_back(ToGlobal(vector3(m_v3Max.x, m_v3Max.y, m_v3Min.z)));
 	vertices.push_back(ToGlobal(vector3(m_v3Min.x, m_v3Max.y, m_v3Max.z)));
@@ -255,6 +269,7 @@ vector2 BoundingBox::Project(vector3 normal) {
 	bounds.x = glm::dot(normal, vertices[0]);
 	bounds.y = bounds.x;
 
+	MeshManagerSingleton::GetInstance()->AddSphereToQueue(glm::translate(vertices[0]) * glm::scale(vector3(0.1f)), REMAGENTA, SOLID);
 	for (int v = 1; v < vertices.size(); v++) {
 		float proj = glm::dot(normal, vertices[v]);
 		if (proj > bounds.y) {
@@ -263,6 +278,7 @@ vector2 BoundingBox::Project(vector3 normal) {
 		else if (proj < bounds.x) {
 			bounds.x = proj;
 		}
+		MeshManagerSingleton::GetInstance()->AddSphereToQueue(glm::translate(vertices[v]) * glm::scale(vector3(0.1f)), REMAGENTA, SOLID);
 	}
 
 	return bounds;
@@ -279,18 +295,16 @@ void BoundingBox::SetVisibility(bool newVisibility) {
 	isVisible = newVisibility;
 }
 
-std::vector<vector3> BoundingBox::GetGlobalNormals()
+std::vector<vector3> BoundingBox::GetLocalNormals()
 {
-	std::vector<vector3> gNormals = std::vector<vector3>();
-	for (int i = 0; i < normals.size(); i++)
-	{
-		//glm::normalize(ToGlobal(normals[i]))
-		gNormals.push_back(ToGlobal(normals[i]));
-	}
-	return gNormals;
+	std::vector<vector3> lNormals = std::vector<vector3>();
+	lNormals.push_back(vector3(m_m4ToWorld[0][0], m_m4ToWorld[0][1], m_m4ToWorld[0][2]));
+	lNormals.push_back(vector3(m_m4ToWorld[1][0], m_m4ToWorld[1][1], m_m4ToWorld[1][2]));
+	lNormals.push_back(vector3(m_m4ToWorld[2][0], m_m4ToWorld[2][1], m_m4ToWorld[2][2]));
+	return lNormals;
 }
 
 bool BoundingBox::IsOverlapping(vector2 a, vector2 b)
 {
-	return a.y > b.x || b.y > a.x;
+	return a.y >= b.x && b.y >= a.x;
 }

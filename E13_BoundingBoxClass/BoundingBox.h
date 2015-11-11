@@ -21,7 +21,6 @@ class BoundingBox
 	vector3 m_v3HalfWidth = vector3(0.0f);//Will store half the size of all sides
 
 	bool isVisible;
-	std::vector<vector3> normals;
 public:
 	/*
 	Method: BoundingBox
@@ -119,7 +118,7 @@ public:
 	void SetVisibility(bool);
 
 	bool CheckSATCollision(BoundingBox* const);
-	std::vector<vector3> GetGlobalNormals();
+	std::vector<vector3> GetLocalNormals();
 
 private:
 	/*
