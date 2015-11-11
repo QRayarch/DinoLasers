@@ -252,38 +252,6 @@ bool BoundingBox::CheckSATCollision(BoundingBox* const colliding) {
 	return true;
 }
 
-vector2 BoundingBox::Project(vector3 normal) {
-	vector2 bounds;
-
-	std::vector<vector3> vertices;
-	vertices.push_back(ToGlobal(m_v3Min));
-	vertices.push_back(ToGlobal(vector3(m_v3Max.x, m_v3Min.y, m_v3Min.z)));
-	vertices.push_back(ToGlobal(vector3(m_v3Min.x, m_v3Min.y, m_v3Max.z)));
-	vertices.push_back(ToGlobal(vector3(m_v3Max.x, m_v3Min.y, m_v3Max.z)));
-	
-	vertices.push_back(ToGlobal(vector3(m_v3Min.x, m_v3Max.y, m_v3Min.z)));
-	vertices.push_back(ToGlobal(vector3(m_v3Max.x, m_v3Max.y, m_v3Min.z)));
-	vertices.push_back(ToGlobal(vector3(m_v3Min.x, m_v3Max.y, m_v3Max.z)));
-	vertices.push_back(ToGlobal(m_v3Max));
-
-	bounds.x = glm::dot(normal, vertices[0]);
-	bounds.y = bounds.x;
-
-	MeshManagerSingleton::GetInstance()->AddSphereToQueue(glm::translate(vertices[0]) * glm::scale(vector3(0.1f)), REMAGENTA, SOLID);
-	for (int v = 1; v < vertices.size(); v++) {
-		float proj = glm::dot(normal, vertices[v]);
-		if (proj > bounds.y) {
-			bounds.y = proj;
-		}
-		else if (proj < bounds.x) {
-			bounds.x = proj;
-		}
-		MeshManagerSingleton::GetInstance()->AddSphereToQueue(glm::translate(vertices[v]) * glm::scale(vector3(0.1f)), REMAGENTA, SOLID);
-	}
-
-	return bounds;
-}
-
 bool BoundingBox::DoesUseSAT() {
 	return false;
 }
@@ -302,9 +270,4 @@ std::vector<vector3> BoundingBox::GetLocalNormals()
 	lNormals.push_back(vector3(m_m4ToWorld[1][0], m_m4ToWorld[1][1], m_m4ToWorld[1][2]));
 	lNormals.push_back(vector3(m_m4ToWorld[2][0], m_m4ToWorld[2][1], m_m4ToWorld[2][2]));
 	return lNormals;
-}
-
-bool BoundingBox::IsOverlapping(vector2 a, vector2 b)
-{
-	return a.y >= b.x && b.y >= a.x;
 }
