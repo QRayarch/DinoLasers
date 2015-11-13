@@ -33,29 +33,22 @@ void AppClass::InitVariables(void)
 	spacing = 5.0f;
 	cameraTarget = playerPosition;
 	cameraPosition = vector3(cameraTarget.x, cameraTarget.y + spacing, cameraTarget.z - spacing);
-	steveMatrix = glm::translate(playerPosition);
 	
-	//m_pCameraMngr->SetTarget(cameraTarget);
-	//m_pCameraMngr->SetPosition(cameraPosition);
 	m_pCameraMngr->SetPositionTargetAndView(cameraPosition, cameraTarget, vector3(0.0f, 1.0f, 0.0f));
 
-	//Load Models
-	m_pMeshMngr->LoadModel("Minecraft\\MC_Steve.obj", "Steve");
-	m_pMeshMngr->LoadModel("Minecraft\\MC_Creeper.obj", "Creeper");	
-
-	steve = BoundingObjectManager::GetInstance()->AddBox(m_pMeshMngr->GetVertexList("Steve"));
-	creeper = BoundingObjectManager::GetInstance()->AddBox(m_pMeshMngr->GetVertexList("Creeper"));
+	//steve = BoundingObjectManager::GetInstance()->AddBox(m_pMeshMngr->GetVertexList("Steve"));
+//	creeper = BoundingObjectManager::GetInstance()->AddBox(m_pMeshMngr->GetVertexList("Creeper"));
 	//ground = BoundingObjectManager::GetInstance()->AddBox(groundPoints);
 
-	//BoundingObjectManager::GetInstance()->SetVisibility(steve, false);
-	//BoundingObjectManager::GetInstance()->SwitchBoxVisibility(steve, true);
-
-	//
 	Component* mR = new ModelRender("Minecraft\\MC_Steve.obj", "Steve");
-	GameObject* go = new GameObject();
-	go->AddComponent(mR);
+	steve = new GameObject();
+	steve->AddComponent(mR);
+	GameObjectManager::GetInstance()->AddGameObject(steve);
 
-	GameObjectManager::GetInstance()->AddGameObject(go);
+	Component* creeperModel = new ModelRender("Minecraft\\MC_Creeper.obj", "Creeper");
+	creeper = new GameObject();
+	creeper->AddComponent(creeperModel);
+	GameObjectManager::GetInstance()->AddGameObject(creeper);
 }
 
 void AppClass::Update(void)
@@ -75,15 +68,19 @@ void AppClass::Update(void)
 
 	ArcBall();
 
-	steveMatrix = glm::translate(playerPosition);
+	steve->GetTransform().SetPosition(playerPosition);
+	steve->GetTransform().SetOrentation(playerRotation);
+
+	creeper->GetTransform().SetPosition(m_v3O2);
+	creeper->GetTransform().SetOrentation(m_qArcBall);
 
 	//Set the model matrices for both objects and Bounding Spheres
-	m_pMeshMngr->SetModelMatrix(steveMatrix * ToMatrix4(playerRotation), "Steve");
-	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O2) * ToMatrix4(m_qArcBall), "Creeper");
+	//m_pMeshMngr->SetModelMatrix(steveMatrix * ToMatrix4(playerRotation), "Steve");
+	//m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O2) * ToMatrix4(m_qArcBall), "Creeper");
 
 
-	BoundingObjectManager::GetInstance()->SetModelMatrix(steve, m_pMeshMngr->GetModelMatrix("Steve"));
-	BoundingObjectManager::GetInstance()->SetModelMatrix(creeper, m_pMeshMngr->GetModelMatrix("Creeper"));
+	//BoundingObjectManager::GetInstance()->SetModelMatrix(steve, m_pMeshMngr->GetModelMatrix("Steve"));
+	//BoundingObjectManager::GetInstance()->SetModelMatrix(creeper, m_pMeshMngr->GetModelMatrix("Creeper"));
 	
 	cameraTarget = static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 0.8f, 0))[3]);
 	cameraPosition = static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 2, -spacing))[3]);
@@ -117,23 +114,6 @@ void AppClass::Display(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the window
 
-	//Render the grid based on the camera's mode:
-	switch (m_pCameraMngr->GetCameraMode())
-	{
-	default: //Perspective
-		//m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::XY); //renders the XY grid with a 100% scale
-		break;
-	case CAMERAMODE::CAMROTHOX:
-		//m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::YZ, RERED * 0.75f); //renders the YZ grid with a 100% scale
-		break;
-	case CAMERAMODE::CAMROTHOY:
-		//m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::XZ, REGREEN * 0.75f); //renders the XZ grid with a 100% scale
-		break;
-	case CAMERAMODE::CAMROTHOZ:
-		//m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::XY, REBLUE * 0.75f); //renders the XY grid with a 100% scale
-		break;
-	}
-	
 	GameObjectManager::GetInstance()->Render();
 	BoundingObjectManager::GetInstance()->Draw();
 

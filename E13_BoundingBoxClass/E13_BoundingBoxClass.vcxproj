@@ -126,6 +126,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClCompile Include="SATBoundingBox.cpp" />
     <ClCompile Include="SpatialPartition.cpp" />
     <ClCompile Include="SPBruteForce.cpp" />
+    <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Updateable.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +144,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClInclude Include="SATBoundingBox.h" />
     <ClInclude Include="SpatialPartition.h" />
     <ClInclude Include="SPBruteForce.h" />
+    <ClInclude Include="Transform.h" />
     <ClInclude Include="Updateable.h" />
   </ItemGroup>
   <ItemGroup>

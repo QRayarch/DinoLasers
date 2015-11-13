@@ -30,14 +30,10 @@ class AppClass : public ReEngAppClass
 	vector3 cameraTarget;
 	vector3 cameraPosition;
 
-	matrix4 steveMatrix;
-
-	uint steve;
-	uint creeper;
-	uint ground;
-
 	std::vector<vector3> groundPoints;
 
+	GameObject* steve;
+	GameObject* creeper;
 public:
 	typedef ReEngAppClass super;
 

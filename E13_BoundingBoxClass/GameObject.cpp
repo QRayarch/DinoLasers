@@ -3,10 +3,11 @@
 
 GameObject::GameObject()
 {
+	transform = Transform();
 }
 
 GameObject::GameObject(const GameObject& other) {
-	worldMatrix = other.worldMatrix;
+	transform = other.transform;
 	components = other.components;
 }
 
@@ -22,7 +23,7 @@ GameObject::~GameObject()
 }
 
 GameObject& GameObject::operator=(const GameObject& other) {
-	worldMatrix = other.worldMatrix;
+	transform = other.transform;
 	components = other.components;
 	return *this;
 }
@@ -47,10 +48,10 @@ T* GameObject::GetComponent() {
 	return nullptr;
 }
 
-matrix4 GameObject::GetWorldMatrix() {
-	return worldMatrix;
-}
+Transform& GameObject::GetTransform() { return transform; }
 
-void GameObject::SetWorldMatrix(matrix4 newWorldMatrix) {
-	worldMatrix = newWorldMatrix;
-}
+void GameObject::SetTransform(Transform newTrans) { transform = newTrans; }
+
+//Its a common call so if figured this could save some time
+matrix4 GameObject::GetWorldMatrix() { return transform.GetMatrix(); }
+

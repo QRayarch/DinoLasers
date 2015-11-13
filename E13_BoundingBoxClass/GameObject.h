@@ -1,11 +1,12 @@
 #pragma once
 #include "RE\ReEngAppClass.h"
+#include "Transform.h"
 #include "Component.h"
 
 class GameObject
 {
 private:
-	matrix4 worldMatrix;
+	Transform transform;
 	std::vector<Component*> components;
 public:
 	GameObject();
@@ -18,6 +19,8 @@ public:
 	T* GetComponent();
 	std::vector<Component*> GetComponents();
 
+	Transform& GetTransform();
+	void SetTransform(Transform);
+
 	matrix4 GetWorldMatrix();
-	void SetWorldMatrix(matrix4);
 };
