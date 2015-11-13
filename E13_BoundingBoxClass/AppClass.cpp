@@ -40,7 +40,7 @@ void AppClass::InitVariables(void)
 //	creeper = BoundingObjectManager::GetInstance()->AddBox(m_pMeshMngr->GetVertexList("Creeper"));
 	//ground = BoundingObjectManager::GetInstance()->AddBox(groundPoints);
 
-	Component* mR = new ModelRender("Minecraft\\MC_Steve.obj", "Steve");
+	Component* mR = new ModelRender("DinoLasers\\Dino.obj", "Steve");
 	steve = new GameObject();
 	steve->AddComponent(mR);
 	GameObjectManager::GetInstance()->AddGameObject(steve);
