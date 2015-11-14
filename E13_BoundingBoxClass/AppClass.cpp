@@ -43,11 +43,17 @@ void AppClass::InitVariables(void)
 	Component* mR = new ModelRender("DinoLasers\\Dino.obj", "Steve");
 	steve = new GameObject();
 	steve->AddComponent(mR);
+	BoundingObject* bo = new BoundingObject();
+	bo->SetOBBVisibility(true);
+	steve->AddComponent(bo);
 	GameObjectManager::GetInstance()->AddGameObject(steve);
 
 	Component* creeperModel = new ModelRender("Minecraft\\MC_Creeper.obj", "Creeper");
 	creeper = new GameObject();
 	creeper->AddComponent(creeperModel);
+	BoundingObject* creeperbo = new BoundingObject();
+	creeperbo->SetOBBVisibility(true);
+	creeper->AddComponent(creeperbo);
 	GameObjectManager::GetInstance()->AddGameObject(creeper);
 }
 

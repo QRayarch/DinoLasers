@@ -13,6 +13,6 @@ public:
 
 	void Update(float);
 
-	String GetType();
+	String GetModel();
 };
 

@@ -22,7 +22,7 @@ public:
 	static BoundingObjectManager* GetInstance();
 	static void Release();
 	void SetVisibility(uint, bool visible);
-	uint AddBox(std::vector<vector3>);
+	uint AddBoundingObject(BoundingObject*);
 	void SwitchBoxVisibility(uint, bool);
 	int GetBoundingObjNumber();
 	void SetColor(uint, vector3);

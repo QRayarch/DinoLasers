@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include "Renderable.h"
 #include "Updateable.h"
+#include "BoundingObjectManager.h"
+#include "BoundingObject.h"
 
 class GameObjectManager
 {

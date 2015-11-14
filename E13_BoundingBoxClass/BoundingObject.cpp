@@ -3,15 +3,32 @@
 
 BoundingObject::BoundingObject(std::vector<vector3> vertices)
 {
-	modelMatrix = IDENTITY_M4;
+	id = 0;
 	sphere = new BoundingSphere(vertices);
 	ob = new SATBoundingBox(vertices);
 	realign = new BoundingBox(vertices);
 
-	isVisible = true;
+	isSphereVisible = false;
+	isAABBVisible = false;
+	isOBBVisible = false;
+
 	color = REWHITE;
 }
 
+//Use when you want to construct the collision info off of a model render
+BoundingObject::BoundingObject()
+{
+	id = 0;
+	sphere = nullptr;
+	ob = nullptr;
+	realign = nullptr;
+
+	isSphereVisible = false;
+	isAABBVisible = false;
+	isOBBVisible = false;
+
+	color = REWHITE;
+}
 
 BoundingObject::~BoundingObject()
 {
@@ -31,15 +48,44 @@ BoundingObject::~BoundingObject()
 	}
 }
 
-void BoundingObject::Draw() {
-	if (isVisible)
-	{
-		//MeshManagerSingleton::GetInstance()->AddCubeToQueue(glm::translate(realign->GetCenterGlobal()) * glm::scale(realign->GetHalfWidth() * 2.0f), color, WIRE);
-		MeshManagerSingleton::GetInstance()->AddCubeToQueue(ob->GetModelMatrix() * glm::translate(vector3(0, ob->GetHalfWidth().y, 0)) * glm::scale(ob->GetHalfWidth() * 2.0f), color, WIRE);
-		if (false) {
-			MeshManagerSingleton::GetInstance()->AddSphereToQueue(glm::translate(sphere->GetCenterGlobal()) * glm::scale(vector3(sphere->GetRadius() * 2.0f)), color, WIRE);
+void BoundingObject::SetGameObject(GameObject* gameObject) {
+	Updateable::SetGameObject(gameObject);
+	//Set up a bounding object around the gameobject
+	if (sphere == nullptr) {
+		ModelRender* modelRender = GetGameObject()->GetComponent<ModelRender>();
+		if (modelRender != nullptr) {
+
+			std::vector<vector3> vertices = MeshManagerSingleton::GetInstance()->GetVertexList(modelRender->GetModel());
+
+			sphere = new BoundingSphere(vertices);
+			ob = new SATBoundingBox(vertices);
+			realign = new BoundingBox(vertices);
+
+			color = REWHITE;
 		}
 	}
+
+	sphere->SetGameObject(gameObject);
+	realign->SetGameObject(gameObject);
+	ob->SetGameObject(gameObject);
+}
+
+void BoundingObject::Update(float dt) {
+
+	//Set new Radius 
+	//sphere->SetRadius(glm::distance(realign->GetMax(), realign->GetCenterLocal()));
+	ob->Update(dt);
+
+	if (isSphereVisible) {
+		MeshManagerSingleton::GetInstance()->AddSphereToQueue(glm::translate(sphere->GetCenterGlobal()) * glm::scale(vector3(sphere->GetRadius() * 2.0f)), color, WIRE);
+	}
+	if (isAABBVisible) {
+		MeshManagerSingleton::GetInstance()->AddCubeToQueue(glm::translate(realign->GetCenterGlobal()) * glm::scale(realign->GetHalfWidth() * 2.0f), color, WIRE);
+	}
+	if (isOBBVisible) {
+		MeshManagerSingleton::GetInstance()->AddCubeToQueue(GetGameObject()->GetWorldMatrix() * glm::translate(vector3(0, ob->GetHalfWidth().y, 0)) * glm::scale(ob->GetHalfWidth() * 2.0f), color, WIRE);
+	}
+	
 }
 
 
@@ -51,39 +97,19 @@ bool BoundingObject::IsColliding(BoundingObject* other) {
 	return other->ob->CheckSATCollision(ob);
 }
 
-bool BoundingObject::GetVisibility() { return isVisible; }
-
-void BoundingObject::SetVisibility(bool visible)
-{
-	isVisible = visible;
-}
-
-void BoundingObject::SetAABBVisibility(bool newVisibility) {
-	realign->SetVisibility(newVisibility);
-}
+void BoundingObject::SetVisibility(bool isVis) { SetSphereVisibility(isVis); SetAABBVisibility(isVis); SetOBBVisibility(isVis); }
+void BoundingObject::SetSphereVisibility(bool isVis) { isSphereVisible = isVis; }
+void BoundingObject::SetAABBVisibility(bool isVis) { isAABBVisible = isVis; }
+void BoundingObject::SetOBBVisibility(bool isVis) { isOBBVisible = isVis;  }
 
 vector3 BoundingObject::GetGlobalCenter() { return sphere->GetCenterGlobal(); }
 vector3 BoundingObject::GetMin() { return realign->GetMin(); }
 vector3 BoundingObject::GetMax() { return realign->GetMax(); }
 
-matrix4 BoundingObject::GetModelMatrix() { 
-	return modelMatrix;
-}
-
-void BoundingObject::SetModelMatrix(matrix4 model)
-{
-	//if (model == modelMatrix) return;
-
-	modelMatrix = model;
-
-	sphere->SetModelMatrix(modelMatrix);
-	ob->SetModelMatrix(modelMatrix);
-
-	//Set new Radius 
-	sphere->SetRadius(glm::distance(realign->GetMax(), realign->GetCenterLocal()));
-}
-
 void BoundingObject::SetColor(vector3 newColor)
 {
 	color = newColor;
 }
+
+uint BoundingObject::GetId() { return id; }
+void BoundingObject::SetId(uint newID) { id = newID; }

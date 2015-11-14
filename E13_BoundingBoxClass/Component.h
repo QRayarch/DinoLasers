@@ -13,8 +13,6 @@ public:
 	~Component();
 
 	GameObject* GetGameObject();
-	void SetGameObject(GameObject*);
-
-	virtual String GetType() = 0;
+	virtual void SetGameObject(GameObject*);
 };
 

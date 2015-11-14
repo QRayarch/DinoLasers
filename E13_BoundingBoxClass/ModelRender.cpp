@@ -17,7 +17,4 @@ void ModelRender::Update(float dt) {
 	MeshManagerSingleton::GetInstance()->SetModelMatrix(GetGameObject()->GetWorldMatrix(), model);
 }
 
-
-String ModelRender::GetType() {
-	return "ModelRender";
-}
+String ModelRender::GetModel() { return model; }

@@ -33,11 +33,11 @@ BoundingObjectManager* BoundingObjectManager::GetInstance()
 	return instance;
 }
 
-uint BoundingObjectManager::AddBox(std::vector<vector3> verticies)
+uint BoundingObjectManager::AddBoundingObject(BoundingObject* newBoundingObject)
 {
-	BoundingObject* bo = new BoundingObject(verticies);
-	if (bo == nullptr) return 0;
-	boundingObjs[addIndex] = bo;
+	if (newBoundingObject == nullptr) return 0;
+	boundingObjs[addIndex] = newBoundingObject;
+	newBoundingObject->SetId(addIndex);
 	return addIndex++;
 }
 
@@ -62,30 +62,6 @@ void BoundingObjectManager::SetColor(uint id, vector3 color)
 	boundingObjs[id]->SetColor(color);
 }
 
-void BoundingObjectManager::SwitchBoxVisibility(uint id, bool vis)
-{
-	if (!IsInBounds(id)) return;
-	boundingObjs[id]->SetAABBVisibility(vis);
-}
-
-void BoundingObjectManager::SetVisibility(uint id, bool visible)
-{
-	if (!IsInBounds(id)) return;
-	boundingObjs[id]->SetVisibility(visible);
-}
-
-void BoundingObjectManager::RenderSetting(bool visible)
-{
-	std::map<uint, BoundingObject*>::iterator iterator;
-	for (iterator = boundingObjs.begin(); iterator != boundingObjs.end(); iterator++) {
-		boundingObjs[iterator->first]->SetVisibility(visible);
-	}
-}
-void BoundingObjectManager::RenderSetting(uint id, bool visible)
-{
-	if (!IsInBounds(id)) return;
-	boundingObjs[id]->SetVisibility(visible);
-}
 void BoundingObjectManager::CheckCollisions()
 {
 	collInd = spatialPartition->CalculateColisions(boundingObjs);
@@ -114,15 +90,8 @@ void BoundingObjectManager::Draw()
 {
 	std::map<uint, BoundingObject*>::iterator iterator;
 	for (iterator = boundingObjs.begin(); iterator != boundingObjs.end(); iterator++) {
-		boundingObjs[iterator->first]->Draw();
+		//boundingObjs[iterator->first]->Draw();
 	}
-}
-
-
-void BoundingObjectManager::SetModelMatrix(uint id, matrix4 model)
-{
-	if (!IsInBounds(id)) return;
-	boundingObjs[id]->SetModelMatrix(model);
 }
 
 bool BoundingObjectManager::IsInBounds(uint id) {

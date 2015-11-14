@@ -4,32 +4,43 @@
 #include "BoundingBox.h"
 #include "SATBoundingBox.h"
 #include "RE\ReEngAppClass.h"
+#include "Updateable.h"
+#include "ModelRender.h"
+#include "GameObject.h"
 
-
-class BoundingObject
+class BoundingObject : public Updateable
 {
 private:
 	BoundingSphere* sphere;
 	SATBoundingBox* ob;
 	BoundingBox* realign;
-
-	bool isVisible;
 	vector3 color;
-	matrix4 modelMatrix;
+
+	bool isSphereVisible;
+	bool isAABBVisible;
+	bool isOBBVisible;
+
+	uint id;
 public:
 	BoundingObject(std::vector<vector3>);
+	BoundingObject();
 	~BoundingObject();
 
-	void Draw();
+	void SetGameObject(GameObject*);
+
+	void Update(float);
+
 	bool IsColliding(BoundingObject*);
-	bool GetVisibility();
 	void SetVisibility(bool);
+	void SetSphereVisibility(bool);
 	void SetAABBVisibility(bool);
+	void SetOBBVisibility(bool);
 	vector3 GetGlobalCenter();
 	vector3 GetMin();
 	vector3 GetMax();
-	matrix4 GetModelMatrix();
-	void SetModelMatrix(matrix4);
 	void SetColor(vector3);
+
+	uint GetId();
+	void SetId(uint);
 };
 

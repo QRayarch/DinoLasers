@@ -7,20 +7,20 @@ Date: 2015/10
 #define __BOUNDINGBOX_H_
 
 #include "RE\ReEng.h"
+#include "Updateable.h"
+#include "GameObject.h"
 
 class SATBoundingBox;
 
 
 //System Class
-class BoundingBox
+class BoundingBox : public Updateable
 {
-	matrix4 m_m4ToWorld = IDENTITY_M4; //Matrix that will take us from local to world coordinate
+	matrix4 matrix;
 	vector3 m_v3Center = vector3(0.0f); //Will store the center point of the box Class
 	vector3 m_v3Min = vector3(0.0f); //Will store the minimum vector of the box Class
 	vector3 m_v3Max = vector3(0.0f); //Will store the maximum vector of the box Class
 	vector3 m_v3HalfWidth = vector3(0.0f);//Will store half the size of all sides
-
-	bool isVisible;
 public:
 	/*
 	Method: BoundingBox
@@ -61,23 +61,6 @@ public:
 	void Swap(BoundingBox& other);
 
 	/*
-	Method: SetToWorldMatrix
-	Usage: Sets the Bounding Box into world coordinates
-	Arguments:
-	matrix4 a_m4ToWorld -> Model to World matrix
-	Output: ---
-	*/
-	void SetModelMatrix(matrix4 a_m4ToWorld);
-
-	/*
-	Method: GetToWorldMatrix
-	Usage: Gets the Bounding Box into world coordinates
-	Arguments:---
-	Output: matrix4 -> Model to World matrix
-	*/
-	matrix4 GetModelMatrix(void);
-
-	/*
 	Method: GetCenter
 	Usage: Gets the Bounding Box's center in local coordinates
 	Arguments: ---
@@ -110,12 +93,11 @@ public:
 	*/
 	virtual bool IsColliding(BoundingBox* const );
 
+	void Update(float);
 	void RealignBox(BoundingBox* const);
 
 	vector3 GetMin();
 	vector3 GetMax();
-
-	void SetVisibility(bool);
 
 	bool CheckSATCollision(BoundingBox* const);
 	std::vector<vector3> GetLocalNormals();

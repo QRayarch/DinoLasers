@@ -3,6 +3,7 @@
 
 GameObject::GameObject()
 {
+	components = std::vector<Component*>();
 	transform = Transform();
 }
 
@@ -35,17 +36,6 @@ void GameObject::AddComponent(Component* newComponent) {
 
 std::vector<Component*> GameObject::GetComponents() {
 	return components;
-}
-
-template<class T>
-T* GameObject::GetComponent() {
-	for (int v = 0; v < components.size(); v++) {
-		T* comp = dynamic_cast<Updateable*>(components[v]);
-		if (comp != nullptr) {
-			return comp;
-		}
-	}
-	return nullptr;
 }
 
 Transform& GameObject::GetTransform() { return transform; }

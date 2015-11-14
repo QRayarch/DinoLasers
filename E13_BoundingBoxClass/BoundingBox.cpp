@@ -2,8 +2,7 @@
 //  BoundingBox
 void BoundingBox::Init(void)
 {
-	m_m4ToWorld = IDENTITY_M4;
-	isVisible = true;
+	matrix = IDENTITY_M4;
 
 	m_v3Center = vector3(0.0f);
 	m_v3Min = vector3(0.0f);
@@ -13,8 +12,6 @@ void BoundingBox::Init(void)
 }
 void BoundingBox::Swap(BoundingBox& other)
 {
-	std::swap(m_m4ToWorld, other.m_m4ToWorld);
-
 	std::swap(m_v3Center, other.m_v3Center);
 	std::swap(m_v3Min, other.m_v3Min);
 	std::swap(m_v3Max, other.m_v3Max);
@@ -37,9 +34,6 @@ BoundingBox::BoundingBox(std::vector<vector3> a_lVectorList)
 
 BoundingBox::BoundingBox(BoundingBox const& other)
 {
-	m_m4ToWorld = other.m_m4ToWorld;
-	isVisible = other.isVisible;
-
 	m_v3Center = other.m_v3Center;
 	m_v3Min = other.m_v3Min;
 	m_v3Max = other.m_v3Max;
@@ -60,9 +54,8 @@ BoundingBox& BoundingBox::operator=(BoundingBox const& other)
 BoundingBox::~BoundingBox(){ Release(); };
 
 void BoundingBox::RealignBox(BoundingBox* const box) {
+	matrix = IDENTITY_M4;
 	std::vector<vector3> vertices;
-
-	isVisible = true;
 
 	vector3 fullWidth = box->GetHalfWidth();
 	fullWidth.x *= 2;
@@ -80,6 +73,10 @@ void BoundingBox::RealignBox(BoundingBox* const box) {
 	vertices.push_back(box->ToGlobal(box->m_v3Max));
 
 	RecalculateBounds(vertices);
+}
+
+void BoundingBox::Update(float dt) {
+	matrix = GetGameObject()->GetWorldMatrix();
 }
 
 void BoundingBox::RecalculateBounds(std::vector<vector3> a_lVectorList) {
@@ -122,14 +119,12 @@ void BoundingBox::RecalculateBounds(std::vector<vector3> a_lVectorList) {
 }
 
 //Accessors
-void BoundingBox::SetModelMatrix(matrix4 mat){ m_m4ToWorld = mat; }
-matrix4 BoundingBox::GetModelMatrix(void){ return m_m4ToWorld; }
 vector3 BoundingBox::GetCenterLocal(void){ return m_v3Center; }
-vector3 BoundingBox::GetCenterGlobal(void){ return vector3(m_m4ToWorld * vector4(m_v3Center, 1.0f)); }
+vector3 BoundingBox::GetCenterGlobal(void){ return ToGlobal(m_v3Center); }
 vector3 BoundingBox::GetHalfWidth(void){ return m_v3HalfWidth; }
 
 vector3 BoundingBox::ToGlobal(vector3 vec) {
-	return vector3(m_m4ToWorld * vector4(vec, 1.0f));
+	return vector3(matrix * vector4(vec, 1.0f));
 }
 
 //--- Non Standard Singleton Methods
@@ -259,15 +254,12 @@ bool BoundingBox::DoesUseSAT() {
 vector3 BoundingBox::GetMin() { return m_v3Min; }
 vector3 BoundingBox::GetMax() { return m_v3Max; }
 
-void BoundingBox::SetVisibility(bool newVisibility) {
-	isVisible = newVisibility;
-}
-
 std::vector<vector3> BoundingBox::GetLocalNormals()
 {
+	matrix4 worldMatrix = GetGameObject()->GetWorldMatrix();
 	std::vector<vector3> lNormals = std::vector<vector3>();
-	lNormals.push_back(vector3(m_m4ToWorld[0][0], m_m4ToWorld[0][1], m_m4ToWorld[0][2]));
-	lNormals.push_back(vector3(m_m4ToWorld[1][0], m_m4ToWorld[1][1], m_m4ToWorld[1][2]));
-	lNormals.push_back(vector3(m_m4ToWorld[2][0], m_m4ToWorld[2][1], m_m4ToWorld[2][2]));
+	lNormals.push_back(vector3(worldMatrix[0][0], worldMatrix[0][1], worldMatrix[0][2]));
+	lNormals.push_back(vector3(worldMatrix[1][0], worldMatrix[1][1], worldMatrix[1][2]));
+	lNormals.push_back(vector3(worldMatrix[2][0], worldMatrix[2][1], worldMatrix[2][2]));
 	return lNormals;
 }

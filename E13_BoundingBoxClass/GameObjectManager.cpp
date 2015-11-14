@@ -50,15 +50,18 @@ void GameObjectManager::AddGameObject(GameObject* gameObject) {
 		//Check for render
 		Renderable* ren = dynamic_cast<Renderable*>(components[v]);
 		if (ren != nullptr) {
-			printf("foundRend ");
 			renderables.push_back(ren);
 		}
 
 		//Check for update
 		Updateable* up = dynamic_cast<Updateable*>(components[v]);
 		if (up != nullptr) {
-			printf("foundUp ");
 			updateables.push_back(up);
+		}
+		//Check for boundingObject
+		BoundingObject* boundingOb = dynamic_cast<BoundingObject*>(components[v]);
+		if (boundingOb != nullptr) {
+			BoundingObjectManager::GetInstance()->AddBoundingObject(boundingOb);
 		}
 	}
 }
