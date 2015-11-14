@@ -123,6 +123,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClCompile Include="ModelRender.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Renderable.cpp" />
+    <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="SATBoundingBox.cpp" />
     <ClCompile Include="SpatialPartition.cpp" />
     <ClCompile Include="SPBruteForce.cpp" />
@@ -141,6 +142,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="ModelRender.h" />
     <ClInclude Include="Renderable.h" />
+    <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="SATBoundingBox.h" />
     <ClInclude Include="SpatialPartition.h" />
     <ClInclude Include="SPBruteForce.h" />

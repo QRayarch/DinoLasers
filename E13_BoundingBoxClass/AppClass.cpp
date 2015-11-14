@@ -36,10 +36,6 @@ void AppClass::InitVariables(void)
 	
 	m_pCameraMngr->SetPositionTargetAndView(cameraPosition, cameraTarget, vector3(0.0f, 1.0f, 0.0f));
 
-	//steve = BoundingObjectManager::GetInstance()->AddBox(m_pMeshMngr->GetVertexList("Steve"));
-//	creeper = BoundingObjectManager::GetInstance()->AddBox(m_pMeshMngr->GetVertexList("Creeper"));
-	//ground = BoundingObjectManager::GetInstance()->AddBox(groundPoints);
-
 	Component* mR = new ModelRender("DinoLasers\\Dino.obj", "Steve");
 	steve = new GameObject();
 	steve->AddComponent(mR);
@@ -79,23 +75,11 @@ void AppClass::Update(void)
 
 	creeper->GetTransform().SetPosition(m_v3O2);
 	creeper->GetTransform().SetOrentation(m_qArcBall);
-
-	//Set the model matrices for both objects and Bounding Spheres
-	//m_pMeshMngr->SetModelMatrix(steveMatrix * ToMatrix4(playerRotation), "Steve");
-	//m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O2) * ToMatrix4(m_qArcBall), "Creeper");
-
-
-	//BoundingObjectManager::GetInstance()->SetModelMatrix(steve, m_pMeshMngr->GetModelMatrix("Steve"));
-	//BoundingObjectManager::GetInstance()->SetModelMatrix(creeper, m_pMeshMngr->GetModelMatrix("Creeper"));
 	
 	cameraTarget = static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 0.8f, 0))[3]);
 	cameraPosition = static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 2, -spacing))[3]);
 	
 	m_pCameraMngr->SetPositionTargetAndView(cameraPosition, cameraTarget, vector3(0, 1, 0));
-
-	//m_pBB1->SetModelMatrix(m_pMeshMngr->GetModelMatrix("Steve"));
-	//reAlign->RealignBox(m_pBB1);
-	//m_pBB2->SetModelMatrix(m_pMeshMngr->GetModelMatrix("Creeper"));
 
 	//Add a representation of the Spheres to the render list
 
