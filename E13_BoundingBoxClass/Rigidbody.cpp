@@ -8,6 +8,8 @@ void Rigidbody::Init(void)
 	accerleration = vector3();
 
 	mass = 1;
+
+	useGravity = true;
 }
 void Rigidbody::Swap(Rigidbody& other)
 {
@@ -16,6 +18,8 @@ void Rigidbody::Swap(Rigidbody& other)
 
 	std::swap(mass, other.mass);
 	std::swap(maxAcceleration, other.maxAcceleration);
+
+	std::swap(useGravity, other.useGravity);
 }
 
 Rigidbody::Rigidbody()
@@ -31,6 +35,8 @@ Rigidbody::Rigidbody(Rigidbody const& other)
 
 	mass = other.mass;
 	maxAcceleration = other.maxAcceleration;
+
+	useGravity = other.useGravity;
 }
 
 Rigidbody::~Rigidbody()
@@ -55,9 +61,14 @@ void Rigidbody::Update(float dt)
 	accerleration = glm::clamp(accerleration, -maxAcceleration, maxAcceleration);
 	velocity += accerleration;
 
+	if (useGravity) {
+		velocity.y += GRAVITY;
+	}
+
 	GetGameObject()->GetTransform().SetPosition(GetGameObject()->GetTransform().GetPosition() + velocity * (1 / mass));
 }
 
 void Rigidbody::SetVelocity(vector3 newVelo) { velocity = newVelo; }
 void Rigidbody::SetAcceleration(vector3 newAcc) { accerleration = newAcc; }
 void Rigidbody::SetMass(float newMass) { mass = newMass; }
+void Rigidbody::SetUseGravity(bool doesUseGravity) { useGravity = doesUseGravity; }

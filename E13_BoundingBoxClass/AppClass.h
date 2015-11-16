@@ -7,33 +7,14 @@ Date: 2015/09
 
 #include "RE\ReEngAppClass.h"
 #include <SFML\Graphics.hpp>
-#include "BoundingBox.h"
-#include "BoundingObjectManager.h"
-#include "GameObjectManager.h"
-#include "GameObject.h"
-#include "Renderable.h"
-#include "Updateable.h"
-#include "ModelRender.h"
+#include "Level.h"
+#include "TestLevel.h"
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
 class AppClass : public ReEngAppClass
 {
-
-	vector3 m_v3O1 = vector3(-2.5f, 0.0f, 0.0f);
-	vector3 m_v3O2 = vector3( 2.5f, 0.0f, 0.0f);
-	quaternion playerRotation;
-	vector3 playerPosition;
-	vector3 forward;
-
-	float spacing;
-	vector3 cameraTarget;
-	vector3 cameraPosition;
-
-	std::vector<vector3> groundPoints;
-
-	GameObject* steve;
-	GameObject* creeper;
+	Level* level;
 public:
 	typedef ReEngAppClass super;
 
@@ -95,8 +76,6 @@ public:
 	IF INHERITED AND OVERRIDEN MAKE SURE TO RELEASE BASE POINTERS (OR CALL BASED CLASS RELEASE)
 	*/
 	virtual void Release(void) final;
-
-	virtual void CameraRotateUp(float degrees);
 };
 
 #endif //__APPLICATION_H_

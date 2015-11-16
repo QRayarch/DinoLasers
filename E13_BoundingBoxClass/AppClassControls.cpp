@@ -81,21 +81,21 @@ void AppClass::ProcessKeyboard(void)
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-		playerPosition -= forward * speed;
+		//steve->GetTransform().SetPosition(steve->GetTransform().GetPosition() - forward * speed);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-		playerPosition += forward * speed;
+		//steve->GetTransform().SetPosition(steve->GetTransform().GetPosition() + forward * speed);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-		playerRotation = quaternion(vector3(0.0f, glm::radians(1.0f), 0.0f)) * playerRotation;
-		forward = glm::rotate(REAXISZ, glm::angle(playerRotation), glm::axis(playerRotation));
+		//playerRotation = quaternion(vector3(0.0f, glm::radians(1.0f), 0.0f)) * playerRotation;
+		//forward = glm::rotate(REAXISZ, glm::angle(playerRotation), glm::axis(playerRotation));
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-		playerRotation = quaternion(vector3(0.0f, glm::radians(-1.0f), 0.0f)) * playerRotation;
-		forward = glm::rotate(REAXISZ, glm::angle(playerRotation), glm::axis(playerRotation));
+		//playerRotation = quaternion(vector3(0.0f, glm::radians(-1.0f), 0.0f)) * playerRotation;
+		//forward = glm::rotate(REAXISZ, glm::angle(playerRotation), glm::axis(playerRotation));
 	}
 #pragma endregion
 

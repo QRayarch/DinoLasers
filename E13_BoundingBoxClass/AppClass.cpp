@@ -17,8 +17,10 @@ void AppClass::InitWindow(String a_sWindowName)
 
 void AppClass::InitVariables(void)
 {
+	level = new TestLevel();
+	level->Load();
 	//Initialize positions
-	m_v3O1 = vector3(-2.5f, 0.0f, 0.0f);
+	/*m_v3O1 = vector3(-2.5f, 0.0f, 0.0f);
 	m_v3O2 = vector3(2.5f, 0.0f, 1.0f);
 	playerRotation = quaternion(vector3(0.0f));
 	playerPosition = vector3(0.0f, 0.0f, 0.0f);
@@ -34,23 +36,7 @@ void AppClass::InitVariables(void)
 	cameraTarget = playerPosition;
 	cameraPosition = vector3(cameraTarget.x, cameraTarget.y + spacing, cameraTarget.z - spacing);
 	
-	m_pCameraMngr->SetPositionTargetAndView(cameraPosition, cameraTarget, vector3(0.0f, 1.0f, 0.0f));
-
-	Component* mR = new ModelRender("DinoLasers\\Dino.obj", "Steve");
-	steve = new GameObject();
-	steve->AddComponent(mR);
-	BoundingObject* bo = new BoundingObject();
-	bo->SetOBBVisibility(true);
-	steve->AddComponent(bo);
-	GameObjectManager::GetInstance()->AddGameObject(steve);
-
-	Component* creeperModel = new ModelRender("Minecraft\\MC_Creeper.obj", "Creeper");
-	creeper = new GameObject();
-	creeper->AddComponent(creeperModel);
-	BoundingObject* creeperbo = new BoundingObject();
-	creeperbo->SetOBBVisibility(true);
-	creeper->AddComponent(creeperbo);
-	GameObjectManager::GetInstance()->AddGameObject(creeper);
+	m_pCameraMngr->SetPositionTargetAndView(cameraPosition, cameraTarget, vector3(0.0f, 1.0f, 0.0f));*/
 }
 
 void AppClass::Update(void)
@@ -65,13 +51,13 @@ void AppClass::Update(void)
 	if (m_bFPC == true)
 		CameraRotation();
 
-	BoundingObjectManager::GetInstance()->CheckCollisions();
-	GameObjectManager::GetInstance()->Update(0);//TODO: ADD DELTA TIME
+	float dt = m_pSystem->LapClock();
+
+	level->Update(dt);
 
 	ArcBall();
 
-	steve->GetTransform().SetPosition(playerPosition);
-	steve->GetTransform().SetOrentation(playerRotation);
+	/*steve->GetTransform().SetOrentation(playerRotation);
 
 	creeper->GetTransform().SetPosition(m_v3O2);
 	creeper->GetTransform().SetOrentation(m_qArcBall);
@@ -79,12 +65,12 @@ void AppClass::Update(void)
 	cameraTarget = static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 0.8f, 0))[3]);
 	cameraPosition = static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 2, -spacing))[3]);
 	
-	m_pCameraMngr->SetPositionTargetAndView(cameraPosition, cameraTarget, vector3(0, 1, 0));
+	m_pCameraMngr->SetPositionTargetAndView(cameraPosition, cameraTarget, vector3(0, 1, 0));*/
 
 	//Add a representation of the Spheres to the render list
 
 	//Adds all loaded instance to the render list
-	m_pMeshMngr->AddInstanceToRenderList("ALL");
+	//m_pMeshMngr->AddInstanceToRenderList("ALL");
 
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();
@@ -104,8 +90,7 @@ void AppClass::Display(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the window
 
-	GameObjectManager::GetInstance()->Render();
-	BoundingObjectManager::GetInstance()->Draw();
+	level->Render();
 
 	m_pMeshMngr->Render(); //renders the render list
 
@@ -114,14 +99,8 @@ void AppClass::Display(void)
 
 void AppClass::Release(void)
 {
+	SafeDelete(level);
+
 	super::Release(); //release the memory of the inherited fields
 	BoundingObjectManager::Release();
-}
-
-void AppClass::CameraRotateUp(float degrees)
-{
-	//vector3 temp = cameraPosition;
-	//cameraPosition = cameraTarget;
-	//cameraPosition *= glm::rotate(matrix4(IDENTITY_M4), degrees, vector3(1.0f, 0.0f, 0.0f));
-	//cameraPosition += temp;
 }
