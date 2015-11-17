@@ -5,7 +5,7 @@ BoundingObjectManager::BoundingObjectManager()
 {
 	boundingObjs = std::map<uint, BoundingObject*>();
 	spatialPartition = new SPBruteForce();
-
+	groundY = 0.0f;
 	addIndex = 1;
 }
 
@@ -64,29 +64,18 @@ void BoundingObjectManager::SetColor(uint id, vector3 color)
 
 void BoundingObjectManager::CheckCollisions()
 {
-	//This could be changed to be faster.
-	collInd = spatialPartition->CalculateColisions(boundingObjs);
-
-	/*
-	//Everything down is temp for testing
-	std::map<uint, BoundingObject*>::iterator i;
-	std::map<uint, BoundingObject*>::iterator j;
-	for (i = boundingObjs.begin(); i != boundingObjs.end(); i++) {
-		j = i;
-		j++;
-		for (; j != boundingObjs.end(); j++)
+	std::map<uint, BoundingObject*>::iterator iterator;
+	for (iterator = boundingObjs.begin(); iterator != boundingObjs.end(); iterator++) {
+		float tempPosY = boundingObjs[iterator->first]->GetGameObject()->GetTransform().GetPosition().y + boundingObjs[iterator->first]->GetMin().y;
+		if (tempPosY < groundY)
 		{
-			SetColor(i->first, REWHITE);
-			SetColor(j->first, REWHITE);
+			vector3 tempPos = boundingObjs[iterator->first]->GetGameObject()->GetTransform().GetPosition();
+			tempPos.y = tempPosY + (groundY - tempPosY);
+			boundingObjs[iterator->first]->GetGameObject()->GetTransform().SetPosition(tempPos);
 		}
 	}
-	std::map<uint, BoundingObject*>::iterator col;
-	for (col = boundingObjs.begin(); col != boundingObjs.end(); col++) {
-		for (int i = 0; i < collInd[col->first].size(); i++) {
-			SetColor(collInd[col->first][i], RERED);
-			SetColor(col->first, RERED);
-		}
-	}*/
+	//This could be changed to be faster.
+	collInd = spatialPartition->CalculateColisions(boundingObjs);
 }
 void BoundingObjectManager::Draw()
 {
@@ -98,4 +87,9 @@ void BoundingObjectManager::Draw()
 
 bool BoundingObjectManager::IsInBounds(uint id) {
 	return boundingObjs.find(id) != boundingObjs.end();
+}
+
+void BoundingObjectManager::SetGroundY(float _groundY)
+{
+	groundY = _groundY;
 }

@@ -17,6 +17,7 @@ private:
 	std::map<uint, std::vector<uint>> collInd;
 
 	int addIndex;
+	float groundY;
 public:
 	static BoundingObjectManager* instance;
 	static BoundingObjectManager* GetInstance();
@@ -31,7 +32,7 @@ public:
 	void CheckCollisions();
 	void Draw();
 	void SetModelMatrix(uint, matrix4);
-
+	void SetGroundY(float);
 	bool IsInBounds(uint);
 };
 
