@@ -16,16 +16,15 @@ void TestLevel::Load() {
 	dino = new GameObject();
 	dino->AddComponent(dinoModel);
 	BoundingObject* dinoBO = new BoundingObject();
-	dinoBO->SetOBBVisibility(true);
 	dino->AddComponent(dinoBO);
-	//dino->AddComponent(new Rigidbody());
+	dino->AddComponent(new Rigidbody());
+	//dino->AddComponent(new CollisionDebug());
 	GameObjectManager::GetInstance()->AddGameObject(dino);
 
 	Component* testModel = new ModelRender("Minecraft\\MC_Creeper.obj", "Creeper");
 	test = new GameObject();
 	test->AddComponent(testModel);
 	BoundingObject* testBO = new BoundingObject();
-	testBO->SetOBBVisibility(true);
 	test->AddComponent(testBO);
 	GameObjectManager::GetInstance()->AddGameObject(test);
 }

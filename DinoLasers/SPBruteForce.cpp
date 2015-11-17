@@ -25,6 +25,10 @@ std::map<uint, std::vector<uint>> SPBruteForce::CalculateColisions(std::map<uint
 			if (bos[i->first]->IsColliding(bos[j->first]))
 			{
 				collInd[i->first].push_back(j->first);
+				SpatialPartition::SendCollisionInfoBoth(bos[i->first], bos[j->first]);
+			}
+			else {
+				SendCollisionInfoBothExit(bos[i->first], bos[j->first]);
 			}
 		}
 	}

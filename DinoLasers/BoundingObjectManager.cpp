@@ -64,8 +64,10 @@ void BoundingObjectManager::SetColor(uint id, vector3 color)
 
 void BoundingObjectManager::CheckCollisions()
 {
+	//This could be changed to be faster.
 	collInd = spatialPartition->CalculateColisions(boundingObjs);
 
+	/*
 	//Everything down is temp for testing
 	std::map<uint, BoundingObject*>::iterator i;
 	std::map<uint, BoundingObject*>::iterator j;
@@ -84,7 +86,7 @@ void BoundingObjectManager::CheckCollisions()
 			SetColor(collInd[col->first][i], RERED);
 			SetColor(col->first, RERED);
 		}
-	}
+	}*/
 }
 void BoundingObjectManager::Draw()
 {

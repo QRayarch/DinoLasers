@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "E13_BoundingBoxClass", "E13_BoundingBoxClass\E13_BoundingBoxClass.vcxproj", "{3967FCB2-CF32-4899-9E66-1F888500EEE0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DinoLasers", "DinoLasers\E13_BoundingBoxClass.vcxproj", "{C4EF08DC-3ABF-40B4-B233-0A970EDBACFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3967FCB2-CF32-4899-9E66-1F888500EEE0}.Debug|Win32.ActiveCfg = Debug|Win32
-		{3967FCB2-CF32-4899-9E66-1F888500EEE0}.Debug|Win32.Build.0 = Debug|Win32
-		{3967FCB2-CF32-4899-9E66-1F888500EEE0}.Release|Win32.ActiveCfg = Release|Win32
-		{3967FCB2-CF32-4899-9E66-1F888500EEE0}.Release|Win32.Build.0 = Release|Win32
+		{C4EF08DC-3ABF-40B4-B233-0A970EDBACFD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C4EF08DC-3ABF-40B4-B233-0A970EDBACFD}.Debug|Win32.Build.0 = Debug|Win32
+		{C4EF08DC-3ABF-40B4-B233-0A970EDBACFD}.Release|Win32.ActiveCfg = Release|Win32
+		{C4EF08DC-3ABF-40B4-B233-0A970EDBACFD}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

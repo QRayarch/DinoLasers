@@ -62,10 +62,13 @@ void Rigidbody::Update(float dt)
 	velocity += accerleration;
 
 	if (useGravity) {
-		velocity.y += GRAVITY;
+		velocity.y -= GRAVITY;
 	}
 
-	GetGameObject()->GetTransform().SetPosition(GetGameObject()->GetTransform().GetPosition() + velocity * (1 / mass));
+	vector3 newPos = GetGameObject()->GetTransform().GetPosition();
+	newPos += (velocity * (1 / mass)) * dt;
+
+	GetGameObject()->GetTransform().SetPosition(newPos);
 }
 
 void Rigidbody::SetVelocity(vector3 newVelo) { velocity = newVelo; }

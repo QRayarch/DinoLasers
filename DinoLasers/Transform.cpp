@@ -71,3 +71,6 @@ void Transform::SetScale(vector3 newScl) { scale = newScl; }
 vector3 Transform::GetScale() { return scale; }
 void Transform::SetPositionOrientation(vector3 newPos, quaternion newOrt) { SetPosition(newPos); SetOrentation(newOrt); }
 void Transform::SetAll(vector3 newPos, quaternion newOrt, vector3 newScl) { SetPosition(newPos); SetOrentation(newOrt); SetScale(newScl); }
+vector3 Transform::GetForward() {
+	return vector3(glm::mat4_cast(orientation)[2][0], glm::mat4_cast(orientation)[2][1], glm::mat4_cast(orientation)[2][2]);
+}

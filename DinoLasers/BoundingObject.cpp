@@ -12,6 +12,8 @@ BoundingObject::BoundingObject(std::vector<vector3> vertices)
 	isAABBVisible = false;
 	isOBBVisible = false;
 
+	isTrigger = false;
+
 	color = REWHITE;
 }
 
@@ -26,6 +28,8 @@ BoundingObject::BoundingObject()
 	isSphereVisible = false;
 	isAABBVisible = false;
 	isOBBVisible = false;
+
+	isTrigger = false;
 
 	color = REWHITE;
 }
@@ -60,8 +64,6 @@ void BoundingObject::SetGameObject(GameObject* gameObject) {
 			sphere = new BoundingSphere(vertices);
 			ob = new SATBoundingBox(vertices);
 			realign = new BoundingBox(vertices);
-
-			color = REWHITE;
 		}
 	}
 
@@ -101,6 +103,8 @@ void BoundingObject::SetVisibility(bool isVis) { SetSphereVisibility(isVis); Set
 void BoundingObject::SetSphereVisibility(bool isVis) { isSphereVisible = isVis; }
 void BoundingObject::SetAABBVisibility(bool isVis) { isAABBVisible = isVis; }
 void BoundingObject::SetOBBVisibility(bool isVis) { isOBBVisible = isVis;  }
+void BoundingObject::SetIsTrigger(bool isTrig) { isTrigger = isTrig; }
+bool BoundingObject::IsTrigger() { return isTrigger; }
 
 vector3 BoundingObject::GetGlobalCenter() { return sphere->GetCenterGlobal(); }
 vector3 BoundingObject::GetMin() { return realign->GetMin(); }

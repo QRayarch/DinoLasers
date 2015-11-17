@@ -19,6 +19,8 @@ private:
 	bool isSphereVisible;
 	bool isAABBVisible;
 	bool isOBBVisible;
+	
+	bool isTrigger;
 
 	uint id;
 public:
@@ -35,6 +37,8 @@ public:
 	void SetSphereVisibility(bool);
 	void SetAABBVisibility(bool);
 	void SetOBBVisibility(bool);
+	void SetIsTrigger(bool);
+	bool IsTrigger();
 	vector3 GetGlobalCenter();
 	vector3 GetMin();
 	vector3 GetMax();

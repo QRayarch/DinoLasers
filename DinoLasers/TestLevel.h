@@ -1,5 +1,6 @@
 #pragma once
 #include "Level.h"
+#include "CollisionDebug.h"
 
 class TestLevel : public Level
 {
