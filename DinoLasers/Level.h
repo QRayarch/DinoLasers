@@ -9,6 +9,7 @@
 #include "Updateable.h"
 #include "ModelRender.h"
 #include "Rigidbody.h"
+#include "PlayerMovement.h"
 
 class Level
 {

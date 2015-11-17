@@ -16,14 +16,14 @@ public:
 	PlayerMovement& operator=(PlayerMovement const&);
 
 	float GetSpeed(void);
-	void SetSpeed(float s);
-	void MoveForward(void);
-	void MoveBackward(void);
-	void StrafeRight(void);
-	void StrafeLeft(void);
-	void Turn(void);
-	void LookUp(void);
-	void Update(float dt);
+	void SetSpeed(float);
+	void MoveForward(float);
+	void MoveBackward(float);
+	void StrafeRight(float);
+	void StrafeLeft(float);
+	void Turn(float);
+	void LookUp(float);
+	void Update(float);
 
 protected:
 	void Init(void);
