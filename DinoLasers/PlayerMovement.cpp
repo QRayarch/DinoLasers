@@ -2,7 +2,8 @@
 
 void PlayerMovement::Init(void)
 {	
-	speed = 0.7f;
+	speed = 10.0f;
+	prevMouse = currMouse = sf::Mouse::getPosition();
 }
 void PlayerMovement::Swap(PlayerMovement& other)
 {
@@ -61,12 +62,13 @@ void PlayerMovement::LookUp(float dt)
 
 void PlayerMovement::Update(float dt)
 {
+	currMouse = sf::Mouse::getPosition();
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
 		MoveForward(dt);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-		StrafeLeft(dt);
+		StrafeRight(dt);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
@@ -74,18 +76,18 @@ void PlayerMovement::Update(float dt)
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-		StrafeRight(dt);
+		StrafeLeft(dt);
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)){ Turn(-1.0f);	}
-		else { Turn(1.0f); }
+	if (currMouse != prevMouse){
+		Turn((prevMouse.x - currMouse.x) * dt * 4);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)){
 		//playerRotation = quaternion(vector3(0.0f, glm::radians(-1.0f), 0.0f)) * playerRotation;
 		//forward = glm::rotate(REAXISZ, glm::angle(playerRotation), glm::axis(playerRotation));
 	}
+	prevMouse = currMouse;
 }
 
 void PlayerMovement::SetGameObject(GameObject* g)
