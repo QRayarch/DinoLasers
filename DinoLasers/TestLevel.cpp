@@ -23,7 +23,6 @@ void TestLevel::Load() {
 	dino->AddComponent(new Health());
 	dino->AddComponent(new PlayerMovement());
 	dino->GetTransform().SetPosition(vector3(0.0f, 5.0f, 0.0f));
-	dino->AddComponent(new CameraFollow());
 	dino->AddComponent(new ProjectileLauncher());
 	//dino->AddComponent(new CollisionDebug());
 	GameObjectManager::GetInstance()->AddGameObject(dino);
@@ -38,6 +37,11 @@ void TestLevel::Load() {
 
 void TestLevel::Update(float dt) {
 	MeshManagerSingleton::GetInstance()->AddPlaneToQueue(glm::rotate(matrix4(IDENTITY_M4), 90.0f, vector3(1.0f, 0.0f, 0.0f)) * glm::scale(vector3(1000.0f)), REGRAY);
+	MeshManagerSingleton::GetInstance()->AddCubeToQueue(glm::translate(vector3(0.0f, 5.0f, 7.0f)), REBLUE);
+	MeshManagerSingleton::GetInstance()->AddCubeToQueue(glm::translate(vector3(5.0f, 5.0f, 5.0f)), RERED);
+	MeshManagerSingleton::GetInstance()->AddCubeToQueue(glm::translate(vector3(-3.0f, 5.0f, 10.0f)), REYELLOW);
+	MeshManagerSingleton::GetInstance()->AddCubeToQueue(glm::translate(vector3(-1.0f, 5.0f, 13.0f)), REGREEN);
+	MeshManagerSingleton::GetInstance()->AddCubeToQueue(glm::translate(vector3(-5.0f, 5.0f, 13.0f)), REORANGE);
 	Level::Update(dt);
 	test->GetTransform().SetOrentation(test->GetTransform().GetOrientation() * quaternion(vector3(0.01f, 0.01f, 0.01f)));
 }

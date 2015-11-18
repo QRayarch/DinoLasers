@@ -7,7 +7,9 @@
 class PlayerMovement : public Updateable
 {
 private:
-	float speed;	
+	float speed;
+	sf::Vector2i prevMouse;
+	sf::Vector2i currMouse;
 public:
 	PlayerMovement();
 	PlayerMovement(PlayerMovement const&);
