@@ -8,6 +8,9 @@ class CameraFollow : public Updateable
 {
 private:
 	float cameraSpacing;
+	float camHeight;
+	float positionDamping;
+	float heightDamping;
 	vector3 cameraTarget;
 	vector3 cameraPosition;	
 public:
@@ -16,9 +19,12 @@ public:
 	CameraFollow& operator=(CameraFollow const&);
 	~CameraFollow();
 	void Update(float);
+	void UpdateCamera(float);
 
 	float GetSpacing(void);
 	void SetSpacing(float);
+
+	void SetGameObject(GameObject*);
 	
 protected:
 	void Init(void);
