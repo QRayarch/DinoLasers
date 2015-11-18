@@ -5,7 +5,7 @@ Projectile::Projectile()
 	damage = 10.0f;
 	lifeTime = 0;
 	maxLifeTime = 1.0f;
-	speed = 20.0f;
+	speed = 50.0f;
 }
 
 Projectile::Projectile(float laserDamage, float maxTime, float lzrSpeed)
