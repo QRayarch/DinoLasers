@@ -19,7 +19,7 @@ Projectile::Projectile(float laserDamage, float maxTime, float lzrSpeed)
 
 void Projectile::OnTrigger(CollisionInfo info) {
 	info.GetChecked()->GetGameObject()->GetComponent<Health>()->TakeDamage(damage);
-	//remove the component
+	GameObjectManager::GetInstance()->RemoveGameObject(GetGameObject());
 }
 
 void Projectile::Update(float dt)
@@ -27,7 +27,7 @@ void Projectile::Update(float dt)
 	lifeTime += dt;
 	if (lifeTime >= maxLifeTime)
 	{
-		//GameObjectManager::GetInstance()->RemoveGameObject(GetGameObject());
+		GameObjectManager::GetInstance()->RemoveGameObject(GetGameObject());
 	}
 }
 
@@ -38,6 +38,7 @@ void Projectile::SetGameObject(GameObject* gameObject) {
 	if (rB != nullptr) {
 		//v = sp*forward of rB
 		rB->SetVelocity(speed * gameObject->GetTransform().GetForward());
+		std::cout << " X: " << gameObject->GetTransform().GetForward().x << " Y: " << gameObject->GetTransform().GetForward().y << " Z: " << gameObject->GetTransform().GetForward().z << std::endl;
 	}
 }
 
