@@ -4,7 +4,7 @@ Projectile::Projectile()
 {
 	damage = 10.0f;
 	lifeTime = 0;
-	maxLifeTime = 5.0f;
+	maxLifeTime = 1.0f;
 	speed = 20.0f;
 }
 
@@ -38,7 +38,6 @@ void Projectile::SetGameObject(GameObject* gameObject) {
 	if (rB != nullptr) {
 		//v = sp*forward of rB
 		rB->SetVelocity(speed * gameObject->GetTransform().GetForward());
-		std::cout << " X: " << gameObject->GetTransform().GetForward().x << " Y: " << gameObject->GetTransform().GetForward().y << " Z: " << gameObject->GetTransform().GetForward().z << std::endl;
 	}
 }
 
