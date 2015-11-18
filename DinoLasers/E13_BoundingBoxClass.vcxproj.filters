@@ -84,7 +84,6 @@
     <ClCompile Include="CollisionDebug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="Health.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -95,9 +94,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Projectile.cpp">
-=======
     <ClCompile Include="PlayerMovement.cpp">
->>>>>>> a716d41c9af5e7c4568c03877f327453249e03b4
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CameraFollow.cpp">
@@ -171,7 +168,6 @@
     <ClInclude Include="CollisionDebug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="Health.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -182,9 +178,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Projectile.h">
-=======
     <ClInclude Include="PlayerMovement.h">
->>>>>>> a716d41c9af5e7c4568c03877f327453249e03b4
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CameraFollow.h">
