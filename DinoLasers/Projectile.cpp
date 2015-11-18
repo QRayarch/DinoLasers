@@ -27,7 +27,7 @@ void Projectile::Update(float dt)
 	lifeTime += dt;
 	if (lifeTime >= maxLifeTime)
 	{
-		//remove component
+		//GameObjectManager::GetInstance()->RemoveGameObject(GetGameObject());
 	}
 }
 

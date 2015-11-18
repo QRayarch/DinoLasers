@@ -2,6 +2,7 @@
 #include "Collideable.h"
 #include "Rigidbody.h"
 #include "Health.h"
+#include "GameObjectManager.h"
 
 class Projectile : virtual public Collideable, public Updateable
 {
