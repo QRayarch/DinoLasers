@@ -7,7 +7,7 @@
 class PlayerMovement : public Updateable
 {
 private:
-	float speed;
+	float speed;	
 public:
 	PlayerMovement();
 	PlayerMovement(PlayerMovement const&);

@@ -117,6 +117,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClCompile Include="BoundingObject.cpp" />
     <ClCompile Include="BoundingObjectManager.cpp" />
     <ClCompile Include="BoundingSphere.cpp" />
+    <ClCompile Include="CameraFollow.cpp" />
     <ClCompile Include="Collideable.cpp" />
     <ClCompile Include="CollisionDebug.cpp" />
     <ClCompile Include="CollisionInfo.cpp" />
@@ -143,6 +144,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClInclude Include="BoundingObject.h" />
     <ClInclude Include="BoundingObjectManager.h" />
     <ClInclude Include="BoundingSphere.h" />
+    <ClInclude Include="CameraFollow.h" />
     <ClInclude Include="Collideable.h" />
     <ClInclude Include="CollisionDebug.h" />
     <ClInclude Include="CollisionInfo.h" />

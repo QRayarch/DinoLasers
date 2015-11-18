@@ -20,6 +20,7 @@ void TestLevel::Load() {
 	dino->AddComponent(dinoBO);
 	dino->AddComponent(new Rigidbody());
 	dino->AddComponent(new PlayerMovement());
+	dino->AddComponent(new CameraFollow());
 	//dino->AddComponent(new CollisionDebug());
 	GameObjectManager::GetInstance()->AddGameObject(dino);
 

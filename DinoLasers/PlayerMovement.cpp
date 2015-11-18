@@ -1,8 +1,8 @@
 #include "PlayerMovement.h"
 
 void PlayerMovement::Init(void)
-{
-	speed = 0.5f;
+{	
+	speed = 0.7f;
 }
 void PlayerMovement::Swap(PlayerMovement& other)
 {

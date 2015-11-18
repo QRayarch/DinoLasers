@@ -10,6 +10,7 @@
 #include "ModelRender.h"
 #include "Rigidbody.h"
 #include "PlayerMovement.h"
+#include "CameraFollow.h"
 
 class Level
 {
