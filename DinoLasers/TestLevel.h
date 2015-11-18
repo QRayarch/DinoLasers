@@ -3,6 +3,7 @@
 #include "CollisionDebug.h"
 #include "Health.h"
 #include "Crate.h"
+#include "ProjectileLauncher.h"
 
 class TestLevel : public Level
 {
