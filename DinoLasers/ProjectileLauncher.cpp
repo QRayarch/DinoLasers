@@ -20,7 +20,7 @@ void ProjectileLauncher::LaunchProjectile()
 
 void ProjectileLauncher::Update(float dt)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		LaunchProjectile();
 }
 
