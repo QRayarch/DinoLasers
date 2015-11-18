@@ -58,7 +58,7 @@ Rigidbody& Rigidbody::operator=(Rigidbody const& other)
 void Rigidbody::Update(float dt) 
 {
 
-	accerleration = glm::clamp(accerleration, -maxAcceleration, maxAcceleration);
+	accerleration = glm::clamp(accerleration / mass * dt, -maxAcceleration, maxAcceleration);
 	velocity += accerleration;
 
 	if (useGravity) {
@@ -66,12 +66,19 @@ void Rigidbody::Update(float dt)
 	}
 
 	vector3 newPos = GetGameObject()->GetTransform().GetPosition();
-	newPos += (velocity * (1 / mass)) * dt;
+	newPos += velocity * dt;
 
 	GetGameObject()->GetTransform().SetPosition(newPos);
 }
 
 void Rigidbody::SetVelocity(vector3 newVelo) { velocity = newVelo; }
 void Rigidbody::SetAcceleration(vector3 newAcc) { accerleration = newAcc; }
-void Rigidbody::SetMass(float newMass) { mass = newMass; }
+void Rigidbody::SetMass(float newMass) {
+	if (newMass <= 0)  {
+		mass = std::numeric_limits<float>::epsilon();
+	}
+	else {
+		mass = newMass;
+	}
+}
 void Rigidbody::SetUseGravity(bool doesUseGravity) { useGravity = doesUseGravity; }

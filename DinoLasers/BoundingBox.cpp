@@ -198,10 +198,7 @@ bool BoundingBox::CheckSATCollision(BoundingBox* const colliding) {
 		ra = m_v3HalfWidth[i];
 		rb = colliding->GetHalfWidth()[0] * AbsR[i][0] + colliding->GetHalfWidth()[1] * AbsR[i][1] + colliding->GetHalfWidth()[2] * AbsR[i][2];
 		if (std::abs(translation[i]) > ra + rb) return false;
-
-
 	}
-
 
 	for (int i = 0; i < 3; i++) {
 		ra = m_v3HalfWidth[0] * AbsR[0][i] + m_v3HalfWidth[1] * AbsR[1][i] + m_v3HalfWidth[2] * AbsR[2][i];

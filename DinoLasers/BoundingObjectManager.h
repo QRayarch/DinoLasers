@@ -24,6 +24,7 @@ public:
 	static void Release();
 	void SetVisibility(uint, bool visible);
 	uint AddBoundingObject(BoundingObject*);
+	void RemoveBoundingObject(BoundingObject*);
 	void SwitchBoxVisibility(uint, bool);
 	int GetBoundingObjNumber();
 	void SetColor(uint, vector3);

@@ -66,6 +66,55 @@ void GameObjectManager::AddGameObject(GameObject* gameObject) {
 	}
 }
 
+void GameObjectManager::RemoveGameObject(GameObject* gameObject) {
+	std::vector<Component*> components = gameObject->GetComponents();
+	for (int v = 0; v < components.size(); v++) {
+		//Check for render
+		Renderable* ren = dynamic_cast<Renderable*>(components[v]);
+		if (ren != nullptr) {
+			RemoveRenderable(ren);
+		}
+
+		//Check for update
+		Updateable* up = dynamic_cast<Updateable*>(components[v]);
+		if (up != nullptr) {
+			RemoveUpdateable(up);
+		}
+		//Check for boundingObject
+		BoundingObject* boundingOb = dynamic_cast<BoundingObject*>(components[v]);
+		if (boundingOb != nullptr) {
+			BoundingObjectManager::GetInstance()->RemoveBoundingObject(boundingOb);
+		}
+	}
+
+	for (int g = 0; g < gameObjects.size(); g++) {
+		if (gameObjects[g] == gameObject) {
+			gameObjects.erase(gameObjects.begin() + g);
+			return;
+		}
+	}
+}
+
+void GameObjectManager::RemoveUpdateable(Updateable* updateable) {
+	if (updateable == nullptr) return;
+	for (int u = 0; u < updateables.size(); u++)  {
+		if (updateables[u] == updateable) {
+			updateables.erase(updateables.begin() + u);
+			return;
+		}
+	}
+}
+
+void GameObjectManager::RemoveRenderable(Renderable* renderable) {
+	if (renderable == nullptr) return;
+	for (int v = 0; v < renderables.size(); v++)  {
+		if (renderables[v] == renderable) {
+			renderables.erase(renderables.begin() + v);
+			return;
+		}
+	}
+}
+
 GameObjectManager* GameObjectManager::GetInstance()
 {
 	if (instance == nullptr)
