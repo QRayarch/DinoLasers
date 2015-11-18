@@ -41,6 +41,14 @@ uint BoundingObjectManager::AddBoundingObject(BoundingObject* newBoundingObject)
 	return addIndex++;
 }
 
+void BoundingObjectManager::RemoveBoundingObject(BoundingObject* boundingObject) {
+	if (boundingObject == nullptr) return;
+
+	uint key = boundingObject->GetId();
+	delete boundingObjs[key];
+	boundingObjs[key] = nullptr;
+}
+
 void BoundingObjectManager::Release()
 {
 	//TODO:REALSE MAP

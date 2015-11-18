@@ -79,11 +79,7 @@ void AppClass::Update(void)
 	//Print info on the screen
 	m_pMeshMngr->PrintLine(m_pSystem->GetAppName(), REYELLOW);
 	m_pMeshMngr->Print("FPS:");
-	m_pMeshMngr->Print(std::to_string(nFPS), RERED);
-
-
-
-	m_pMeshMngr->AddPlaneToQueue(glm::rotate(matrix4(IDENTITY_M4), 90.0f, vector3(1.0f, 0.0f, 0.0f)) * glm::scale(vector3(100.0f)), REGRAY);
+	m_pMeshMngr->Print(std::to_string(nFPS), RERED);	
 }
 
 void AppClass::Display(void)
