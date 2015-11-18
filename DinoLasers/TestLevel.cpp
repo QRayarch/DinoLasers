@@ -18,6 +18,7 @@ void TestLevel::Load() {
 	BoundingObject* dinoBO = new BoundingObject();
 	dino->AddComponent(dinoBO);
 	dino->AddComponent(new Rigidbody());
+	dino->AddComponent(new Health());
 	//dino->AddComponent(new CollisionDebug());
 	GameObjectManager::GetInstance()->AddGameObject(dino);
 
@@ -30,6 +31,7 @@ void TestLevel::Load() {
 }
 
 void TestLevel::Update(float dt) {
+	MeshManagerSingleton::GetInstance()->AddPlaneToQueue(glm::rotate(matrix4(IDENTITY_M4), 90.0f, vector3(1.0f, 0.0f, 0.0f)) * glm::scale(vector3(1000.0f)), REGRAY);
 	Level::Update(dt);
 }
 
