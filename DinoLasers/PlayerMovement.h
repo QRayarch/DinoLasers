@@ -24,6 +24,7 @@ public:
 	void Turn(float);
 	void LookUp(float);
 	void Update(float);
+	void SetGameObject(GameObject*);
 
 protected:
 	void Init(void);

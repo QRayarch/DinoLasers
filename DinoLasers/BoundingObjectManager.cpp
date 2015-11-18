@@ -72,6 +72,7 @@ void BoundingObjectManager::SetColor(uint id, vector3 color)
 
 void BoundingObjectManager::CheckCollisions()
 {
+	collInd = spatialPartition->CalculateColisions(boundingObjs);
 	std::map<uint, BoundingObject*>::iterator iterator;
 	for (iterator = boundingObjs.begin(); iterator != boundingObjs.end(); iterator++) {
 		float tempPosY = boundingObjs[iterator->first]->GetGameObject()->GetTransform().GetPosition().y + boundingObjs[iterator->first]->GetMin().y;
@@ -83,7 +84,6 @@ void BoundingObjectManager::CheckCollisions()
 		}
 	}
 	//This could be changed to be faster.
-	collInd = spatialPartition->CalculateColisions(boundingObjs);
 }
 void BoundingObjectManager::Draw()
 {

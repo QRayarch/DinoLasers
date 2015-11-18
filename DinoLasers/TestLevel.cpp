@@ -18,9 +18,11 @@ void TestLevel::Load() {
 	dino->AddComponent(dinoModel);
 	BoundingObject* dinoBO = new BoundingObject();
 	dino->AddComponent(dinoBO);
-	dino->AddComponent(new Rigidbody());
+	dino->AddComponent(new CameraFollow());
+	//dino->AddComponent(new Rigidbody());
 	dino->AddComponent(new Health());
 	dino->AddComponent(new PlayerMovement());
+	dino->GetTransform().SetPosition(vector3(0.0f, 5.0f, 0.0f));
 	dino->AddComponent(new CameraFollow());
 	dino->AddComponent(new ProjectileLauncher());
 	//dino->AddComponent(new CollisionDebug());

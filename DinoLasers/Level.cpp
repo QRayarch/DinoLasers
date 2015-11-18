@@ -12,8 +12,8 @@ Level::~Level()
 }
 
 void Level::Update(float dt) {
+	GameObjectManager::GetInstance()->Update(dt);
 	BoundingObjectManager::GetInstance()->CheckCollisions();
-	GameObjectManager::GetInstance()->Update(dt);//TODO: ADD DELTA TIME
 }
 
 void Level::Render() {

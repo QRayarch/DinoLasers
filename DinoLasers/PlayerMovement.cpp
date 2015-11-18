@@ -10,7 +10,7 @@ void PlayerMovement::Swap(PlayerMovement& other)
 }
 PlayerMovement::PlayerMovement()
 {
-	Init();
+	Init();	
 }
 
 PlayerMovement::~PlayerMovement(){}
@@ -86,6 +86,11 @@ void PlayerMovement::Update(float dt)
 		//playerRotation = quaternion(vector3(0.0f, glm::radians(-1.0f), 0.0f)) * playerRotation;
 		//forward = glm::rotate(REAXISZ, glm::angle(playerRotation), glm::axis(playerRotation));
 	}
+}
+
+void PlayerMovement::SetGameObject(GameObject* g)
+{
+	Updateable::SetGameObject(g);
 }
 
 float PlayerMovement::GetSpeed(void){ return speed; }
