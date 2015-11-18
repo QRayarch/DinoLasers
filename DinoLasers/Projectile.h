@@ -1,8 +1,9 @@
 #pragma once
 #include "Collideable.h"
 #include "Rigidbody.h"
+#include "Health.h"
 
-class Projectile : public Collideable, public Updateable
+class Projectile : virtual public Collideable, public Updateable
 {
 private:
 	float damage;

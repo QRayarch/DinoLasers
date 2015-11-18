@@ -1,5 +1,4 @@
 #include "Projectile.h"
-#include "Health.h"
 
 Projectile::Projectile()
 {
