@@ -3,7 +3,7 @@
 #include "Rigidbody.h"
 #include "Health.h"
 
-class Projectile : virtual public Collideable, public Updateable
+class Projectile : public Collideable, public Updateable
 {
 private:
 	float damage;
