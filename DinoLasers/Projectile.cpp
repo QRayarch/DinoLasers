@@ -37,7 +37,7 @@ void Projectile::SetGameObject(GameObject* gameObject) {
 	Rigidbody* rB = GetGameObject()->GetComponent<Rigidbody>();
 	if (rB != nullptr) {
 		//v = sp*forward of rB
-		rB->SetVelocity(speed * gameObject->GetTransform().GetForward());
+		rB->SetVelocity(speed * GetGameObject()->GetTransform().GetForward());
 	}
 }
 

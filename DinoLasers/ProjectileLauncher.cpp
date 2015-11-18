@@ -12,9 +12,9 @@ void ProjectileLauncher::LaunchProjectile()
 	Rigidbody* rgBody = new Rigidbody();
 	rgBody->SetUseGravity(false);
 	projectile->AddComponent(rgBody);
-	projectile->AddComponent(new Projectile());
-	//projectile->GetTransform().SetOrentation(quaternion(GetGameObject()->GetTransform().GetForward()));
+	projectile->GetTransform().SetOrentation(GetGameObject()->GetTransform().GetOrientation());
 	projectile->GetTransform().SetPosition(GetGameObject()->GetTransform().GetPosition());
+	projectile->AddComponent(new Projectile());
 	GameObjectManager::GetInstance()->AddGameObject(projectile);
 }
 
