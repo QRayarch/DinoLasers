@@ -129,11 +129,8 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="ModelRender.cpp" />
     <ClCompile Include="Main.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="Projectile.cpp" />
-=======
     <ClCompile Include="PlayerMovement.cpp" />
->>>>>>> a716d41c9af5e7c4568c03877f327453249e03b4
     <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="SATBoundingBox.cpp" />
@@ -161,11 +158,8 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClInclude Include="Health.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="ModelRender.h" />
-<<<<<<< HEAD
     <ClInclude Include="Projectile.h" />
-=======
     <ClInclude Include="PlayerMovement.h" />
->>>>>>> a716d41c9af5e7c4568c03877f327453249e03b4
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="SATBoundingBox.h" />
