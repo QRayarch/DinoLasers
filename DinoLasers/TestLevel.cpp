@@ -19,11 +19,8 @@ void TestLevel::Load() {
 	BoundingObject* dinoBO = new BoundingObject();
 	dino->AddComponent(dinoBO);
 	dino->AddComponent(new Rigidbody());
-<<<<<<< HEAD
 	dino->AddComponent(new Health());
-=======
 	dino->AddComponent(new PlayerMovement());
->>>>>>> a716d41c9af5e7c4568c03877f327453249e03b4
 	//dino->AddComponent(new CollisionDebug());
 	GameObjectManager::GetInstance()->AddGameObject(dino);
 

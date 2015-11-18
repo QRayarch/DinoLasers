@@ -52,11 +52,6 @@ void Projectile::SetMaxLifeTime(float newMax)
 	maxLifeTime = newMax;
 }
 
-void Projectile::SetDamage(float newDamage)
-{
-	damage = newDamage;
-}
-
 void Projectile::SetLifeTimer(float newTime)
 {
 	lifeTime = newTime;
