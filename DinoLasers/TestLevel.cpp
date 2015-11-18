@@ -22,7 +22,7 @@ void TestLevel::Load() {
 	//dino->AddComponent(new CollisionDebug());
 	GameObjectManager::GetInstance()->AddGameObject(dino);
 
-	Component* testModel = new ModelRender("Minecraft\\MC_Creeper.obj", "Creeper");
+	Component* testModel = new ModelRender("DinoLasers\\Laser.obj", "Laser");
 	test = new GameObject();
 	test->AddComponent(testModel);
 	BoundingObject* testBO = new BoundingObject();
@@ -32,6 +32,7 @@ void TestLevel::Load() {
 
 void TestLevel::Update(float dt) {
 	Level::Update(dt);
+	test->GetTransform().SetOrentation(test->GetTransform().GetOrientation() * quaternion(vector3(0.01f, 0.01f, 0.01f)));
 }
 
 void TestLevel::Render() {

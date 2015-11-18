@@ -20,6 +20,9 @@ public:
 	static void ReleaseInstance();
 
 	void AddGameObject(GameObject*);
+	void RemoveGameObject(GameObject*);
+	void RemoveUpdateable(Updateable*);
+	void RemoveRenderable(Renderable*);
 
 	void Update(float);
 	void Render();
