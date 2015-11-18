@@ -26,6 +26,8 @@ public:
 	void SetPositionOrientation(vector3, quaternion);
 	void SetAll(vector3, quaternion, vector3);
 	vector3 GetForward();
+	vector3 GetRight();
+	vector3 GetUp();
 private:
 	void Init();
 	void Release();

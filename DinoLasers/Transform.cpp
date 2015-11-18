@@ -74,3 +74,9 @@ void Transform::SetAll(vector3 newPos, quaternion newOrt, vector3 newScl) { SetP
 vector3 Transform::GetForward() {
 	return vector3(glm::mat4_cast(orientation)[2][0], glm::mat4_cast(orientation)[2][1], glm::mat4_cast(orientation)[2][2]);
 }
+vector3 Transform::GetRight(){
+	return vector3(glm::mat4_cast(orientation)[0][0], glm::mat4_cast(orientation)[0][1], glm::mat4_cast(orientation)[0][2]);
+}
+vector3 Transform::GetUp(){
+	return vector3(glm::mat4_cast(orientation)[1][0], glm::mat4_cast(orientation)[1][1], glm::mat4_cast(orientation)[1][2]);
+}
