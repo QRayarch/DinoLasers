@@ -3,7 +3,7 @@
 #include "Component.h"
 #include "CollisionInfo.h"
 
-class Collideable : public Component
+class Collideable : virtual public Component
 {
 public:
 	Collideable();

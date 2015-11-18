@@ -4,7 +4,7 @@
 #include "Health.h"
 #include "GameObjectManager.h"
 
-class Projectile : virtual public Collideable, public Updateable
+class Projectile : public Collideable, public Updateable
 {
 private:
 	float damage;

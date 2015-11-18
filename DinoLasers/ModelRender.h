@@ -3,7 +3,7 @@
 #include "Updateable.h"
 #include "GameObject.h"
 
-class ModelRender : public Updateable
+class ModelRender : virtual public Updateable
 {
 private:
 	String model;

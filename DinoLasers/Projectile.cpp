@@ -33,8 +33,8 @@ void Projectile::Update(float dt)
 
 void Projectile::SetGameObject(GameObject* gameObject) {
 	Collideable::SetGameObject(gameObject);
-	Updateable::SetGameObject(gameObject);
-	Rigidbody* rB = gameObject->GetComponent<Rigidbody>();
+	//Updateable::SetGameObject(gameObject);
+	Rigidbody* rB = GetGameObject()->GetComponent<Rigidbody>();
 	if (rB != nullptr) {
 		//v = sp*forward of rB
 		rB->SetVelocity(speed * gameObject->GetTransform().GetForward());
