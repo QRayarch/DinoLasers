@@ -109,6 +109,7 @@ bool BoundingObject::IsTrigger() { return isTrigger; }
 vector3 BoundingObject::GetGlobalCenter() { return sphere->GetCenterGlobal(); }
 vector3 BoundingObject::GetMin() { return realign->GetMin(); }
 vector3 BoundingObject::GetMax() { return realign->GetMax(); }
+vector3 BoundingObject::GetHalfWidth(){ return realign->GetHalfWidth(); }
 
 void BoundingObject::SetColor(vector3 newColor)
 {

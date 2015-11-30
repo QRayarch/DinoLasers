@@ -3,6 +3,7 @@
 #include "Updateable.h"
 #include "GameObject.h"
 #include <SFML\Graphics.hpp>
+#include "Rigidbody.h"
 
 class PlayerMovement : public Updateable
 {

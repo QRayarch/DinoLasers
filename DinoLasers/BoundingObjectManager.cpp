@@ -75,12 +75,23 @@ void BoundingObjectManager::CheckCollisions()
 	collInd = spatialPartition->CalculateColisions(boundingObjs);
 	std::map<uint, BoundingObject*>::iterator iterator;
 	for (iterator = boundingObjs.begin(); iterator != boundingObjs.end(); iterator++) {
-		float tempPosY = boundingObjs[iterator->first]->GetGameObject()->GetTransform().GetPosition().y + boundingObjs[iterator->first]->GetMin().y;
+		float tempPosY = boundingObjs[iterator->first]->GetGameObject()->GetTransform().GetPosition().y - boundingObjs[iterator->first]->GetHalfWidth().y;
 		if (tempPosY < groundY)
 		{
 			vector3 tempPos = boundingObjs[iterator->first]->GetGameObject()->GetTransform().GetPosition();
 			tempPos.y = tempPosY + (groundY - tempPosY);
+			tempPos.y = groundY + boundingObjs[iterator->first]->GetHalfWidth().y;
 			boundingObjs[iterator->first]->GetGameObject()->GetTransform().SetPosition(tempPos);
+
+			//Set y velo to zero
+			Rigidbody* body = boundingObjs[iterator->first]->GetGameObject()->GetComponent<Rigidbody>();
+			if (body != nullptr) {
+				vector3 velo = body->GetVelocity();
+				if (velo.y <= 0) {
+					velo.y = 0;
+				}
+				body->SetVelocity(velo);
+			}
 		}
 	}
 	//This could be changed to be faster.
@@ -101,3 +112,5 @@ void BoundingObjectManager::SetGroundY(float _groundY)
 {
 	groundY = _groundY;
 }
+
+float BoundingObjectManager::GetGroundY() { return groundY; }

@@ -3,7 +3,7 @@
 #include "Updateable.h"
 #include "GameObject.h"
 
-#define GRAVITY 9.8
+#define GRAVITY 3.5
 
 class Rigidbody : public Updateable
 {
@@ -24,6 +24,7 @@ public:
 	void Update(float);
 
 	void SetVelocity(vector3);
+	vector3 GetVelocity();
 	void SetAcceleration(vector3);
 	void SetMass(float);
 	void SetUseGravity(bool);

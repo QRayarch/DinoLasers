@@ -130,6 +130,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="ModelRender.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="PlayerMovement.cpp" />
     <ClCompile Include="ProjectileLauncher.cpp" />
@@ -140,6 +141,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClCompile Include="SPBruteForce.cpp" />
     <ClCompile Include="TestLevel.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="Updateable.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +163,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClInclude Include="Health.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="ModelRender.h" />
+    <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="PlayerMovement.h" />
     <ClInclude Include="ProjectileLauncher.h" />
@@ -171,6 +174,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClInclude Include="SPBruteForce.h" />
     <ClInclude Include="TestLevel.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="Updateable.h" />
   </ItemGroup>
   <ItemGroup>

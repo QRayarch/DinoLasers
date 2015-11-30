@@ -87,6 +87,18 @@ void PlayerMovement::Update(float dt)
 		//playerRotation = quaternion(vector3(0.0f, glm::radians(-1.0f), 0.0f)) * playerRotation;
 		//forward = glm::rotate(REAXISZ, glm::angle(playerRotation), glm::axis(playerRotation));
 	}
+
+	//JUMP
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
+		Rigidbody* body = GetGameObject()->GetComponent<Rigidbody>();
+		if (body != nullptr) {
+			vector3 velo = body->GetVelocity();
+			if (velo.y == 0) {
+				velo.y = 40;
+				body->SetVelocity(velo);
+			}
+		}
+	}
 	prevMouse = currMouse;
 }
 

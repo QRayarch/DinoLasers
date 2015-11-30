@@ -4,6 +4,7 @@
 #include "BoundingObject.h"
 #include "SpatialPartition.h"
 #include "SPBruteForce.h"
+#include "Rigidbody.h"
 
 class BoundingObjectManager
 {
@@ -34,6 +35,7 @@ public:
 	void Draw();
 	void SetModelMatrix(uint, matrix4);
 	void SetGroundY(float);
+	float GetGroundY();
 	bool IsInBounds(uint);
 };
 

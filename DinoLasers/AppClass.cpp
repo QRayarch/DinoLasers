@@ -47,15 +47,9 @@ void AppClass::Update(void)
 	//Update the mesh manager's time without updating for collision detection
 	m_pMeshMngr->Update(false);
 
-	//First person camera movement
-	if (m_bFPC == true)
-		CameraRotation();
-
 	float dt = m_pSystem->LapClock();
 
 	level->Update(dt);
-
-	ArcBall();
 
 	/*steve->GetTransform().SetOrentation(playerRotation);
 
@@ -77,9 +71,9 @@ void AppClass::Update(void)
 	//print info into the console
 	printf("FPS: %d            \r", nFPS);//print the Frames per Second
 	//Print info on the screen
-	m_pMeshMngr->PrintLine(m_pSystem->GetAppName(), REYELLOW);
-	m_pMeshMngr->Print("FPS:");
-	m_pMeshMngr->Print(std::to_string(nFPS), RERED);	
+	/*m_pMeshMngr->PrintLine(m_pSystem->GetAppName(), REYELLOW);
+	m_pMeshMngr->Print("0 FPS:");
+	m_pMeshMngr->Print(std::to_string(nFPS), RERED);	*/
 }
 
 void AppClass::Display(void)

@@ -72,6 +72,7 @@ void Rigidbody::Update(float dt)
 }
 
 void Rigidbody::SetVelocity(vector3 newVelo) { velocity = newVelo; }
+vector3 Rigidbody::GetVelocity() { return velocity; }
 void Rigidbody::SetAcceleration(vector3 newAcc) { accerleration = newAcc; }
 void Rigidbody::SetMass(float newMass) {
 	if (newMass <= 0)  {

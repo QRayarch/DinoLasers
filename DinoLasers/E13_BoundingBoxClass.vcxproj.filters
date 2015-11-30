@@ -31,6 +31,8 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Updateable.cpp" />
     <ClCompile Include="ProjectileLauncher.cpp" />
+    <ClCompile Include="UI.cpp" />
+    <ClCompile Include="ProgressBar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\res\Resource.h" />
@@ -62,6 +64,8 @@
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Updateable.h" />
     <ClInclude Include="ProjectileLauncher.h" />
+    <ClInclude Include="UI.h" />
+    <ClInclude Include="ProgressBar.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\res\BTO.rc" />

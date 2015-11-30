@@ -5,6 +5,8 @@
 #include "Crate.h"
 #include "ProjectileLauncher.h"
 
+#include "ProgressBar.h"
+
 class TestLevel : public Level
 {
 public:
