@@ -8,6 +8,8 @@ class SATBoundingBox : public BoundingBox
 public:
 	SATBoundingBox(std::vector<vector3>);
 	~SATBoundingBox();
+	SATBoundingBox(SATBoundingBox const&);
+	SATBoundingBox& operator=(SATBoundingBox const&);
 
 	bool IsColliding(BoundingBox* const);
 protected:

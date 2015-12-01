@@ -3,7 +3,8 @@
 #include "Updateable.h"
 #include "GameObject.h"
 
-#define GRAVITY 3.5
+#define GRAVITY 3.5f
+#define DRAG 0.95f
 
 class Rigidbody : public Updateable
 {

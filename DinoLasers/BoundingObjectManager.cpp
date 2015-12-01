@@ -3,18 +3,17 @@
 
 BoundingObjectManager::BoundingObjectManager()
 {
-	boundingObjs = std::map<uint, BoundingObject*>();
+	boundingObjs = std::vector<BoundingObject*>();
 	spatialPartition = new SPBruteForce();
 	groundY = 0.0f;
-	addIndex = 1;
 }
 
 BoundingObjectManager::~BoundingObjectManager() {
 	std::map<uint, BoundingObject*>::iterator iterator;
-	for (iterator = boundingObjs.begin(); iterator != boundingObjs.end(); iterator++) {
-		if (boundingObjs[iterator->first] != nullptr) {
-			delete boundingObjs[iterator->first];
-			boundingObjs[iterator->first] = nullptr;
+	for (int b = 0; b < boundingObjs.size(); b++) {
+		if (boundingObjs[b] != nullptr) {
+			delete boundingObjs[b];
+			boundingObjs[b] = nullptr;
 		}
 	}
 
@@ -36,17 +35,21 @@ BoundingObjectManager* BoundingObjectManager::GetInstance()
 uint BoundingObjectManager::AddBoundingObject(BoundingObject* newBoundingObject)
 {
 	if (newBoundingObject == nullptr) return 0;
-	boundingObjs[addIndex] = newBoundingObject;
-	newBoundingObject->SetId(addIndex);
-	return addIndex++;
+	boundingObjs.push_back(newBoundingObject);
+	return boundingObjs.size();
 }
 
 void BoundingObjectManager::RemoveBoundingObject(BoundingObject* boundingObject) {
 	if (boundingObject == nullptr) return;
 
-	uint key = boundingObject->GetId();
-	delete boundingObjs[key];
-	boundingObjs[key] = nullptr;
+	for (int b = 0; b < boundingObjs.size(); b++) {
+		if (boundingObjs[b] == boundingObject) {
+			//delete boundingObjs[b];
+			//boundingObjs[b] = nullptr;
+			boundingObjs.erase(boundingObjs.begin() + b);
+			return;
+		}
+	}
 }
 
 void BoundingObjectManager::Release()
@@ -73,23 +76,23 @@ void BoundingObjectManager::SetColor(uint id, vector3 color)
 void BoundingObjectManager::CheckCollisions()
 {
 	collInd = spatialPartition->CalculateColisions(boundingObjs);
-	std::map<uint, BoundingObject*>::iterator iterator;
-	for (iterator = boundingObjs.begin(); iterator != boundingObjs.end(); iterator++) {
-		float tempPosY = boundingObjs[iterator->first]->GetGameObject()->GetTransform().GetPosition().y - boundingObjs[iterator->first]->GetHalfWidth().y;
+	for (int b = 0; b < boundingObjs.size(); b++) {
+		float tempPosY = boundingObjs[b]->GetGameObject()->GetTransform().GetPosition().y - boundingObjs[b]->GetHalfWidth().y;
 		if (tempPosY < groundY)
 		{
-			vector3 tempPos = boundingObjs[iterator->first]->GetGameObject()->GetTransform().GetPosition();
-			tempPos.y = tempPosY + (groundY - tempPosY);
-			tempPos.y = groundY + boundingObjs[iterator->first]->GetHalfWidth().y;
-			boundingObjs[iterator->first]->GetGameObject()->GetTransform().SetPosition(tempPos);
+			vector3 tempPos = boundingObjs[b]->GetGameObject()->GetTransform().GetPosition();
+			//tempPos.y = tempPosY + (groundY - tempPosY);
+			tempPos.y = groundY + boundingObjs[b]->GetHalfWidth().y;
+			boundingObjs[b]->GetGameObject()->GetTransform().SetPosition(tempPos);
 
 			//Set y velo to zero
-			Rigidbody* body = boundingObjs[iterator->first]->GetGameObject()->GetComponent<Rigidbody>();
+			Rigidbody* body = boundingObjs[b]->GetGameObject()->GetComponent<Rigidbody>();
 			if (body != nullptr) {
 				vector3 velo = body->GetVelocity();
 				if (velo.y <= 0) {
 					velo.y = 0;
 				}
+				velo = velo * DRAG;
 				body->SetVelocity(velo);
 			}
 		}
@@ -98,14 +101,11 @@ void BoundingObjectManager::CheckCollisions()
 }
 void BoundingObjectManager::Draw()
 {
-	std::map<uint, BoundingObject*>::iterator iterator;
-	for (iterator = boundingObjs.begin(); iterator != boundingObjs.end(); iterator++) {
-		//boundingObjs[iterator->first]->Draw();
-	}
+	
 }
 
 bool BoundingObjectManager::IsInBounds(uint id) {
-	return boundingObjs.find(id) != boundingObjs.end();
+	return id > 0 && id < boundingObjs.size();
 }
 
 void BoundingObjectManager::SetGroundY(float _groundY)

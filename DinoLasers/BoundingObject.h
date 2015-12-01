@@ -22,7 +22,7 @@ private:
 	
 	bool isTrigger;
 
-	uint id;
+	uint layer;
 public:
 	BoundingObject(std::vector<vector3>);
 	BoundingObject();
@@ -45,7 +45,7 @@ public:
 	vector3 GetHalfWidth();
 	void SetColor(vector3);
 
-	uint GetId();
-	void SetId(uint);
+	void SetLayer(uint);
+	uint GetLayer();
 };
 

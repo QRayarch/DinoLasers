@@ -11,7 +11,7 @@ public:
 	SpatialPartition();
 	~SpatialPartition();
 
-	virtual std::map<uint, std::vector<uint>> CalculateColisions(std::map<uint, BoundingObject*>) = 0;
+	virtual std::vector<std::vector<uint>> CalculateColisions(std::vector<BoundingObject*>) = 0;
 
 	void SendCollisionInfoBoth(BoundingObject*, BoundingObject*);
 	void SendCollisionInfoBothExit(BoundingObject*, BoundingObject*);

@@ -20,7 +20,9 @@ void CollisionDebug::SetGameObject(GameObject* gameObject) {
 }
 
 void CollisionDebug::OnCollide(CollisionInfo info) {
-	info.GetSource()->SetColor(RERED);
+	GetGameObject()->GetComponent<BoundingObject>()->SetColor(RERED);
+	//info.GetSource()->SetColor(REBLUE);
+	MeshManagerSingleton::GetInstance()->AddCubeToQueue(info.GetSource()->GetGameObject()->GetWorldMatrix(), REBLUE, WIRE);
 }
 
 void CollisionDebug::OnCollideExit(CollisionInfo info) {
@@ -32,5 +34,5 @@ void CollisionDebug::OnTrigger(CollisionInfo info) {
 }
 
 void CollisionDebug::OnTriggerExit(CollisionInfo info) {
-	info.GetSource()->SetColor(REWHITE);
+	info.GetSource()->SetColor(REYELLOW);
 }

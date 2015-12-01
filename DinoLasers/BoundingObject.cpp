@@ -3,7 +3,6 @@
 
 BoundingObject::BoundingObject(std::vector<vector3> vertices)
 {
-	id = 0;
 	sphere = new BoundingSphere(vertices);
 	ob = new SATBoundingBox(vertices);
 	realign = new BoundingBox(vertices);
@@ -15,12 +14,13 @@ BoundingObject::BoundingObject(std::vector<vector3> vertices)
 	isTrigger = false;
 
 	color = REWHITE;
+
+	layer = 0;
 }
 
 //Use when you want to construct the collision info off of a model render
 BoundingObject::BoundingObject()
 {
-	id = 0;
 	sphere = nullptr;
 	ob = nullptr;
 	realign = nullptr;
@@ -32,6 +32,8 @@ BoundingObject::BoundingObject()
 	isTrigger = false;
 
 	color = REWHITE;
+
+	layer = 0;
 }
 
 BoundingObject::~BoundingObject()
@@ -116,5 +118,6 @@ void BoundingObject::SetColor(vector3 newColor)
 	color = newColor;
 }
 
-uint BoundingObject::GetId() { return id; }
-void BoundingObject::SetId(uint newID) { id = newID; }
+void BoundingObject::SetLayer(uint newLayer) { layer = newLayer; }
+
+uint BoundingObject::GetLayer() { return layer; }

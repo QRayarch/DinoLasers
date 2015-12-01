@@ -10,25 +10,21 @@ SPBruteForce::~SPBruteForce()
 {
 }
 
-std::map<uint, std::vector<uint>> SPBruteForce::CalculateColisions(std::map<uint, BoundingObject*> bos) {
-	//ASK ALBERTO about maybe using a heap here?
-	std::map<uint, std::vector<uint>> collInd;
+std::vector<std::vector<uint>> SPBruteForce::CalculateColisions(std::vector<BoundingObject*> bos) {
+	std::vector<std::vector<uint>> collInd;
 
-	std::map<uint, BoundingObject*>::iterator i;
-	std::map<uint, BoundingObject*>::iterator j;
-	for (i = bos.begin(); i != bos.end(); i++) {
-		collInd[i->first] = (std::vector<uint>());
-		j = i;
-		j++;
-		for (; j != bos.end(); j++)
+	for (int i = 0; i < bos.size(); i++) {
+		collInd.push_back(std::vector<uint>());
+
+		for (int j = i + 1; j < bos.size(); j++)
 		{
-			if (bos[i->first]->IsColliding(bos[j->first]))
+			if (bos[i]->IsColliding(bos[j]))
 			{
-				collInd[i->first].push_back(j->first);
-				SpatialPartition::SendCollisionInfoBoth(bos[i->first], bos[j->first]);
+				collInd[i].push_back(j);
+				SpatialPartition::SendCollisionInfoBoth(bos[i], bos[j]);
 			}
 			else {
-				SendCollisionInfoBothExit(bos[i->first], bos[j->first]);
+				SendCollisionInfoBothExit(bos[i], bos[j]);
 			}
 		}
 	}

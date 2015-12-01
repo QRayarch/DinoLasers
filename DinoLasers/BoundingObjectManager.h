@@ -12,12 +12,11 @@ class BoundingObjectManager
 private:
 	BoundingObjectManager();
 	~BoundingObjectManager();
-	std::map<uint, BoundingObject*> boundingObjs;
+	std::vector<BoundingObject*> boundingObjs;
 
 	SpatialPartition* spatialPartition;
-	std::map<uint, std::vector<uint>> collInd;
+	std::vector<std::vector<uint>> collInd;
 
-	int addIndex;
 	float groundY;
 public:
 	static BoundingObjectManager* instance;

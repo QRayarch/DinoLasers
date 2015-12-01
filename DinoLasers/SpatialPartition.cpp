@@ -11,8 +11,12 @@ SpatialPartition::~SpatialPartition()
 }
 
 void SpatialPartition::SendCollisionInfoBoth(BoundingObject* a, BoundingObject* b) {
-	SendCollisionInfo(a, b);
-	SendCollisionInfo(b, a);
+	if (a == b) return;
+	if (a->GetLayer() & b->GetLayer()) {
+		SendCollisionInfo(a, b);
+		SendCollisionInfo(b, a);
+	}
+
 }
 
 void SpatialPartition::SendCollisionInfo(BoundingObject* source, BoundingObject* checked) {
@@ -31,6 +35,7 @@ void SpatialPartition::SendCollisionInfo(BoundingObject* source, BoundingObject*
 			sourceCollideables[c]->OnCollide(collisionInfo);
 		}
 	}
+	
 }
 
 void SpatialPartition::SendCollisionInfoBothExit(BoundingObject* a, BoundingObject* b) {

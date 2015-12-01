@@ -10,6 +10,6 @@ public:
 	SPBruteForce();
 	~SPBruteForce();
 	
-	std::map<uint, std::vector<uint>> CalculateColisions(std::map<uint, BoundingObject*>);
+	std::vector<std::vector<uint>> CalculateColisions(std::vector<BoundingObject*>);
 };
 
