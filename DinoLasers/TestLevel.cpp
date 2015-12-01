@@ -19,7 +19,9 @@ void TestLevel::Load() {
 	dinoBO->SetLayer(2);
 	dino->AddComponent(dinoBO);
 	dino->AddComponent(new CameraFollow());
-	dino->AddComponent(new ProjectileLauncher());
+	ProjectileLauncher* launcher = new ProjectileLauncher();
+	launcher->SetFireTime(0.1f);
+	dino->AddComponent(launcher);
 	dino->AddComponent(new PlayerMovement());
 	dino->AddComponent(new Rigidbody());
 	dino->AddComponent(new Health());
@@ -34,7 +36,7 @@ void TestLevel::Load() {
 	//test->AddComponent(testBO);
 	GameObjectManager::GetInstance()->AddGameObject(test);
 
-	for (int c = 0; c < 20; c++) {
+	for (int c = 0; c < 10; c++) {
 		GameObject* crate = new GameObject();
 		crate->AddComponent(new ModelRender("Minecraft\\MC_Cow.obj", "Crate_" + c));
 		BoundingObject* crateBO = new BoundingObject();

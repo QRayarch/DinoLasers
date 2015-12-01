@@ -188,6 +188,9 @@ bool BoundingBox::CheckSATCollision(BoundingBox* const colliding) {
 	vector3 translation = colliding->GetCenterGlobal() - GetCenterGlobal();
 	translation = vector3(glm::dot(translation, objectANormals[0]), glm::dot(translation, objectANormals[1]), glm::dot(translation, objectANormals[2]));
 
+	
+
+
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
 			AbsR[i][j] = std::abs(R[i][j]) + std::numeric_limits<float>::epsilon();

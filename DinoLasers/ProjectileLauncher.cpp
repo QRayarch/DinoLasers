@@ -3,14 +3,19 @@
 
 ProjectileLauncher::ProjectileLauncher()
 {
-
+	fireTime = 1.0f;
+	fireTimer = 0;
 }
 
 void ProjectileLauncher::LaunchProjectile()
 {
 	GameObject* projectile = new GameObject();
-	projectile->AddComponent(new ModelRender("DinoLasers\\Laser.obj", "Laser"));
-	BoundingObject* boundingOb = new BoundingObject();
+	ModelRender* model = new ModelRender("DinoLasers\\Laser.obj", "Laser");
+	if (bounds.size() == 0) {
+		bounds = Utility::GetModelMinMax(model->GetModel());
+	}
+	projectile->AddComponent(model);
+	BoundingObject* boundingOb = new BoundingObject(bounds);
 	boundingOb->SetLayer(4);
 	boundingOb->SetIsTrigger(true);
 	projectile->AddComponent(boundingOb);
@@ -25,10 +30,17 @@ void ProjectileLauncher::LaunchProjectile()
 
 void ProjectileLauncher::Update(float dt)
 {
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-		LaunchProjectile();
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		if (fireTimer >= fireTime) {
+			LaunchProjectile();
+			fireTimer = 0;
+		}
+	}
+	fireTimer += dt;
 }
 
 ProjectileLauncher::~ProjectileLauncher()
 {
 }
+
+void ProjectileLauncher::SetFireTime(float newFireTime) { fireTime = newFireTime; }
