@@ -5,6 +5,7 @@ Health::Health()
 {
 	health = 100;
 	maxHealth = health;
+	
 }
 Health::Health(float _health)
 {
@@ -30,8 +31,17 @@ void Health::AddHealth(float _increment)
 
 void Health::TakeDamage(float _decriment)
 {
+	bool wasDead = IsDead();
 	health -= _decriment;
 	health = fmax(health, 0.0f);
+	if (!wasDead && IsDead()) {
+		
+		std::vector<DeathHandler*> dhs = GetGameObject()->GetComponents<DeathHandler>();
+		for (int i = 0; i < dhs.size(); i++)
+		{
+			dhs[i]->OnDeath();
+		}
+	}
 }
 
 bool Health::IsDead()

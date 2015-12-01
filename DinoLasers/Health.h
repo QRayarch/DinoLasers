@@ -1,6 +1,8 @@
 #pragma once
 #include "Component.h"
 #include "math.h"
+#include "DeathHandler.h"
+#include "GameObject.h"
 
 class Health : public Component
 {

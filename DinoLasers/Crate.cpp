@@ -7,7 +7,7 @@ Crate::Crate()
 
 void Crate::OnDeath()
 {
-	//TBD
+	GameObjectManager::GetInstance()->RemoveGameObject(GetGameObject());
 }
 
 Crate::~Crate()

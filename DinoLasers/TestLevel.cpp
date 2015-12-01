@@ -40,6 +40,7 @@ void TestLevel::Load() {
 		BoundingObject* crateBO = new BoundingObject();
 		crateBO->SetLayer(4 | 2);
 		crate->AddComponent(crateBO);
+		crate->AddComponent(new Health(30.0f));
 		//crate->AddComponent(new CollisionDebug());
 		crate->AddComponent(new Rigidbody());
 		crate->GetTransform().SetPosition(vector3(rand() % 40 - 20, 5.0f, rand() % 40 - 20));
