@@ -3,6 +3,7 @@
 #include "math.h"
 #include "DeathHandler.h"
 #include "GameObject.h"
+#include "Crate.h"
 
 class Health : public Component
 {

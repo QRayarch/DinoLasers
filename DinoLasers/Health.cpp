@@ -35,11 +35,19 @@ void Health::TakeDamage(float _decriment)
 	health -= _decriment;
 	health = fmax(health, 0.0f);
 	if (!wasDead && IsDead()) {
-		
+
+		/*
 		std::vector<DeathHandler*> dhs = GetGameObject()->GetComponents<DeathHandler>();
 		for (int i = 0; i < dhs.size(); i++)
 		{
-			dhs[i]->OnDeath();
+		dhs[i]->OnDeath();
+		}
+		*/
+
+		DeathHandler* dh = GetGameObject()->GetComponent<DeathHandler>();
+		if (dh != nullptr)
+		{		
+			dh->OnDeath();
 		}
 	}
 }
