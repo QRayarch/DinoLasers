@@ -80,7 +80,7 @@ void PlayerMovement::Update(float dt)
 	}
 
 	if (currMouse != prevMouse){
-		Turn((prevMouse.x - currMouse.x) * dt * 4);
+		Turn((prevMouse.x - currMouse.x) * dt * 10);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)){
