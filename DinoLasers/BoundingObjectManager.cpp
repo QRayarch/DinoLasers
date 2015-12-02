@@ -76,15 +76,17 @@ void BoundingObjectManager::SetColor(uint id, vector3 color)
 void BoundingObjectManager::CheckCollisions()
 {
 	collInd = spatialPartition->CalculateColisions(boundingObjs);
-	for (int c = 0; c < 0; c++) {//collInd.size()
+	for (int c = 0; c < collInd.size(); c++) {
 		for (int m = 0; m < collInd[c].size(); m++) {
-			vector3 pos = boundingObjs[m]->GetGameObject()->GetTransform().GetPosition();
+			if (IsInBounds(collInd[c][m].index)) {
+				if (!boundingObjs[c]->IsTrigger() && !boundingObjs[collInd[c][m].index]->IsTrigger()) {// && boundingObjs[c]->GetLayer() & boundingObjs[m]->GetLayer()
+					vector3 pos = boundingObjs[c]->GetGameObject()->GetTransform().GetPosition();
 
-			ContactManifold cm = collInd[c][m];
-
-			pos -= collInd[c][m].axis * collInd[c][m].penetration;
-			std::cout << "MERB " << " " << (cm.penetration * 10000000.0f) << "   " << cm.axis[0] << "   " << cm.axis[1] << "   " << cm.axis[2] << "\n";
-			boundingObjs[m]->GetGameObject()->GetTransform().SetPosition(pos);
+					pos -= collInd[c][m].axis * collInd[c][m].penetration;
+					//std::cout << "MERB " << " " << (cm.penetration * 10000000.0f) << "   " << cm.axis[0] << "   " << cm.axis[1] << "   " << cm.axis[2] << "\n";
+					boundingObjs[c]->GetGameObject()->GetTransform().SetPosition(pos);
+				}
+			}
 		}
 	}
 	for (int b = 0; b < boundingObjs.size(); b++) {

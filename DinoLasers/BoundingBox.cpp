@@ -201,175 +201,75 @@ bool BoundingBox::CheckSATCollision(BoundingBox* const colliding, ContactManifol
 
 	float dist;
 	float overlap;
-	vector3 axis;
-	vector3 zero;
 
 	//std::cout << "\n\n\n";
 	for (int i = 0; i < 3; i++) {
 		ra = m_v3HalfWidth[i];
 		rb = colliding->GetHalfWidth()[0] * AbsR[i][0] + colliding->GetHalfWidth()[1] * AbsR[i][1] + colliding->GetHalfWidth()[2] * AbsR[i][2];
-		dist = std::abs(translation[i]);
-		if (dist > ra + rb) return false;
+		dist = translation[i];
+		if (std::abs(dist) > ra + rb) return false;
 		overlap = std::abs(dist - ra - rb);
 		if (overlap < contact.penetration) {
-			axis = objectANormals[i];
-			if (axis != zero) {
-				contact.penetration = overlap;
-				contact.axis = axis;
-				//std::cout << overlap << "\n";
+			contact.penetration = overlap;
+			contact.axis = objectANormals[i];
+			if (dist > 0) {
+				contact.axis *= -1;
 			}
+			//std::cout << translation[i] << "\n";
 		}
 	}
 
 	for (int i = 0; i < 3; i++) {
 		ra = m_v3HalfWidth[0] * AbsR[0][i] + m_v3HalfWidth[1] * AbsR[1][i] + m_v3HalfWidth[2] * AbsR[2][i];
 		rb = colliding->GetHalfWidth()[i];
-		dist = std::abs(translation[0] * R[0][i] + translation[1] * R[1][i] + translation[2] * R[2][i]);
-		if (dist > ra + rb) return false;
+		dist = translation[0] * R[0][i] + translation[1] * R[1][i] + translation[2] * R[2][i];
+		if (std::abs(dist) > ra + rb) return false;
 		overlap = std::abs(dist - ra - rb);
 		if (overlap < contact.penetration) {
-			axis = objectBNormals[i];
-			if (axis != zero) {
-				contact.penetration = overlap;
-				contact.axis = axis; 
-				//std::cout << overlap << "\n";
+			contact.penetration = overlap;
+			contact.axis = objectBNormals[i];
+			if (dist > 0) {
+				contact.axis *= -1;
 			}
+			//std::cout << dist << "\n";
 		}
 	}
 
 	ra = m_v3HalfWidth[1] * AbsR[2][0] + m_v3HalfWidth[2] * AbsR[1][0];
 	rb = colliding->GetHalfWidth()[1] * AbsR[0][2] + colliding->GetHalfWidth()[2] * AbsR[0][1];
-	dist = std::abs(translation[2] * R[1][0] - translation[1] * R[2][0]);
-	if (dist > ra + rb) return false;
-	overlap = std::abs(dist - ra - rb);
-	if (overlap < contact.penetration) {
-		axis = glm::cross(objectANormals[0], objectBNormals[0]);
-		if (axis != zero) {
-			contact.penetration = overlap;
-			contact.axis = axis; 
-			//std::cout << overlap << "\n";
-		}
-	}
+	if (std::abs(translation[2] * R[1][0] - translation[1] * R[2][0]) > ra + rb) return false;
 
 	ra = m_v3HalfWidth[1] * AbsR[2][1] + m_v3HalfWidth[2] * AbsR[1][1];
 	rb = colliding->GetHalfWidth()[0] * AbsR[0][2] + colliding->GetHalfWidth()[2] * AbsR[0][0];
-	dist = std::abs(translation[2] * R[1][1] - translation[1] * R[2][1]);
-	if (dist > ra + rb) return false;
-	overlap = std::abs(dist - ra - rb);
-	if (overlap < contact.penetration) {
-		axis = glm::cross(objectANormals[0], objectBNormals[1]);
-		if (axis != zero) {
-			contact.penetration = overlap;
-			contact.axis = axis; 
-			//std::cout << overlap << "\n";
-		}
-
-	}
+	if (std::abs(translation[2] * R[1][1] - translation[1] * R[2][1]) > ra + rb) return false;
 
 	ra = m_v3HalfWidth[1] * AbsR[2][2] + m_v3HalfWidth[2] * AbsR[1][2];
 	rb = colliding->GetHalfWidth()[0] * AbsR[0][1] + colliding->GetHalfWidth()[1] * AbsR[0][0];
-	dist = std::abs(translation[2] * R[1][2] - translation[1] * R[2][2]);
-	if (dist > ra + rb) return false;
-	overlap = std::abs(dist - ra - rb);
-	if (overlap < contact.penetration) {
-		axis = glm::cross(objectANormals[0], objectBNormals[2]);
-		if (axis != zero) {
-			contact.penetration = overlap;
-			contact.axis = axis;
-			//std::cout << overlap << "\n";
-		}
-
-	}
+	if (std::abs(translation[2] * R[1][2] - translation[1] * R[2][2]) > ra + rb) return false;
 
 	ra = m_v3HalfWidth[0] * AbsR[2][0] + m_v3HalfWidth[2] * AbsR[0][0];
 	rb = colliding->GetHalfWidth()[1] * AbsR[1][2] + colliding->GetHalfWidth()[2] * AbsR[1][1];
-	dist = std::abs(translation[0] * R[2][0] - translation[2] * R[0][0]);
-	if (dist > ra + rb) return false;
-	overlap = std::abs(dist - ra - rb);
-	if (overlap < contact.penetration) {
-		axis = glm::cross(objectANormals[1], objectBNormals[0]);
-		if (axis != zero) {
-			contact.penetration = overlap;
-			contact.axis = axis;
-			//std::cout << overlap << "\n";
-		}
-
-	}
+	if (std::abs(translation[0] * R[2][0] - translation[2] * R[0][0]) > ra + rb) return false;
 
 	ra = m_v3HalfWidth[0] * AbsR[2][1] + m_v3HalfWidth[2] * AbsR[0][1];
 	rb = colliding->GetHalfWidth()[0] * AbsR[1][2] + colliding->GetHalfWidth()[2] * AbsR[1][0];
-	dist = std::abs(translation[0] * R[2][1] - translation[2] * R[0][1]);
-	if (dist > ra + rb) return false;
-	overlap = std::abs(dist - ra - rb);
-	if (overlap < contact.penetration) {
-		axis = glm::cross(objectANormals[1], objectBNormals[1]);
-		if (axis != zero) {
-			contact.penetration = overlap;
-			contact.axis = axis;
-			//std::cout << overlap << "\n";
-		}
-		
-	}
+	if (std::abs(translation[0] * R[2][1] - translation[2] * R[0][1]) > ra + rb) return false;
 
 	ra = m_v3HalfWidth[0] * AbsR[2][2] + m_v3HalfWidth[2] * AbsR[0][2];
 	rb = colliding->GetHalfWidth()[0] * AbsR[1][1] + colliding->GetHalfWidth()[1] * AbsR[1][0];
-	dist = std::abs(translation[0] * R[2][2] - translation[2] * R[0][2]);
-	if (dist > ra + rb) return false;
-	overlap = std::abs(dist - ra - rb);
-	if (overlap < contact.penetration) {
-		axis = glm::cross(objectANormals[1], objectBNormals[2]);
-		if (axis != zero) {
-			contact.penetration = overlap;
-			contact.axis = axis;
-			//std::cout << overlap << "\n";
-		}
-
-	}
+	if (std::abs(translation[0] * R[2][2] - translation[2] * R[0][2]) > ra + rb) return false;
 
 	ra = m_v3HalfWidth[0] * AbsR[1][0] + m_v3HalfWidth[1] * AbsR[0][0];
 	rb = colliding->GetHalfWidth()[1] * AbsR[2][2] + colliding->GetHalfWidth()[2] * AbsR[2][1];
-	dist = std::abs(translation[1] * R[0][0] - translation[0] * R[1][0]);
-	if (dist > ra + rb) return false;
-	overlap = std::abs(dist - ra - rb);
-	if (overlap < contact.penetration) {
-		axis = glm::cross(objectANormals[2], objectBNormals[0]);
-		if (axis != zero) {
-			contact.penetration = overlap;
-			contact.axis = axis;
-			//std::cout << overlap << "\n";
-		}
-
-	}
+	if (std::abs(translation[1] * R[0][0] - translation[0] * R[1][0]) > ra + rb) return false;
 
 	ra = m_v3HalfWidth[0] * AbsR[1][1] + m_v3HalfWidth[1] * AbsR[0][1];
 	rb = colliding->GetHalfWidth()[0] * AbsR[2][2] + colliding->GetHalfWidth()[2] * AbsR[2][0];
-	dist = std::abs(translation[1] * R[0][1] - translation[0] * R[1][1]);
-	if (dist > ra + rb) return false;
-	overlap = std::abs(dist - ra - rb);
-	if (overlap < contact.penetration) {
-		axis = glm::cross(objectANormals[2], objectBNormals[1]);
-		if (axis != zero) {
-			contact.penetration = overlap;
-			contact.axis = axis;
-			//std::cout << overlap << "\n";
-		}
-
-	}
+	if (std::abs(translation[1] * R[0][1] - translation[0] * R[1][1]) > ra + rb) return false;
 
 	ra = m_v3HalfWidth[0] * AbsR[1][2] + m_v3HalfWidth[1] * AbsR[0][2];
 	rb = colliding->GetHalfWidth()[0] * AbsR[2][1] + colliding->GetHalfWidth()[1] * AbsR[2][0];
-	dist = std::abs(translation[1] * R[0][2] - translation[0] * R[1][2]);
-	if (dist > ra + rb) return false;
-	overlap = std::abs(dist - ra - rb);
-	if (overlap < contact.penetration) {
-		axis = glm::cross(objectANormals[2], objectBNormals[2]);
-		if (axis != zero) {
-			contact.penetration = overlap;
-			contact.axis = axis;
-			//std::cout << overlap << "\n";
-		}
-
-	}
+	if (std::abs(translation[1] * R[0][2] - translation[0] * R[1][2]) > ra + rb) return false;
 
 	if (contact.penetration == 1000000) {
 		contact.penetration = 0;

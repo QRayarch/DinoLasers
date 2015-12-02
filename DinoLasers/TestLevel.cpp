@@ -42,7 +42,7 @@ void TestLevel::Load() {
 		BoundingObject* crateBO = new BoundingObject();
 		crateBO->SetLayer(4 | 2);
 		crate->AddComponent(crateBO);
-		crate->AddComponent(new Health(30.0f));
+		crate->AddComponent(new Health(50.0f));
 		crate->AddComponent(new Crate());
 		//crate->AddComponent(new CollisionDebug());
 		crate->AddComponent(new Rigidbody());
@@ -61,7 +61,7 @@ void TestLevel::Update(float dt) {
 	Level::Update(dt);
 
 
-	MeshManagerSingleton::GetInstance()->AddPlaneToQueue(glm::rotate(glm::translate(vector3(0.0f, BoundingObjectManager::GetInstance()->GetGroundY() - 1, 0.0f)) * glm::scale(vector3(1000.0f)), 90.0f, vector3(1.0f, 0.0f, 0.0f)), REGRAY);
+	MeshManagerSingleton::GetInstance()->AddPlaneToQueue(glm::rotate(glm::translate(vector3(0.0f, BoundingObjectManager::GetInstance()->GetGroundY() - 1 - 0.2f, 0.0f)) * glm::scale(vector3(1000.0f)), 90.0f, vector3(1.0f, 0.0f, 0.0f)), REGRAY);
 	test->GetTransform().SetOrentation(test->GetTransform().GetOrientation() * quaternion(vector3(0.01f, 0.01f, 0.01f)));
 
 
