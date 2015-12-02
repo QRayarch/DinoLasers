@@ -38,7 +38,7 @@ void TestLevel::Load() {
 
 	for (int c = 0; c < 10; c++) {
 		GameObject* crate = new GameObject();
-		crate->AddComponent(new ModelRender("Minecraft\\MC_Cow.obj", "Crate_" + c));
+		crate->AddComponent(new ModelRender("DinoLasers\\Crate.obj", "Crate_" + c));
 		BoundingObject* crateBO = new BoundingObject();
 		crateBO->SetLayer(4 | 2);
 		crate->AddComponent(crateBO);
