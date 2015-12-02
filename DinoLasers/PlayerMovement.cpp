@@ -4,6 +4,7 @@ void PlayerMovement::Init(void)
 {	
 	speed = 10.0f;
 	prevMouse = currMouse = sf::Mouse::getPosition();
+	center = sf::Vector2i(SystemSingleton::GetInstance()->GetWindowWidth() / 2 + SystemSingleton::GetInstance()->GetWindowX(), SystemSingleton::GetInstance()->GetWindowHeight() / 2 + SystemSingleton::GetInstance()->GetWindowY());
 }
 void PlayerMovement::Swap(PlayerMovement& other)
 {
@@ -55,13 +56,8 @@ void PlayerMovement::Turn(float degrees)
 	GetGameObject()->GetTransform().SetOrentation(GetGameObject()->GetTransform().GetOrientation() * quaternion(glm::rotate(matrix4(IDENTITY_M4), degrees, REAXISY)));
 }
 
-void PlayerMovement::LookUp(float dt)
-{
-
-}
-
 void PlayerMovement::Update(float dt)
-{
+{	
 	currMouse = sf::Mouse::getPosition();
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
 		MoveForward(dt);
@@ -79,13 +75,9 @@ void PlayerMovement::Update(float dt)
 		StrafeLeft(dt);
 	}
 
-	if (currMouse != prevMouse){
-		Turn((prevMouse.x - currMouse.x) * dt * 10);
-	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)){
-		//playerRotation = quaternion(vector3(0.0f, glm::radians(-1.0f), 0.0f)) * playerRotation;
-		//forward = glm::rotate(REAXISZ, glm::angle(playerRotation), glm::axis(playerRotation));
+	if (currMouse != center && prevMouse == center){
+		Turn((Utility::Sign(prevMouse.x - currMouse.x)) * dt * 300);
+		std::cout << currMouse.x << ", " << currMouse.y << std::endl;
 	}
 
 	//JUMP
@@ -99,6 +91,9 @@ void PlayerMovement::Update(float dt)
 			}
 		}
 	}
+	
+	sf::Mouse::setPosition(center);
+
 	prevMouse = currMouse;
 }
 
