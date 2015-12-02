@@ -3,7 +3,7 @@
 void PlayerMovement::Init(void)
 {	
 	speed = 10.0f;
-	prevMouse = currMouse = sf::Mouse::getPosition();
+	currMouse = sf::Mouse::getPosition();
 	center = sf::Vector2i(SystemSingleton::GetInstance()->GetWindowWidth() / 2 + SystemSingleton::GetInstance()->GetWindowX(), SystemSingleton::GetInstance()->GetWindowHeight() / 2 + SystemSingleton::GetInstance()->GetWindowY());
 }
 void PlayerMovement::Swap(PlayerMovement& other)
@@ -75,10 +75,8 @@ void PlayerMovement::Update(float dt)
 		StrafeLeft(dt);
 	}
 
-	if (currMouse != center && prevMouse == center){
-		Turn((Utility::Sign(prevMouse.x - currMouse.x)) * dt * 300);
-		std::cout << currMouse.x << ", " << currMouse.y << std::endl;
-	}
+	Turn((Utility::Sign(center.x - currMouse.x)) * dt * 100);
+	std::cout << currMouse.x << ", " << currMouse.y << std::endl;	
 
 	//JUMP
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
@@ -93,8 +91,6 @@ void PlayerMovement::Update(float dt)
 	}
 	
 	sf::Mouse::setPosition(center);
-
-	prevMouse = currMouse;
 }
 
 void PlayerMovement::SetGameObject(GameObject* g)
