@@ -95,11 +95,9 @@ void BoundingObject::Update(float dt) {
 
 bool BoundingObject::IsColliding(BoundingObject* other, ContactManifold& contact) {
 	if (!other->sphere->IsColliding(sphere)) return false;
-	//MeshManagerSingleton::GetInstance()->AddSphereToQueue(glm::translate(sphere->GetCenterGlobal()) * glm::scale(vector3(sphere->GetRadius() * 2.0f)), color, WIRE);
 	realign->RealignBox(ob);
 	other->realign->RealignBox(other->ob);
 	if (!other->realign->IsColliding(realign)) return false;
-	MeshManagerSingleton::GetInstance()->AddCubeToQueue(glm::translate(realign->GetCenterGlobal()) * glm::scale(realign->GetHalfWidth() * 2.0f), color, WIRE);
 	return other->ob->CheckSATCollision(ob, contact);
 }
 

@@ -125,13 +125,6 @@ private:
 
 	bool CheckAABBCollision(BoundingBox* const);
 
-
-	vector2 Project(vector3);
-
-	bool IsOverlapping(vector2, vector2);
-
-	float GetOverlap(vector2, vector2);
-
 protected:
 	virtual bool DoesUseSAT();
 };

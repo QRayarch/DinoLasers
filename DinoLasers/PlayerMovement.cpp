@@ -76,7 +76,6 @@ void PlayerMovement::Update(float dt)
 	}
 
 	Turn((Utility::Sign(center.x - currMouse.x)) * dt * 100);
-	std::cout << currMouse.x << ", " << currMouse.y << std::endl;	
 
 	//JUMP
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){

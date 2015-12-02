@@ -19,12 +19,12 @@ std::vector<std::vector<ContactManifold>> SPBruteForce::CalculateColisions(std::
 		for (int j = i + 1; j < bos.size(); j++)
 		{
 			ContactManifold contact;
-			if (bos[i]->IsColliding(bos[j], contact) || bos[j]->IsColliding(bos[i], contact))
+			if (bos[i]->IsColliding(bos[j], contact))
 			{
 				
 				contact.index = j;
 				collInd[i].push_back(contact);
-				std::cout << contact.index << " " << contact.penetration << "\n";
+				
 				SpatialPartition::SendCollisionInfoBoth(bos[i], bos[j]);
 			}
 			else {

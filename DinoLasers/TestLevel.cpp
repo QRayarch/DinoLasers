@@ -26,7 +26,7 @@ void TestLevel::Load() {
 	dino->AddComponent(new Rigidbody());
 	dino->AddComponent(new Health());
 	dino->GetTransform().SetPosition(vector3(0.0f, 5.0f, 0.0f));
-	dino->AddComponent(new CollisionDebug());
+	//dino->AddComponent(new CollisionDebug());
 	GameObjectManager::GetInstance()->AddGameObject(dino);
 	
 	//Component* testModel = new ModelRender("DinoLasers\\Laser.obj", "Laser");
@@ -36,7 +36,7 @@ void TestLevel::Load() {
 	//test->AddComponent(testBO);
 	GameObjectManager::GetInstance()->AddGameObject(test);
 
-	for (int c = 0; c < 1; c++) {
+	for (int c = 0; c < 10; c++) {
 		GameObject* crate = new GameObject();
 		crate->AddComponent(new ModelRender("DinoLasers\\Crate.obj", "Crate_" + c));
 		BoundingObject* crateBO = new BoundingObject();

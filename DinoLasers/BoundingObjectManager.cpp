@@ -76,11 +76,14 @@ void BoundingObjectManager::SetColor(uint id, vector3 color)
 void BoundingObjectManager::CheckCollisions()
 {
 	collInd = spatialPartition->CalculateColisions(boundingObjs);
-	for (int c = 0; c < collInd.size(); c++) {
+	for (int c = 0; c < 0; c++) {//collInd.size()
 		for (int m = 0; m < collInd[c].size(); m++) {
 			vector3 pos = boundingObjs[m]->GetGameObject()->GetTransform().GetPosition();
 
+			ContactManifold cm = collInd[c][m];
+
 			pos -= collInd[c][m].axis * collInd[c][m].penetration;
+			std::cout << "MERB " << " " << (cm.penetration * 10000000.0f) << "   " << cm.axis[0] << "   " << cm.axis[1] << "   " << cm.axis[2] << "\n";
 			boundingObjs[m]->GetGameObject()->GetTransform().SetPosition(pos);
 		}
 	}

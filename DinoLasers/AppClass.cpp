@@ -17,6 +17,7 @@ void AppClass::InitWindow(String a_sWindowName)
 
 void AppClass::InitVariables(void)
 {
+	srand(time(NULL));
 	level = new TestLevel();
 	level->Load();
 	//Initialize positions
