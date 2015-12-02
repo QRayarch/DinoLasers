@@ -75,7 +75,7 @@ void PlayerMovement::Update(float dt)
 		StrafeLeft(dt);
 	}
 
-	Turn((Utility::Sign(center.x - currMouse.x)) * dt * 100);
+	Turn((Utility::Sign(center.x - currMouse.x)) * dt * 100);	
 
 	//JUMP
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
