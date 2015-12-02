@@ -11,7 +11,7 @@ public:
 	SATBoundingBox(SATBoundingBox const&);
 	SATBoundingBox& operator=(SATBoundingBox const&);
 
-	bool IsColliding(BoundingBox* const);
+	bool IsColliding(BoundingBox* const, ContactManifold&);
 protected:
 	bool DoesUseSAT();
 };

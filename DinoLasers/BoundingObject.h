@@ -7,6 +7,7 @@
 #include "Updateable.h"
 #include "ModelRender.h"
 #include "GameObject.h"
+#include "ContactManifold.h"
 
 class BoundingObject : public Updateable
 {
@@ -32,7 +33,7 @@ public:
 
 	void Update(float);
 
-	bool IsColliding(BoundingObject*);
+	bool IsColliding(BoundingObject*, ContactManifold&);
 	void SetVisibility(bool);
 	void SetSphereVisibility(bool);
 	void SetAABBVisibility(bool);

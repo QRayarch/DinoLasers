@@ -23,8 +23,8 @@ SATBoundingBox& SATBoundingBox::operator=(SATBoundingBox const& other)
 	return static_cast<SATBoundingBox&>(BoundingBox::operator=(other));
 }
 
-bool SATBoundingBox::IsColliding(BoundingBox* const colliding) {
-	return CheckSATCollision(colliding);
+bool SATBoundingBox::IsColliding(BoundingBox* const colliding, ContactManifold& contact) {
+	return CheckSATCollision(colliding, contact);
 }
 
 bool SATBoundingBox::DoesUseSAT() {

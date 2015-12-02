@@ -10,17 +10,21 @@ SPBruteForce::~SPBruteForce()
 {
 }
 
-std::vector<std::vector<uint>> SPBruteForce::CalculateColisions(std::vector<BoundingObject*> bos) {
-	std::vector<std::vector<uint>> collInd;
+std::vector<std::vector<ContactManifold>> SPBruteForce::CalculateColisions(std::vector<BoundingObject*> bos) {
+	std::vector<std::vector<ContactManifold>> collInd;
 
 	for (int i = 0; i < bos.size(); i++) {
-		collInd.push_back(std::vector<uint>());
+		collInd.push_back(std::vector<ContactManifold>());
 
 		for (int j = i + 1; j < bos.size(); j++)
 		{
-			if (bos[i]->IsColliding(bos[j]))
+			ContactManifold contact;
+			if (bos[i]->IsColliding(bos[j], contact) || bos[j]->IsColliding(bos[i], contact))
 			{
-				collInd[i].push_back(j);
+				
+				contact.index = j;
+				collInd[i].push_back(contact);
+				std::cout << contact.index << " " << contact.penetration << "\n";
 				SpatialPartition::SendCollisionInfoBoth(bos[i], bos[j]);
 			}
 			else {

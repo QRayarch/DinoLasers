@@ -5,6 +5,7 @@
 #include "SpatialPartition.h"
 #include "SPBruteForce.h"
 #include "Rigidbody.h"
+#include "ContactManifold.h"
 
 class BoundingObjectManager
 {
@@ -15,7 +16,7 @@ private:
 	std::vector<BoundingObject*> boundingObjs;
 
 	SpatialPartition* spatialPartition;
-	std::vector<std::vector<uint>> collInd;
+	std::vector<std::vector<ContactManifold>> collInd;
 
 	float groundY;
 public:

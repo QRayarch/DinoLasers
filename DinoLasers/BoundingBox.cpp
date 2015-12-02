@@ -131,7 +131,7 @@ vector3 BoundingBox::ToGlobal(vector3 vec) {
 bool BoundingBox::IsColliding(BoundingBox* const colliding)
 {
 	if (colliding->DoesUseSAT()) {
-		return CheckSATCollision(colliding);
+		return CheckSATCollision(colliding, ContactManifold());
 	}
 	return CheckAABBCollision(colliding);
 }
@@ -171,8 +171,8 @@ bool BoundingBox::CheckAABBCollision(BoundingBox* const colliding) {
 	return bColliding;
 }
 
-bool BoundingBox::CheckSATCollision(BoundingBox* const colliding) {
-	std::vector<vector3> objectANormals = GetLocalNormals();
+bool BoundingBox::CheckSATCollision(BoundingBox* const colliding, ContactManifold& contact) {
+	/*std::vector<vector3> objectANormals = GetLocalNormals();
 	std::vector<vector3> objectBNormals = colliding->GetLocalNormals();
 
 	float ra, rb;
@@ -244,7 +244,111 @@ bool BoundingBox::CheckSATCollision(BoundingBox* const colliding) {
 	ra = m_v3HalfWidth[0] * AbsR[1][2] + m_v3HalfWidth[1] * AbsR[0][2];
 	rb = colliding->GetHalfWidth()[0] * AbsR[2][1] + colliding->GetHalfWidth()[1] * AbsR[2][0];
 	if (std::abs(translation[1] * R[0][2] - translation[0] * R[1][2]) > ra + rb) return false;
+	return true;*/
+
+	contact.penetration = std::numeric_limits<float>::max();
+
+	std::vector<vector3> objectANormals = GetLocalNormals();
+	std::vector<vector3> objectBNormals = colliding->GetLocalNormals();
+
+	matrix4 m1 = GetGameObject()->GetWorldMatrix();
+	matrix4 m2 = colliding->GetGameObject()->GetWorldMatrix();
+
+	for (int i = 0; i < objectANormals.size(); i++)
+	{
+		vector2 p1 = Project(objectANormals[i]);
+		vector2 p2 = Project(objectANormals[i]);
+
+		if (!IsOverlapping(p1, p2)) return false;
+		float overlap = GetOverlap(p1, p2);
+		if (overlap < contact.penetration) {
+			contact.penetration = overlap;
+			contact.axis = objectANormals[i];
+		}
+	}
+	for (int i = 0; i < objectBNormals.size(); i++)
+	{
+		vector2 p1 = Project(objectBNormals[i]);
+		vector2 p2 = Project(objectBNormals[i]);
+
+		if (!IsOverlapping(p1, p2)) return false;
+		float overlap = GetOverlap(p1, p2);
+		if (overlap < contact.penetration) {
+			contact.penetration = overlap;
+			contact.axis = objectBNormals[i];
+		}
+	}
+
+
+	int AONSize = objectANormals.size();
+	int BONSize = objectBNormals.size();
+
+	std::vector<vector3> crossProd;
+
+	for (int x = 0; x < AONSize; x++)
+	{
+		for (int y = 0; y < BONSize; y++)
+		{
+			crossProd.push_back(glm::cross(objectANormals[x], objectBNormals[y]));
+		}
+	}
+
+	int CPSize = crossProd.size();
+
+	for (int z = 0; z < CPSize; z++)
+	{
+		vector2 pA = Project(crossProd[z]);
+		vector2 pB = Project(crossProd[z]); //and j
+
+		if (!IsOverlapping(pA, pB)) return false;
+		float overlap = GetOverlap(pA, pB);
+		if (overlap < contact.penetration) {
+			contact.penetration = overlap;
+			contact.axis = crossProd[z];
+		}
+	}
+
+
 	return true;
+}
+
+vector2 BoundingBox::Project(vector3 normal) {
+	vector2 bounds;
+
+	std::vector<vector3> vertices;
+	vertices.push_back(ToGlobal(m_v3Min));
+	vertices.push_back(ToGlobal(vector3(m_v3Max.x, m_v3Min.y, m_v3Min.z)));
+	vertices.push_back(ToGlobal(vector3(m_v3Min.x, m_v3Min.y, m_v3Max.z)));
+	vertices.push_back(ToGlobal(vector3(m_v3Max.x, m_v3Min.y, m_v3Max.z)));
+
+	vertices.push_back(ToGlobal(vector3(m_v3Min.x, m_v3Max.y, m_v3Min.z)));
+	vertices.push_back(ToGlobal(vector3(m_v3Max.x, m_v3Max.y, m_v3Min.z)));
+	vertices.push_back(ToGlobal(vector3(m_v3Min.x, m_v3Max.y, m_v3Max.z)));
+	vertices.push_back(ToGlobal(m_v3Max));
+
+	bounds.x = glm::dot(normal, vertices[0]);
+	bounds.y = bounds.x;
+
+	for (int v = 1; v < vertices.size(); v++) {
+		float proj = glm::dot(normal, vertices[v]);
+		if (proj > bounds.y) {
+			bounds.y = proj;
+		}
+		else if (proj < bounds.x) {
+			bounds.x = proj;
+		}
+	}
+
+	return bounds;
+}
+
+bool BoundingBox::IsOverlapping(vector2 a, vector2 b)
+{
+	return a.y > b.x || b.y > a.x;
+}
+
+float BoundingBox::GetOverlap(vector2 a, vector2 b) {
+	return std::max(0.0f, std::min(a.y, b.y) - std::max(a.x, b.x));
 }
 
 bool BoundingBox::DoesUseSAT() {

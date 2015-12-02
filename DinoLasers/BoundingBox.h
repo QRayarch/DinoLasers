@@ -9,6 +9,7 @@ Date: 2015/10
 #include "RE\ReEng.h"
 #include "Updateable.h"
 #include "GameObject.h"
+#include "ContactManifold.h"
 
 class SATBoundingBox;
 
@@ -99,7 +100,7 @@ public:
 	vector3 GetMin();
 	vector3 GetMax();
 
-	bool CheckSATCollision(BoundingBox* const);
+	bool CheckSATCollision(BoundingBox* const, ContactManifold&);
 	std::vector<vector3> GetLocalNormals();
 
 private:
@@ -123,6 +124,13 @@ private:
 	void RecalculateBounds(std::vector<vector3>);
 
 	bool CheckAABBCollision(BoundingBox* const);
+
+
+	vector2 Project(vector3);
+
+	bool IsOverlapping(vector2, vector2);
+
+	float GetOverlap(vector2, vector2);
 
 protected:
 	virtual bool DoesUseSAT();

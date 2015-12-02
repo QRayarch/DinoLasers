@@ -76,6 +76,14 @@ void BoundingObjectManager::SetColor(uint id, vector3 color)
 void BoundingObjectManager::CheckCollisions()
 {
 	collInd = spatialPartition->CalculateColisions(boundingObjs);
+	for (int c = 0; c < collInd.size(); c++) {
+		for (int m = 0; m < collInd[c].size(); m++) {
+			vector3 pos = boundingObjs[m]->GetGameObject()->GetTransform().GetPosition();
+
+			pos -= collInd[c][m].axis * collInd[c][m].penetration;
+			boundingObjs[m]->GetGameObject()->GetTransform().SetPosition(pos);
+		}
+	}
 	for (int b = 0; b < boundingObjs.size(); b++) {
 		float tempPosY = boundingObjs[b]->GetGameObject()->GetTransform().GetPosition().y - boundingObjs[b]->GetHalfWidth().y;
 		if (tempPosY < groundY)

@@ -23,7 +23,7 @@ void SpatialPartition::SendCollisionInfo(BoundingObject* source, BoundingObject*
 	if (source == nullptr || checked == nullptr) return;
 
 	CollisionInfo collisionInfo(source, checked);
-
+	MeshManagerSingleton::GetInstance()->AddCubeToQueue(source->GetGameObject()->GetWorldMatrix(), REBLUE, WIRE);
 	std::vector<Collideable*> sourceCollideables = source->GetGameObject()->GetComponents<Collideable>();
 	if (source->IsTrigger()) {
 		for (int c = 0; c < sourceCollideables.size(); c++) {
@@ -47,7 +47,7 @@ void SpatialPartition::SendCollisionInfoExit(BoundingObject* source, BoundingObj
 	if (source == nullptr || checked == nullptr) return;
 
 	CollisionInfo collisionInfo(source, checked);
-
+	MeshManagerSingleton::GetInstance()->AddCubeToQueue(source->GetGameObject()->GetWorldMatrix(), RERED, WIRE);
 	std::vector<Collideable*> sourceCollideables = source->GetGameObject()->GetComponents<Collideable>();
 	if (source->IsTrigger()) {
 		for (int c = 0; c < sourceCollideables.size(); c++) {
