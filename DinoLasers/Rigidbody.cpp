@@ -55,6 +55,10 @@ Rigidbody& Rigidbody::operator=(Rigidbody const& other)
 	return *this;
 }
 
+void Rigidbody::AddForce(vector3 force) {
+	accerleration += force / mass;
+}
+
 void Rigidbody::Update(float dt) 
 {
 

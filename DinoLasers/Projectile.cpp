@@ -4,7 +4,7 @@ Projectile::Projectile()
 {
 	damage = 10.0f;
 	lifeTime = 0;
-	maxLifeTime = 1.0f;
+	maxLifeTime = 0.3f;
 	speed = 40.0f;
 	
 	//
@@ -26,7 +26,7 @@ void Projectile::OnTrigger(CollisionInfo info) {
 	}
 	Rigidbody* body = info.GetChecked()->GetGameObject()->GetComponent<Rigidbody>();
 	if (body != nullptr) {
-		float amount = 20;
+		float amount = 10;
 		body->SetVelocity(body->GetVelocity() + vector3(0.0f, amount, 0.0f) + GetGameObject()->GetTransform().GetForward() * amount);
 	}
 	GameObjectManager::GetInstance()->RemoveGameObject(GetGameObject());

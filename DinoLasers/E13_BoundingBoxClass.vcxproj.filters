@@ -35,6 +35,9 @@
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="Utility.cpp" />
     <ClCompile Include="ContactManifold.cpp" />
+    <ClCompile Include="AnimateRotation.cpp" />
+    <ClCompile Include="RandomMove.cpp" />
+    <ClCompile Include="LandMine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\res\Resource.h" />
@@ -70,6 +73,9 @@
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="Utility.h" />
     <ClInclude Include="ContactManifold.h" />
+    <ClInclude Include="AnimateRotation.h" />
+    <ClInclude Include="RandomMove.h" />
+    <ClInclude Include="LandMine.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\res\BTO.rc" />

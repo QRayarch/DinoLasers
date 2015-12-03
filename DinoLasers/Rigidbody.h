@@ -24,6 +24,8 @@ public:
 
 	void Update(float);
 
+	void AddForce(vector3);
+
 	void SetVelocity(vector3);
 	vector3 GetVelocity();
 	void SetAcceleration(vector3);

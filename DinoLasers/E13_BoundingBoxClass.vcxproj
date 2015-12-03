@@ -111,6 +111,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimateRotation.cpp" />
     <ClCompile Include="AppClass.cpp" />
     <ClCompile Include="AppClassControls.cpp" />
     <ClCompile Include="BoundingBox.cpp" />
@@ -128,6 +129,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="Health.cpp" />
+    <ClCompile Include="LandMine.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="ModelRender.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -135,6 +137,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="PlayerMovement.cpp" />
     <ClCompile Include="ProjectileLauncher.cpp" />
+    <ClCompile Include="RandomMove.cpp" />
     <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="SATBoundingBox.cpp" />
@@ -148,6 +151,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\res\Resource.h" />
+    <ClInclude Include="AnimateRotation.h" />
     <ClInclude Include="AppClass.h" />
     <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="BoundingObject.h" />
@@ -164,12 +168,14 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="Health.h" />
+    <ClInclude Include="LandMine.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="ModelRender.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="PlayerMovement.h" />
     <ClInclude Include="ProjectileLauncher.h" />
+    <ClInclude Include="RandomMove.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="SATBoundingBox.h" />

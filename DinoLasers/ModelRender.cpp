@@ -3,7 +3,12 @@
 
 ModelRender::ModelRender(String filePath, String modelName)
 {
-	MeshManagerSingleton::GetInstance()->LoadModel(filePath, modelName);
+	if (MeshManagerSingleton::GetInstance() != nullptr && MeshManagerSingleton::GetInstance()->m_pModelMngr != nullptr) {
+		MeshManagerSingleton::GetInstance()->m_pModelMngr->LoadModel(filePath, modelName);
+	}
+	else {
+		assert(true);
+	}
 	model = modelName;
 }
 
