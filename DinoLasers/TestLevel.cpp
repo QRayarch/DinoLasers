@@ -55,7 +55,7 @@ void TestLevel::Load() {
 	//test->AddComponent(testBO);
 	GameObjectManager::GetInstance()->AddGameObject(test);
 
-	for (int c = 0; c < 10; c++) {
+	for (int c = 0; c < 30; c++) {
 		GameObject* crate = new GameObject();
 		crate->AddComponent(new ModelRender("DinoLasers\\Crate.obj", "Crate"));
 		BoundingObject* crateBO = new BoundingObject();

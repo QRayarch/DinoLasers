@@ -102,7 +102,7 @@ public:
 
 	bool CheckSATCollision(BoundingBox* const, ContactManifold&);
 	std::vector<vector3> GetLocalNormals();
-
+	void GetLocalNormals(std::vector<vector3>&);
 private:
 	/*
 	Method: Release
@@ -121,7 +121,7 @@ private:
 
 	vector3 ToGlobal(vector3);
 
-	void RecalculateBounds(std::vector<vector3>);
+	void RecalculateBounds(std::vector<vector3>&);
 
 	bool CheckAABBCollision(BoundingBox* const);
 

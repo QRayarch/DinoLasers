@@ -4,7 +4,7 @@ Projectile::Projectile()
 {
 	damage = 10.0f;
 	lifeTime = 0;
-	maxLifeTime = 0.3f;
+	maxLifeTime = 1.3f;
 	speed = 40.0f;
 	
 	//

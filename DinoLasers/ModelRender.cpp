@@ -19,8 +19,10 @@ ModelRender::~ModelRender()
 
 void ModelRender::Update(float dt) {
 	//Okay not actually a render, but good enough
-	MeshManagerSingleton::GetInstance()->SetModelMatrix(GetGameObject()->GetWorldMatrix(), model);
-	MeshManagerSingleton::GetInstance()->AddInstanceToRenderList(model);
+	ModelManagerSingleton::GetInstance()->SetModelMatrix(GetGameObject()->GetWorldMatrix(), model);
+	ModelManagerSingleton::GetInstance()->AddInstanceToRenderList(model);
+	//MeshManagerSingleton::GetInstance()->SetModelMatrix(GetGameObject()->GetWorldMatrix(), model);//HOT
+	//MeshManagerSingleton::GetInstance()->AddInstanceToRenderList(model);
 }
 
 String ModelRender::GetModel() { return model; }

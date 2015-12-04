@@ -30,6 +30,9 @@ GameObjectManager::~GameObjectManager()
 }
 
 void GameObjectManager::Update(float dt) {
+	for (int g = 0; g < gameObjects.size(); g++) {
+		gameObjects[g]->GetTransform().RecalculateMatrix();
+	}
 	for (int u = 0; u < updateables.size(); u++) {
 		updateables[u]->Update(dt);
 	}

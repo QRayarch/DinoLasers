@@ -2,37 +2,39 @@
 
 BoundingSphere::BoundingSphere(std::vector<vector3> listOfVertex){
 
-	vector3 vMin, vMax;
-	
-	vMin = vMax = listOfVertex[0];
+	if (listOfVertex.size() > 0) {
+		vector3 vMin, vMax;
 
-	for (uint i = 1; i < listOfVertex.size(); i++)
-	{
-		if (vMax.x < listOfVertex[i].x)
-			vMax.x = listOfVertex[i].x;
-		else if (vMin.x > listOfVertex[i].x)
-			vMin.x = listOfVertex[i].x;
+		vMin = vMax = listOfVertex[0];
 
-		if (vMax.y < listOfVertex[i].y)
-			vMax.y = listOfVertex[i].y;
-		else if (vMin.y > listOfVertex[i].y)
-			vMin.y = listOfVertex[i].y;
+		for (uint i = 1; i < listOfVertex.size(); i++)
+		{
+			if (vMax.x < listOfVertex[i].x)
+				vMax.x = listOfVertex[i].x;
+			else if (vMin.x > listOfVertex[i].x)
+				vMin.x = listOfVertex[i].x;
 
-		if (vMax.z < listOfVertex[i].z)
-			vMax.z = listOfVertex[i].z;
-		else if (vMin.z > listOfVertex[i].z)
-			vMin.z = listOfVertex[i].z;
-	}
+			if (vMax.y < listOfVertex[i].y)
+				vMax.y = listOfVertex[i].y;
+			else if (vMin.y > listOfVertex[i].y)
+				vMin.y = listOfVertex[i].y;
 
-	m_v3Center = (vMax + vMin) / 2.0f;
+			if (vMax.z < listOfVertex[i].z)
+				vMax.z = listOfVertex[i].z;
+			else if (vMin.z > listOfVertex[i].z)
+				vMin.z = listOfVertex[i].z;
+		}
 
-	m_fRadius = 0.0f;
-	float fDistance;
-	for (uint i = 0; i < listOfVertex.size(); i++)
-	{
-		fDistance = glm::distance(m_v3Center, listOfVertex[i]);
-		if (m_fRadius < fDistance)
-			m_fRadius = fDistance;
+		m_v3Center = (vMax + vMin) / 2.0f;
+
+		m_fRadius = 0.0f;
+		float fDistance;
+		for (uint i = 0; i < listOfVertex.size(); i++)
+		{
+			fDistance = glm::distance(m_v3Center, listOfVertex[i]);
+			if (m_fRadius < fDistance)
+				m_fRadius = fDistance;
+		}
 	}
 }
 bool BoundingSphere::IsColliding(BoundingSphere* pOther){

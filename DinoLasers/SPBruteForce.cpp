@@ -19,7 +19,7 @@ std::vector<std::vector<ContactManifold>> SPBruteForce::CalculateColisions(std::
 		for (int j = i + 1; j < bos.size(); j++)
 		{
 			ContactManifold contact;
-			if (bos[i]->IsColliding(bos[j], contact))
+			if (bos[i]->IsColliding(bos[j], contact))//HOT
 			{
 				
 				contact.index = j;

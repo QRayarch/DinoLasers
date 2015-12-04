@@ -4,6 +4,8 @@ void Transform::Init() {
 	position = vector3();
 	orientation = quaternion();
 	scale = vector3(1, 1, 1);
+
+	matrix = IDENTITY_M4;
 }
 
 void Transform::Release(void)
@@ -25,6 +27,7 @@ Transform::Transform()
 Transform::Transform(vector3 pos) {
 	Init();
 	position = pos;
+	RecalculateMatrix();
 }
 
 Transform::Transform(vector3 pos, quaternion ort, vector3 scl) {
@@ -32,6 +35,7 @@ Transform::Transform(vector3 pos, quaternion ort, vector3 scl) {
 	position = pos;
 	orientation = ort;
 	scale = scl;
+	RecalculateMatrix();
 }
 
 
@@ -39,6 +43,7 @@ Transform::Transform(Transform const& other) {
 	position = other.position;
 	orientation = other.orientation;
 	scale = other.scale;
+	RecalculateMatrix();
 }
 
 Transform::~Transform()
@@ -58,10 +63,16 @@ Transform& Transform::operator=(Transform const& other)
 	return *this;
 }
 
+//
+
 matrix4 Transform::GetMatrix() {
-	return glm::translate(position) * glm::mat4_cast(orientation) * glm::scale(scale);
+	return matrix;
 }
 
+
+void Transform::RecalculateMatrix() {
+	matrix = glm::translate(position) * glm::mat4_cast(orientation) * glm::scale(scale);
+}
 
 void Transform::SetPosition(vector3 newPos) { position = newPos; }
 vector3 Transform::GetPosition() { return position; }

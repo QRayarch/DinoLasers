@@ -20,6 +20,8 @@ private:
 	bool isSphereVisible;
 	bool isAABBVisible;
 	bool isOBBVisible;
+
+	bool hasAlignedThisFrame = false;
 	
 	bool isTrigger;
 

@@ -75,7 +75,7 @@ void BoundingObject::SetGameObject(GameObject* gameObject) {
 }
 
 void BoundingObject::Update(float dt) {
-
+	hasAlignedThisFrame = false;
 	//Set new Radius 
 	//sphere->SetRadius(glm::distance(realign->GetMax(), realign->GetCenterLocal()));
 	ob->Update(dt);
@@ -95,8 +95,12 @@ void BoundingObject::Update(float dt) {
 
 bool BoundingObject::IsColliding(BoundingObject* other, ContactManifold& contact) {
 	if (!other->sphere->IsColliding(sphere)) return false;
-	realign->RealignBox(ob);
-	other->realign->RealignBox(other->ob);
+	if (!hasAlignedThisFrame) {
+		realign->RealignBox(ob);//HOT
+	}
+	if (!other->hasAlignedThisFrame) {
+		other->realign->RealignBox(other->ob);//HOT
+	}
 	if (!other->realign->IsColliding(realign)) return false;
 	return other->ob->CheckSATCollision(ob, contact);
 }

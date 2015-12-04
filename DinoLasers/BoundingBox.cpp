@@ -56,21 +56,22 @@ BoundingBox::~BoundingBox(){ Release(); };
 void BoundingBox::RealignBox(BoundingBox* const box) {
 	matrix = IDENTITY_M4;
 	std::vector<vector3> vertices;
+	vertices.reserve(8);
 
 	vector3 fullWidth = box->GetHalfWidth();
 	fullWidth.x *= 2;
 	fullWidth.y *= 2;
 	fullWidth.z *= 2;
 
-	vertices.push_back(box->ToGlobal(box->m_v3Min));
-	vertices.push_back(box->ToGlobal(vector3(box->m_v3Max.x, box->m_v3Min.y, box->m_v3Min.z)));
-	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x, box->m_v3Min.y, box->m_v3Max.z)));
-	vertices.push_back(box->ToGlobal(vector3(box->m_v3Max.x, box->m_v3Min.y, box->m_v3Max.z)));
+	vertices.push_back((box->m_v3Min));
+	vertices.push_back((vector3(box->m_v3Max.x, box->m_v3Min.y, box->m_v3Min.z)));
+	vertices.push_back((vector3(box->m_v3Min.x, box->m_v3Min.y, box->m_v3Max.z)));
+	vertices.push_back((vector3(box->m_v3Max.x, box->m_v3Min.y, box->m_v3Max.z)));
 
-	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x, box->m_v3Max.y, box->m_v3Min.z)));
-	vertices.push_back(box->ToGlobal(vector3(box->m_v3Max.x, box->m_v3Max.y, box->m_v3Min.z)));
-	vertices.push_back(box->ToGlobal(vector3(box->m_v3Min.x, box->m_v3Max.y, box->m_v3Max.z)));
-	vertices.push_back(box->ToGlobal(box->m_v3Max));
+	vertices.push_back((vector3(box->m_v3Min.x, box->m_v3Max.y, box->m_v3Min.z)));
+	vertices.push_back((vector3(box->m_v3Max.x, box->m_v3Max.y, box->m_v3Min.z)));
+	vertices.push_back((vector3(box->m_v3Min.x, box->m_v3Max.y, box->m_v3Max.z)));
+	vertices.push_back((box->m_v3Max));
 
 	RecalculateBounds(vertices);
 }
@@ -79,7 +80,7 @@ void BoundingBox::Update(float dt) {
 	matrix = GetGameObject()->GetWorldMatrix();
 }
 
-void BoundingBox::RecalculateBounds(std::vector<vector3> a_lVectorList) {
+void BoundingBox::RecalculateBounds(std::vector<vector3>& a_lVectorList) {//HOT
 	//Count the points of the incoming list
 	uint nVertexCount = a_lVectorList.size();
 
@@ -93,7 +94,7 @@ void BoundingBox::RecalculateBounds(std::vector<vector3> a_lVectorList) {
 	//Get the max and min out of the list
 	for (uint nVertex = 1; nVertex < nVertexCount; nVertex++)
 	{
-		if (m_v3Min.x > a_lVectorList[nVertex].x) //If min is larger than current
+		if (m_v3Min.x > a_lVectorList[nVertex].x) //If min is larger than current//HOT
 			m_v3Min.x = a_lVectorList[nVertex].x;
 		else if (m_v3Max.x < a_lVectorList[nVertex].x)//if max is smaller than current
 			m_v3Max.x = a_lVectorList[nVertex].x;
@@ -113,9 +114,9 @@ void BoundingBox::RecalculateBounds(std::vector<vector3> a_lVectorList) {
 	m_v3Center = (m_v3Min + m_v3Max) / 2.0f;
 
 	//we calculate the distance between all the values of min and max vectors
-	m_v3HalfWidth.x = glm::distance(vector3(m_v3Min.x, 0.0f, 0.0f), vector3(m_v3Max.x, 0.0f, 0.0f)) / 2.0f;
-	m_v3HalfWidth.y = glm::distance(vector3(0.0f, m_v3Min.y, 0.0f), vector3(0.0f, m_v3Max.y, 0.0f)) / 2.0f;
-	m_v3HalfWidth.z = glm::distance(vector3(0.0f, 0.0f, m_v3Min.z), vector3(0.0f, 0.0f, m_v3Max.z)) / 2.0f;
+	m_v3HalfWidth.x = (m_v3Max.x - m_v3Min.x) / 2.0f; // glm::distance(vector3(m_v3Min.x, 0.0f, 0.0f), vector3(m_v3Max.x, 0.0f, 0.0f)) / 2.0f;//HOT
+	m_v3HalfWidth.y = (m_v3Max.y - m_v3Min.y) / 2.0f; //glm::distance(vector3(0.0f, m_v3Min.y, 0.0f), vector3(0.0f, m_v3Max.y, 0.0f)) / 2.0f;//HOT
+	m_v3HalfWidth.z = (m_v3Max.z - m_v3Min.z) / 2.0f; //glm::distance(vector3(0.0f, 0.0f, m_v3Min.z), vector3(0.0f, 0.0f, m_v3Max.z)) / 2.0f;
 }
 
 //Accessors
@@ -174,8 +175,12 @@ bool BoundingBox::CheckAABBCollision(BoundingBox* const colliding) {
 bool BoundingBox::CheckSATCollision(BoundingBox* const colliding, ContactManifold& contact) {
 	contact.penetration = 1000000;
 
-	std::vector<vector3> objectANormals = GetLocalNormals();
-	std::vector<vector3> objectBNormals = colliding->GetLocalNormals();
+	std::vector<vector3> objectANormals = std::vector<vector3>();
+	objectANormals.reserve(3);
+	std::vector<vector3> objectBNormals = std::vector<vector3>();
+	objectBNormals.reserve(3);
+	GetLocalNormals(objectANormals);
+	colliding->GetLocalNormals(objectBNormals);
 
 	float ra, rb;
 	matrix3 R, AbsR;
@@ -289,8 +294,16 @@ std::vector<vector3> BoundingBox::GetLocalNormals()
 {
 	matrix4 worldMatrix = GetGameObject()->GetWorldMatrix();
 	std::vector<vector3> lNormals = std::vector<vector3>();
+	lNormals.reserve(3);
 	lNormals.push_back(vector3(worldMatrix[0][0], worldMatrix[0][1], worldMatrix[0][2]));
 	lNormals.push_back(vector3(worldMatrix[1][0], worldMatrix[1][1], worldMatrix[1][2]));
 	lNormals.push_back(vector3(worldMatrix[2][0], worldMatrix[2][1], worldMatrix[2][2]));
 	return lNormals;
+}
+
+void BoundingBox::GetLocalNormals(std::vector<vector3>& normals) {
+	matrix4 worldMatrix = GetGameObject()->GetWorldMatrix();
+	normals.push_back(vector3(worldMatrix[0][0], worldMatrix[0][1], worldMatrix[0][2]));
+	normals.push_back(vector3(worldMatrix[1][0], worldMatrix[1][1], worldMatrix[1][2]));
+	normals.push_back(vector3(worldMatrix[2][0], worldMatrix[2][1], worldMatrix[2][2]));
 }

@@ -27,12 +27,16 @@ void SpatialPartition::SendCollisionInfo(BoundingObject* source, BoundingObject*
 	std::vector<Collideable*> sourceCollideables = source->GetGameObject()->GetComponents<Collideable>();
 	if (source->IsTrigger()) {
 		for (int c = 0; c < sourceCollideables.size(); c++) {
-			sourceCollideables[c]->OnTrigger(collisionInfo);
+			if (sourceCollideables[c] != nullptr) {
+				sourceCollideables[c]->OnTrigger(collisionInfo);
+			}
 		}
 	}
 	else {
 		for (int c = 0; c < sourceCollideables.size(); c++) {
-			sourceCollideables[c]->OnCollide(collisionInfo);
+			if (sourceCollideables[c] != nullptr) {
+				sourceCollideables[c]->OnCollide(collisionInfo);
+			}
 		}
 	}
 	
@@ -51,12 +55,16 @@ void SpatialPartition::SendCollisionInfoExit(BoundingObject* source, BoundingObj
 	std::vector<Collideable*> sourceCollideables = source->GetGameObject()->GetComponents<Collideable>();
 	if (source->IsTrigger()) {
 		for (int c = 0; c < sourceCollideables.size(); c++) {
-			sourceCollideables[c]->OnTriggerExit(collisionInfo);
+			if (sourceCollideables[c] != nullptr) {
+				sourceCollideables[c]->OnTriggerExit(collisionInfo);
+			}
 		}
 	}
 	else {
 		for (int c = 0; c < sourceCollideables.size(); c++) {
-			sourceCollideables[c]->OnCollideExit(collisionInfo);
+			if (sourceCollideables[c] != nullptr) {
+				sourceCollideables[c]->OnCollideExit(collisionInfo);
+			}
 		}
 	}
 }

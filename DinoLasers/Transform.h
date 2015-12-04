@@ -28,9 +28,12 @@ public:
 	vector3 GetForward();
 	vector3 GetRight();
 	vector3 GetUp();
+	void RecalculateMatrix();
 private:
+	matrix4 matrix;
 	void Init();
 	void Release();
 	void Swap(Transform&);
+
 };
 
