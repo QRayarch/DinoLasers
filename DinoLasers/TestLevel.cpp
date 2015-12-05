@@ -59,7 +59,7 @@ void TestLevel::Load() {
 	//test->AddComponent(testBO);
 	GameObjectManager::GetInstance()->AddGameObject(test);
 
-	for (int c = 0; c < 10; c++) {
+	for (int c = 0; c < 0; c++) {
 		GameObject* crate = new GameObject();
 		crate->AddComponent(new ModelRender("DinoLasers\\Crate.obj", "Crate"));
 		BoundingObject* crateBO = new BoundingObject();
@@ -78,6 +78,57 @@ void TestLevel::Load() {
 	ProgressBar* healthBar = new ProgressBar("Health", 100.0f);
 	healthBar->SetFillColor(RERED);
 	AddUIElement(healthBar);
+
+	//Load Level
+	LoadLevelFromFile();
+}
+
+void TestLevel::LoadLevelFromFile() {
+	std::ifstream levelFile("Levels\\0.txt", std::ios::in | std::ios::ate);
+	if (levelFile.is_open()) {
+		std::streampos size;
+		char* levelInfo;
+
+		size = levelFile.tellg();
+		levelInfo = new char[size];
+		levelFile.seekg(0, std::ios::beg);
+		levelFile.read(levelInfo, size);
+		levelFile.close();
+
+		std::cout << "SIZE " << size << "\n";
+		int y = 0;
+		int x = 0;
+		for (int c = 0; c < size; c++) {
+			if (levelInfo[c] == '\n') {
+				std::cout << "    END" << std::endl;
+				y++;
+				x = 0;
+			}
+			else {
+				x++;
+				switch (levelInfo[c]) {
+					case '#':
+						GameObject* wall = new GameObject();
+						wall->AddComponent(new ModelRender("DinoLasers\\Wall.obj", "Wall"));
+						BoundingObject* wallBO = new BoundingObject();
+						wallBO->SetLayer(2 | 4 | 8 | 16);
+						wallBO->SetIsMoveable(false);
+						wall->AddComponent(wallBO);
+						float s = 2;// wallBO->GetHalfWidth()[0];
+						std::cout << s;
+						wall->GetTransform().SetPosition(vector3(static_cast<float>(x) * s, 0.0f, static_cast<float>(y)* s));
+						wall->GetTransform().SetOrentation(quaternion(vector3(0.0f, (rand() % 4) * glm::pi<float>() / 2, 0.0f)));
+						GameObjectManager::GetInstance()->AddGameObject(wall);
+						break;
+				}
+			}
+		}
+
+		delete[] levelInfo;
+	}
+	else {
+		std::cout << "ERROR LOADING FILE" << std::endl;
+	}
 }
 
 void TestLevel::Update(float dt) {

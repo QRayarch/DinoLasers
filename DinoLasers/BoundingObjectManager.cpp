@@ -78,7 +78,7 @@ void BoundingObjectManager::CheckCollisions()
 	collInd = spatialPartition->CalculateColisions(boundingObjs);
 	for (int c = 0; c < collInd.size(); c++) {
 		for (int m = 0; m < collInd[c].size(); m++) {
-			if (IsInBounds(collInd[c][m].index)) {
+			if (IsInBounds(collInd[c][m].index) && boundingObjs[c]->IsMoveable()) {
 				if (!boundingObjs[c]->IsTrigger() && !boundingObjs[collInd[c][m].index]->IsTrigger()) {// && boundingObjs[c]->GetLayer() & boundingObjs[m]->GetLayer()
 					vector3 pos = boundingObjs[c]->GetGameObject()->GetTransform().GetPosition();
 
@@ -91,23 +91,25 @@ void BoundingObjectManager::CheckCollisions()
 		}
 	}
 	for (int b = 0; b < boundingObjs.size(); b++) {
-		float tempPosY = boundingObjs[b]->GetGameObject()->GetTransform().GetPosition().y - boundingObjs[b]->GetHalfWidth().y;
-		if (tempPosY < groundY)
-		{
-			vector3 tempPos = boundingObjs[b]->GetGameObject()->GetTransform().GetPosition();
-			//tempPos.y = tempPosY + (groundY - tempPosY);
-			tempPos.y = groundY + boundingObjs[b]->GetHalfWidth().y;
-			boundingObjs[b]->GetGameObject()->GetTransform().SetPosition(tempPos);
+		if (boundingObjs[b]->IsMoveable()) {
+			float tempPosY = boundingObjs[b]->GetGameObject()->GetTransform().GetPosition().y - boundingObjs[b]->GetHalfWidth().y;
+			if (tempPosY < groundY)
+			{
+				vector3 tempPos = boundingObjs[b]->GetGameObject()->GetTransform().GetPosition();
+				//tempPos.y = tempPosY + (groundY - tempPosY);
+				tempPos.y = groundY + boundingObjs[b]->GetHalfWidth().y;
+				boundingObjs[b]->GetGameObject()->GetTransform().SetPosition(tempPos);
 
-			//Set y velo to zero
-			Rigidbody* body = boundingObjs[b]->GetGameObject()->GetComponent<Rigidbody>();
-			if (body != nullptr) {
-				vector3 velo = body->GetVelocity();
-				if (velo.y <= 0) {
-					velo.y = 0;
+				//Set y velo to zero
+				Rigidbody* body = boundingObjs[b]->GetGameObject()->GetComponent<Rigidbody>();
+				if (body != nullptr) {
+					vector3 velo = body->GetVelocity();
+					if (velo.y <= 0) {
+						velo.y = 0;
+					}
+					velo = velo * DRAG;
+					body->SetVelocity(velo);
 				}
-				velo = velo * DRAG;
-				body->SetVelocity(velo);
 			}
 		}
 	}

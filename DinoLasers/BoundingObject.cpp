@@ -12,6 +12,7 @@ BoundingObject::BoundingObject(std::vector<vector3> vertices)
 	isOBBVisible = false;
 
 	isTrigger = false;
+	isMoveable = true;
 
 	color = REWHITE;
 
@@ -30,6 +31,7 @@ BoundingObject::BoundingObject()
 	isOBBVisible = false;
 
 	isTrigger = false;
+	isMoveable = true;
 
 	color = REWHITE;
 
@@ -113,6 +115,8 @@ void BoundingObject::SetAABBVisibility(bool isVis) { isAABBVisible = isVis; }
 void BoundingObject::SetOBBVisibility(bool isVis) { isOBBVisible = isVis;  }
 void BoundingObject::SetIsTrigger(bool isTrig) { isTrigger = isTrig; }
 bool BoundingObject::IsTrigger() { return isTrigger; }
+void BoundingObject::SetIsMoveable(bool isMove) { isMoveable = isMove; }
+bool BoundingObject::IsMoveable() { return isMoveable; }
 
 vector3 BoundingObject::GetGlobalCenter() { return sphere->GetCenterGlobal(); }
 vector3 BoundingObject::GetMin() { return realign->GetMin(); }

@@ -1,4 +1,7 @@
 #pragma once
+#include <iostream>
+#include <fstream>
+
 #include "Level.h"
 #include "CollisionDebug.h"
 #include "Health.h"
@@ -20,5 +23,7 @@ private :
 	GameObject* dino;
 	GameObject* test;
 	std::vector<vector3> groundPoints;
+
+	void LoadLevelFromFile(void);
 };
 

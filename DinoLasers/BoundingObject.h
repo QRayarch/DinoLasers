@@ -24,6 +24,7 @@ private:
 	bool hasAlignedThisFrame = false;
 	
 	bool isTrigger;
+	bool isMoveable;
 
 	uint layer;
 public:
@@ -42,6 +43,8 @@ public:
 	void SetOBBVisibility(bool);
 	void SetIsTrigger(bool);
 	bool IsTrigger();
+	void SetIsMoveable(bool);
+	bool IsMoveable();
 	vector3 GetGlobalCenter();
 	vector3 GetMin();
 	vector3 GetMax();
