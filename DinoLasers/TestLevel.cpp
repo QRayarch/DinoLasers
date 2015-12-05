@@ -28,6 +28,10 @@ void TestLevel::Load() {
 	temp->AddComponent(tempModel);
 	temp->GetTransform().SetScale(vector3(0.0f, 0.0f, 0.0f));
 	GameObjectManager::GetInstance()->AddGameObject(temp);
+	tempModel = new ModelRender("DinoLasers\\Explosion.obj", "Explosion");
+	temp->AddComponent(tempModel);
+	temp->GetTransform().SetScale(vector3(0.0f, 0.0f, 0.0f));
+	GameObjectManager::GetInstance()->AddGameObject(temp);
 	//END TEMP STUFF
 
 
@@ -55,7 +59,7 @@ void TestLevel::Load() {
 	//test->AddComponent(testBO);
 	GameObjectManager::GetInstance()->AddGameObject(test);
 
-	for (int c = 0; c < 30; c++) {
+	for (int c = 0; c < 10; c++) {
 		GameObject* crate = new GameObject();
 		crate->AddComponent(new ModelRender("DinoLasers\\Crate.obj", "Crate"));
 		BoundingObject* crateBO = new BoundingObject();

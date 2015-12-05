@@ -85,6 +85,7 @@ void BoundingObjectManager::CheckCollisions()
 					pos -= collInd[c][m].axis * collInd[c][m].penetration;
 					//std::cout << "MERB " << " " << (cm.penetration * 10000000.0f) << "   " << cm.axis[0] << "   " << cm.axis[1] << "   " << cm.axis[2] << "\n";
 					boundingObjs[c]->GetGameObject()->GetTransform().SetPosition(pos);
+					//boundingObjs[c]->GetGameObject()->GetTransform().RecalculateMatrix();
 				}
 			}
 		}

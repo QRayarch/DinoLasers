@@ -97,9 +97,11 @@ bool BoundingObject::IsColliding(BoundingObject* other, ContactManifold& contact
 	if (!other->sphere->IsColliding(sphere)) return false;
 	if (!hasAlignedThisFrame) {
 		realign->RealignBox(ob);//HOT
+		hasAlignedThisFrame = true;
 	}
 	if (!other->hasAlignedThisFrame) {
 		other->realign->RealignBox(other->ob);//HOT
+		other->hasAlignedThisFrame = true;
 	}
 	if (!other->realign->IsColliding(realign)) return false;
 	return other->ob->CheckSATCollision(ob, contact);

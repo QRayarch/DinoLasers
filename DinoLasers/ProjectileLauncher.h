@@ -7,6 +7,7 @@
 #include "Rigidbody.h"
 #include <SFML\Graphics.hpp>
 #include "Utility.h"
+#include "AnimateScale.h"
 
 class ProjectileLauncher : public Updateable
 {

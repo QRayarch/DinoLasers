@@ -112,6 +112,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnimateRotation.cpp" />
+    <ClCompile Include="AnimateScale.cpp" />
     <ClCompile Include="AppClass.cpp" />
     <ClCompile Include="AppClassControls.cpp" />
     <ClCompile Include="BoundingBox.cpp" />
@@ -144,6 +145,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClCompile Include="SpatialPartition.cpp" />
     <ClCompile Include="SPBruteForce.cpp" />
     <ClCompile Include="TestLevel.cpp" />
+    <ClCompile Include="TimeRemover.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Updateable.cpp" />
@@ -152,6 +154,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
   <ItemGroup>
     <ClInclude Include="..\res\Resource.h" />
     <ClInclude Include="AnimateRotation.h" />
+    <ClInclude Include="AnimateScale.h" />
     <ClInclude Include="AppClass.h" />
     <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="BoundingObject.h" />
@@ -182,6 +185,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClInclude Include="SpatialPartition.h" />
     <ClInclude Include="SPBruteForce.h" />
     <ClInclude Include="TestLevel.h" />
+    <ClInclude Include="TimeRemover.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Updateable.h" />

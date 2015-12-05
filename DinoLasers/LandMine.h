@@ -2,6 +2,9 @@
 #include "Collideable.h"
 #include "Health.h"
 #include "Rigidbody.h"
+#include "AnimateScale.h"
+#include "ModelRender.h"
+#include "TimeRemover.h"
 
 class LandMine : virtual public Collideable
 {

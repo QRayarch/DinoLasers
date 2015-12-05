@@ -18,8 +18,8 @@ Projectile::Projectile(float laserDamage, float maxTime, float lzrSpeed)
 	speed = lzrSpeed;
 }
 
-
 void Projectile::OnTrigger(CollisionInfo info) {
+	if (info.GetChecked()->IsTrigger()) return;
 	Health* health = info.GetChecked()->GetGameObject()->GetComponent<Health>();
 	if (health != nullptr) {
 		health->TakeDamage(damage);

@@ -38,6 +38,8 @@
     <ClCompile Include="AnimateRotation.cpp" />
     <ClCompile Include="RandomMove.cpp" />
     <ClCompile Include="LandMine.cpp" />
+    <ClCompile Include="AnimateScale.cpp" />
+    <ClCompile Include="TimeRemover.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\res\Resource.h" />
@@ -76,6 +78,8 @@
     <ClInclude Include="AnimateRotation.h" />
     <ClInclude Include="RandomMove.h" />
     <ClInclude Include="LandMine.h" />
+    <ClInclude Include="AnimateScale.h" />
+    <ClInclude Include="TimeRemover.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\res\BTO.rc" />
