@@ -53,5 +53,7 @@ public:
 
 	void SetLayer(uint);
 	uint GetLayer();
+
+	void SetIgnoreAxis(uint);
 };
 

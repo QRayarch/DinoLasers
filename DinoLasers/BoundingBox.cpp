@@ -9,6 +9,7 @@ void BoundingBox::Init(void)
 	m_v3Max = vector3(0.0f);
 
 	m_v3HalfWidth = vector3(0.0f);
+	ignoreResolutionMask = 4;
 }
 void BoundingBox::Swap(BoundingBox& other)
 {
@@ -17,6 +18,7 @@ void BoundingBox::Swap(BoundingBox& other)
 	std::swap(m_v3Max, other.m_v3Max);
 
 	std::swap(m_v3HalfWidth, other.m_v3HalfWidth);
+	std::swap(ignoreResolutionMask, other.ignoreResolutionMask);
 }
 void BoundingBox::Release(void)
 {
@@ -39,6 +41,7 @@ BoundingBox::BoundingBox(BoundingBox const& other)
 	m_v3Max = other.m_v3Max;
 
 	m_v3HalfWidth = other.m_v3HalfWidth;
+	ignoreResolutionMask = other.ignoreResolutionMask;
 }
 BoundingBox& BoundingBox::operator=(BoundingBox const& other)
 {
@@ -207,20 +210,25 @@ bool BoundingBox::CheckSATCollision(BoundingBox* const colliding, ContactManifol
 	float dist;
 	float overlap;
 
+
+	vector3 pos = GetCenterGlobal();
+
 	//std::cout << "\n\n\n";
 	for (int i = 0; i < 3; i++) {
 		ra = m_v3HalfWidth[i];
 		rb = colliding->GetHalfWidth()[0] * AbsR[i][0] + colliding->GetHalfWidth()[1] * AbsR[i][1] + colliding->GetHalfWidth()[2] * AbsR[i][2];
 		dist = translation[i];
 		if (std::abs(dist) > ra + rb) return false;
-		overlap = std::abs(dist - ra - rb);
-		if (overlap < contact.penetration) {
-			contact.penetration = overlap;
-			contact.axis = objectANormals[i];
-			if (dist > 0) {//if (translation[i] > 0) {
-				contact.axis *= -1;
+		if (i != ignoreResolutionMask) {
+			overlap = std::abs(dist - ra - rb);
+			if (overlap < contact.penetration) {
+				contact.penetration = overlap;
+				contact.axis = objectANormals[i];
+				if (glm::dot(translation, contact.axis) < 0) {//if (translation[i] > 0) {
+					contact.axis *= -1;
+				}
+				//std::cout << translation[i] << "\n";
 			}
-			//std::cout << translation[i] << "\n";
 		}
 	}
 
@@ -229,14 +237,17 @@ bool BoundingBox::CheckSATCollision(BoundingBox* const colliding, ContactManifol
 		rb = colliding->GetHalfWidth()[i];
 		dist = translation[0] * R[0][i] + translation[1] * R[1][i] + translation[2] * R[2][i];
 		if (std::abs(dist) > ra + rb) return false;
-		overlap = std::abs(dist - ra - rb);
-		if (overlap < contact.penetration) {
-			contact.penetration = overlap;
-			contact.axis = objectBNormals[i];
-			if (dist > 0) {//if (translation[i] > 0) {
-				contact.axis *= -1;
+		if (i != ignoreResolutionMask) {
+			overlap = std::abs(dist - ra - rb);
+			if (overlap < contact.penetration) {
+				contact.penetration = overlap;
+				contact.axis = objectBNormals[i];
+				
+				if (glm::dot(translation, contact.axis) < 0) {//if (translation[i] > 0) {
+					contact.axis *= -1;
+				}
+				//std::cout << dist << "\n";
 			}
-			//std::cout << dist << "\n";
 		}
 	}
 
@@ -290,20 +301,13 @@ bool BoundingBox::DoesUseSAT() {
 vector3 BoundingBox::GetMin() { return m_v3Min; }
 vector3 BoundingBox::GetMax() { return m_v3Max; }
 
-std::vector<vector3> BoundingBox::GetLocalNormals()
-{
-	matrix4 worldMatrix = GetGameObject()->GetWorldMatrix();
-	std::vector<vector3> lNormals = std::vector<vector3>();
-	lNormals.reserve(3);
-	lNormals.push_back(vector3(worldMatrix[0][0], worldMatrix[0][1], worldMatrix[0][2]));
-	lNormals.push_back(vector3(worldMatrix[1][0], worldMatrix[1][1], worldMatrix[1][2]));
-	lNormals.push_back(vector3(worldMatrix[2][0], worldMatrix[2][1], worldMatrix[2][2]));
-	return lNormals;
-}
-
 void BoundingBox::GetLocalNormals(std::vector<vector3>& normals) {
 	matrix4 worldMatrix = GetGameObject()->GetWorldMatrix();
 	normals.push_back(vector3(worldMatrix[0][0], worldMatrix[0][1], worldMatrix[0][2]));
 	normals.push_back(vector3(worldMatrix[1][0], worldMatrix[1][1], worldMatrix[1][2]));
 	normals.push_back(vector3(worldMatrix[2][0], worldMatrix[2][1], worldMatrix[2][2]));
+}
+
+void BoundingBox::SetIgnoreAxis(uint newAxis) {
+	ignoreResolutionMask = newAxis;
 }

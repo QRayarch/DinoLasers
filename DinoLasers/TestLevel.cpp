@@ -52,7 +52,7 @@ void TestLevel::Load() {
 	GameObjectManager::GetInstance()->AddGameObject(dino);
 
 	crateDropper = new GameObject();
-	crateDropper->AddComponent(new CrateDropper(1.0f, 2));
+	crateDropper->AddComponent(new CrateDropper(1.0f, 20));
 	GameObjectManager::GetInstance()->AddGameObject(crateDropper);
 	
 	/*Component* testModel = new ModelRender("DinoLasers\\SpaghettiMine.obj", "Mine");
@@ -88,24 +88,44 @@ void TestLevel::LoadLevelFromFile() {
 		int x = 0;
 		int z = 0;
 		CrateDropper* dropper = nullptr;
+		bool wasLast = false;
 		for (int c = 0; c < size; c++) {
 			if (levelInfo[c] == '\n') {
 				z++;
 				x = 0;
+				wasLast = true;
 			}
 			else {
 				x++;
 				switch (levelInfo[c]) {
-					case '#': {
+					case 'N':
+					case 'E':
+					case 'S':
+					case 'W':{
 						GameObject* wall = new GameObject();
 						wall->AddComponent(new ModelRender("DinoLasers\\Wall.obj", "Wall"));
 						BoundingObject* wallBO = new BoundingObject();
 						wallBO->SetLayer(2 | 4 | 8 | 16);
 						wallBO->SetIsMoveable(false);
 						wall->AddComponent(wallBO);
+						if (!wasLast && (levelInfo[c - 1] == '#' || levelInfo[c + 1] == '#')) {
+							wallBO->SetIgnoreAxis(0);
+							//wall->GetTransform().SetScale(vector3(0.8f));
+						} else  {
+							wallBO->SetIgnoreAxis(2);
+						}
 						gridSize = wallBO->GetHalfWidth()[0] * 2;
 						wall->GetTransform().SetPosition(vector3(static_cast<float>(x)* gridSize, 0.0f, static_cast<float>(z)* gridSize));
-						wall->GetTransform().SetOrentation(quaternion(vector3(0.0f, (rand() % 4) * glm::pi<float>() / 2, 0.0f)));
+						//wall->GetTransform().SetOrentation(quaternion(vector3(0.0f, (rand() % 4) * glm::pi<float>() / 2, 0.0f)));
+						if (levelInfo[c] == 'N') {
+
+						}
+						else if (levelInfo[c] == 'E') {
+						}
+						else if (levelInfo[c] == 'S') {
+						}
+						else if (levelInfo[c] == 'W') {
+						}
 						GameObjectManager::GetInstance()->AddGameObject(wall);
 					}
 					break;
@@ -121,6 +141,7 @@ void TestLevel::LoadLevelFromFile() {
 					}
 					break;
 				}
+				wasLast = false;
 			}
 		}
 

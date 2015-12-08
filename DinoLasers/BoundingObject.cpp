@@ -131,3 +131,7 @@ void BoundingObject::SetColor(vector3 newColor)
 void BoundingObject::SetLayer(uint newLayer) { layer = newLayer; }
 
 uint BoundingObject::GetLayer() { return layer; }
+
+void BoundingObject::SetIgnoreAxis(uint newAxis) {
+	ob->SetIgnoreAxis(newAxis);
+}

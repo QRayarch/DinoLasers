@@ -6,6 +6,7 @@ BoundingObjectManager::BoundingObjectManager()
 	boundingObjs = std::vector<BoundingObject*>();
 	spatialPartition = new SPBruteForce();
 	groundY = 0.0f;
+	oldPos = std::vector<vector3>();
 }
 
 BoundingObjectManager::~BoundingObjectManager() {
@@ -81,18 +82,36 @@ void BoundingObjectManager::CheckCollisions()
 			if (IsInBounds(collInd[c][m].index)) {
 				if (!boundingObjs[c]->IsTrigger() && !boundingObjs[collInd[c][m].index]->IsTrigger()) {// && boundingObjs[c]->GetLayer() & boundingObjs[m]->GetLayer()
 					if (boundingObjs[c]->IsMoveable()) {
-						vector3 pos = boundingObjs[c]->GetGameObject()->GetTransform().GetPosition();
+						if (false && !boundingObjs[collInd[c][m].index]->IsMoveable()) {
+							
+							if (c < oldPos.size()) {
+								vector3 trans = oldPos[c] - boundingObjs[c]->GetGameObject()->GetTransform().GetPosition();
+								trans.y = 0;
+								//trans = glm::normalize(trans);
+								boundingObjs[c]->GetGameObject()->GetTransform().SetPosition(oldPos[c] + trans);
+							}
+						}
+						else {
+							vector3 pos = boundingObjs[c]->GetGameObject()->GetTransform().GetPosition();
 
-						pos -= collInd[c][m].axis * collInd[c][m].penetration;
-						//std::cout << "MERB " << " " << (cm.penetration * 10000000.0f) << "   " << cm.axis[0] << "   " << cm.axis[1] << "   " << cm.axis[2] << "\n";
-						boundingObjs[c]->GetGameObject()->GetTransform().SetPosition(pos);
-						//boundingObjs[c]->GetGameObject()->GetTransform().RecalculateMatrix();
-					}
-					else if (boundingObjs[collInd[c][m].index]->IsMoveable()){
+							pos += collInd[c][m].axis * collInd[c][m].penetration;
+							//std::cout << "MERB " << " " << (cm.penetration * 10000000.0f) << "   " << cm.axis[0] << "   " << cm.axis[1] << "   " << cm.axis[2] << "\n";
+							boundingObjs[c]->GetGameObject()->GetTransform().SetPosition(pos);
+							//boundingObjs[c]->GetGameObject()->GetTransform().RecalculateMatrix();
+						}
+					} else if (false && boundingObjs[collInd[c][m].index]->IsMoveable()){
 						vector3 pos = boundingObjs[collInd[c][m].index]->GetGameObject()->GetTransform().GetPosition();
 
-						pos -= collInd[c][m].axis * -collInd[c][m].penetration;
-						boundingObjs[collInd[c][m].index]->GetGameObject()->GetTransform().SetPosition(pos);
+						pos -= collInd[c][m].axis * collInd[c][m].penetration;
+						//boundingObjs[collInd[c][m].index]->GetGameObject()->GetTransform().SetPosition(pos);
+						if (!boundingObjs[c]->IsMoveable()) {
+							if (collInd[c][m].index < oldPos.size()) {
+								vector3 trans = oldPos[collInd[c][m].index] - boundingObjs[collInd[c][m].index]->GetGameObject()->GetTransform().GetPosition();
+								trans.y = 0;
+								//trans = glm::normalize(trans);
+								boundingObjs[collInd[c][m].index]->GetGameObject()->GetTransform().SetPosition(oldPos[collInd[c][m].index] + trans);
+							}
+						}
 					}
 				}
 			}
@@ -120,6 +139,10 @@ void BoundingObjectManager::CheckCollisions()
 				}
 			}
 		}
+	}
+	oldPos.clear();
+	for (int b = 0; b < boundingObjs.size(); b++) {
+		oldPos.push_back(boundingObjs[b]->GetGameObject()->GetTransform().GetPosition());
 	}
 	//This could be changed to be faster.
 }

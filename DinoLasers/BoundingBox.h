@@ -22,6 +22,7 @@ class BoundingBox : public Updateable
 	vector3 m_v3Min = vector3(0.0f); //Will store the minimum vector of the box Class
 	vector3 m_v3Max = vector3(0.0f); //Will store the maximum vector of the box Class
 	vector3 m_v3HalfWidth = vector3(0.0f);//Will store half the size of all sides
+	uint ignoreResolutionMask;
 public:
 	/*
 	Method: BoundingBox
@@ -101,8 +102,9 @@ public:
 	vector3 GetMax();
 
 	bool CheckSATCollision(BoundingBox* const, ContactManifold&);
-	std::vector<vector3> GetLocalNormals();
 	void GetLocalNormals(std::vector<vector3>&);
+
+	void SetIgnoreAxis(uint);
 private:
 	/*
 	Method: Release
