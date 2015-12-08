@@ -51,9 +51,9 @@ void PlayerMovement::StrafeLeft(float dt)
 	GetGameObject()->GetTransform().SetPosition(GetGameObject()->GetTransform().GetPosition() + GetGameObject()->GetTransform().GetRight() * -speed * dt);
 }
 
-void PlayerMovement::Turn(float degrees)
+void PlayerMovement::Turn(float degrees, float dt)
 {
-	GetGameObject()->GetTransform().SetOrentation(GetGameObject()->GetTransform().GetOrientation() * quaternion(glm::rotate(matrix4(IDENTITY_M4), degrees, REAXISY)));
+	GetGameObject()->GetTransform().SetOrentation(GetGameObject()->GetTransform().GetOrientation() * quaternion(glm::rotate(matrix4(IDENTITY_M4), degrees, REAXISY)));	
 }
 
 void PlayerMovement::Update(float dt)
@@ -75,7 +75,7 @@ void PlayerMovement::Update(float dt)
 		StrafeLeft(dt);
 	}
 
-	Turn((Utility::Sign(center.x - currMouse.x)) * dt * 100);	
+	Turn((Utility::Sign(center.x - currMouse.x)) * dt * 100, dt);	
 
 	//JUMP
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
@@ -96,6 +96,5 @@ void PlayerMovement::SetGameObject(GameObject* g)
 {
 	Updateable::SetGameObject(g);
 }
-
-float PlayerMovement::GetSpeed(void){ return speed; }
-void PlayerMovement::SetSpeed(float s){ speed = s; }
+float PlayerMovement::GetSpeed(void) { return speed; }
+void PlayerMovement::SetSpeed(float s) { speed = s; }
