@@ -147,6 +147,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClCompile Include="SPBruteForce.cpp" />
     <ClCompile Include="TestLevel.cpp" />
     <ClCompile Include="TimeRemover.cpp" />
+    <ClCompile Include="TitleScreen.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Updateable.cpp" />
@@ -188,6 +189,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClInclude Include="SPBruteForce.h" />
     <ClInclude Include="TestLevel.h" />
     <ClInclude Include="TimeRemover.h" />
+    <ClInclude Include="TitleScreen.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Updateable.h" />

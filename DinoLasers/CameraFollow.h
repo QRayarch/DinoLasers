@@ -9,10 +9,10 @@ class CameraFollow : public Updateable
 private:
 	float cameraSpacing;
 	float camHeight;
-	float positionDamping;
-	float heightDamping;
+	float slerpDamping;
 	vector3 cameraTarget;
 	vector3 cameraPosition;	
+	vector3 prevCamPosition;
 public:
 	CameraFollow();
 	CameraFollow(CameraFollow const&);
@@ -23,6 +23,8 @@ public:
 
 	float GetSpacing(void);
 	void SetSpacing(float);
+	float GetSlerpDamping(void);
+	void SetSlerpDamping(float);
 
 	void SetGameObject(GameObject*);
 	

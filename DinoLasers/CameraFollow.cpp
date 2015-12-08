@@ -6,9 +6,9 @@ void CameraFollow::Init(void)
 	camera = CameraManagerSingleton::GetInstance();
 	cameraSpacing = 6.0f;
 	camHeight = 3.0f;
-	heightDamping = positionDamping = 3.0f;
 	cameraTarget = vector3(0.f, 0.f, 0.f);
-	cameraPosition = vector3(0.f, 0.f, 0.f);
+	prevCamPosition = cameraPosition = vector3(0.f, 0.f, 0.f);
+	slerpDamping = 4.0f;
 }
 void CameraFollow::Swap(CameraFollow& other)
 {
@@ -56,6 +56,9 @@ void CameraFollow::UpdateCamera(float dt)
 	cameraPosition = cameraTarget - GetGameObject()->GetTransform().GetForward() * cameraSpacing;
 	cameraPosition.y = posHeight;
 
+	cameraPosition = glm::mix(prevCamPosition, cameraPosition, slerpDamping * dt);
+	prevCamPosition = cameraPosition;
+
 	camera->SetPositionTargetAndView(cameraPosition, cameraTarget, REAXISY);
 }
 
@@ -65,3 +68,5 @@ void CameraFollow::SetGameObject(GameObject* g)
 }
 float CameraFollow::GetSpacing(void){ return cameraSpacing; }
 void CameraFollow::SetSpacing(float s){ cameraSpacing = s; }
+float CameraFollow::GetSlerpDamping(void){ return slerpDamping; }
+void CameraFollow::SetSlerpDamping(float d){ slerpDamping = d; }

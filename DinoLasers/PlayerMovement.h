@@ -10,6 +10,7 @@ class PlayerMovement : public Updateable
 {
 private:
 	float speed;	
+	float sensitivity;
 	sf::Vector2i currMouse;
 	sf::Vector2i center;
 public:
@@ -25,7 +26,7 @@ public:
 	void MoveBackward(float);
 	void StrafeRight(float);
 	void StrafeLeft(float);
-	void Turn(float);
+	void Turn(float, float);
 	void Update(float);
 	void SetGameObject(GameObject*);
 
