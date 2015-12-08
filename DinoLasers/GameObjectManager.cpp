@@ -118,6 +118,16 @@ void GameObjectManager::RemoveRenderable(Renderable* renderable) {
 	}
 }
 
+std::vector<GameObject*> GameObjectManager::GetObjectsWithTag(String tag) {
+	std::vector<GameObject*> tagged;
+	for (int g = 0; g < gameObjects.size(); g++) {
+		if (gameObjects[g] != nullptr && gameObjects[g]->GetTag().compare(tag) == 0) {
+			tagged.push_back(gameObjects[g]);
+		}
+	}
+	return tagged;
+}
+
 GameObjectManager* GameObjectManager::GetInstance()
 {
 	if (instance == nullptr)

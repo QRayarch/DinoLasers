@@ -217,7 +217,7 @@ bool BoundingBox::CheckSATCollision(BoundingBox* const colliding, ContactManifol
 		if (overlap < contact.penetration) {
 			contact.penetration = overlap;
 			contact.axis = objectANormals[i];
-			if (dist > 0) {
+			if (dist > 0) {//if (translation[i] > 0) {
 				contact.axis *= -1;
 			}
 			//std::cout << translation[i] << "\n";
@@ -233,7 +233,7 @@ bool BoundingBox::CheckSATCollision(BoundingBox* const colliding, ContactManifol
 		if (overlap < contact.penetration) {
 			contact.penetration = overlap;
 			contact.axis = objectBNormals[i];
-			if (dist > 0) {
+			if (dist > 0) {//if (translation[i] > 0) {
 				contact.axis *= -1;
 			}
 			//std::cout << dist << "\n";

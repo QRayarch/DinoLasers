@@ -8,6 +8,7 @@ class GameObject
 private:
 	Transform transform;
 	std::vector<Component*> components;
+	String tag;
 public:
 	GameObject();
 	GameObject(const GameObject&);
@@ -19,6 +20,9 @@ public:
 
 	Transform& GetTransform();
 	void SetTransform(Transform);
+
+	String GetTag();
+	void SetTag(String);
 
 	matrix4 GetWorldMatrix();
 

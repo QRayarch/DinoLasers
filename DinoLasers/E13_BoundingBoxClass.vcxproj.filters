@@ -40,6 +40,7 @@
     <ClCompile Include="LandMine.cpp" />
     <ClCompile Include="AnimateScale.cpp" />
     <ClCompile Include="TimeRemover.cpp" />
+    <ClCompile Include="CrateDropper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\res\Resource.h" />
@@ -80,6 +81,7 @@
     <ClInclude Include="LandMine.h" />
     <ClInclude Include="AnimateScale.h" />
     <ClInclude Include="TimeRemover.h" />
+    <ClInclude Include="CrateDropper.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\res\BTO.rc" />

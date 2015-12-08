@@ -42,6 +42,9 @@ Transform& GameObject::GetTransform() { return transform; }
 
 void GameObject::SetTransform(Transform newTrans) { transform = newTrans; }
 
+String GameObject::GetTag() { return tag; }
+void GameObject::SetTag(String newTag){ tag = newTag; }
+
 //Its a common call so if figured this could save some time
 matrix4 GameObject::GetWorldMatrix() { return transform.GetMatrix(); }
 

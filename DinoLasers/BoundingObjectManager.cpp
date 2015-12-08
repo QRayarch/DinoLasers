@@ -78,14 +78,22 @@ void BoundingObjectManager::CheckCollisions()
 	collInd = spatialPartition->CalculateColisions(boundingObjs);
 	for (int c = 0; c < collInd.size(); c++) {
 		for (int m = 0; m < collInd[c].size(); m++) {
-			if (IsInBounds(collInd[c][m].index) && boundingObjs[c]->IsMoveable()) {
+			if (IsInBounds(collInd[c][m].index)) {
 				if (!boundingObjs[c]->IsTrigger() && !boundingObjs[collInd[c][m].index]->IsTrigger()) {// && boundingObjs[c]->GetLayer() & boundingObjs[m]->GetLayer()
-					vector3 pos = boundingObjs[c]->GetGameObject()->GetTransform().GetPosition();
+					if (boundingObjs[c]->IsMoveable()) {
+						vector3 pos = boundingObjs[c]->GetGameObject()->GetTransform().GetPosition();
 
-					pos -= collInd[c][m].axis * collInd[c][m].penetration;
-					//std::cout << "MERB " << " " << (cm.penetration * 10000000.0f) << "   " << cm.axis[0] << "   " << cm.axis[1] << "   " << cm.axis[2] << "\n";
-					boundingObjs[c]->GetGameObject()->GetTransform().SetPosition(pos);
-					//boundingObjs[c]->GetGameObject()->GetTransform().RecalculateMatrix();
+						pos -= collInd[c][m].axis * collInd[c][m].penetration;
+						//std::cout << "MERB " << " " << (cm.penetration * 10000000.0f) << "   " << cm.axis[0] << "   " << cm.axis[1] << "   " << cm.axis[2] << "\n";
+						boundingObjs[c]->GetGameObject()->GetTransform().SetPosition(pos);
+						//boundingObjs[c]->GetGameObject()->GetTransform().RecalculateMatrix();
+					}
+					else if (boundingObjs[collInd[c][m].index]->IsMoveable()){
+						vector3 pos = boundingObjs[collInd[c][m].index]->GetGameObject()->GetTransform().GetPosition();
+
+						pos -= collInd[c][m].axis * -collInd[c][m].penetration;
+						boundingObjs[collInd[c][m].index]->GetGameObject()->GetTransform().SetPosition(pos);
+					}
 				}
 			}
 		}

@@ -126,6 +126,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ContactManifold.cpp" />
     <ClCompile Include="Crate.cpp" />
+    <ClCompile Include="CrateDropper.cpp" />
     <ClCompile Include="DeathHandler.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
@@ -167,6 +168,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClInclude Include="Component.h" />
     <ClInclude Include="ContactManifold.h" />
     <ClInclude Include="Crate.h" />
+    <ClInclude Include="CrateDropper.h" />
     <ClInclude Include="DeathHandler.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectManager.h" />

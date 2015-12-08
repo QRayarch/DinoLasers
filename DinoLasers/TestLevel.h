@@ -5,7 +5,7 @@
 #include "Level.h"
 #include "CollisionDebug.h"
 #include "Health.h"
-#include "Crate.h"
+#include "CrateDropper.h"
 #include "ProjectileLauncher.h"
 
 #include "ProgressBar.h"
@@ -21,7 +21,7 @@ public:
 	void Render();
 private :
 	GameObject* dino;
-	GameObject* test;
+	GameObject* crateDropper;
 	std::vector<vector3> groundPoints;
 
 	void LoadLevelFromFile(void);
