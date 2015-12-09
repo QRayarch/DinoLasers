@@ -26,7 +26,7 @@ void Projectile::OnTrigger(CollisionInfo info) {
 	}
 	Rigidbody* body = info.GetChecked()->GetGameObject()->GetComponent<Rigidbody>();
 	if (body != nullptr) {
-		float amount = 10;
+		float amount = 3;
 		body->SetVelocity(body->GetVelocity() + vector3(0.0f, amount, 0.0f) + GetGameObject()->GetTransform().GetForward() * amount);
 	}
 	GameObjectManager::GetInstance()->RemoveGameObject(GetGameObject());

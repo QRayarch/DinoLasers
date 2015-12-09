@@ -10,6 +10,7 @@ Date: 2015/10
 #include "Updateable.h"
 #include "GameObject.h"
 #include "ContactManifold.h"
+#include "Rigidbody.h"
 
 class SATBoundingBox;
 

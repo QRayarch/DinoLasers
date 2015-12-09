@@ -175,6 +175,7 @@ bool BoundingBox::CheckAABBCollision(BoundingBox* const colliding) {
 	return bColliding;
 }
 void BoundingBox::CalculateAABBOverlap(BoundingBox* const colliding, ContactManifold& contact) {
+if (colliding == this) return;
 	vector3 axis = vector3(0.0f, 0.0f, 0.0f);
 	//Bounds of this collider
 
@@ -209,37 +210,43 @@ void BoundingBox::CalculateAABBOverlap(BoundingBox* const colliding, ContactMani
 	{
 		axis.y = out;
 	}
-	
-	/*if (glm::abs(axis.x) < glm::abs(axis.y))
-	{
-		if (glm::abs(axis.y) < glm::abs(axis.z))
-		{
-			axis.z = 0;
-		}
-		axis.y = 0;
-	}
-	else
-	{
-		if (glm::abs(axis.x) < glm::abs(axis.z))
-		{
-			axis.z = 0;
-		}
-		axis.x = 0;
-	}*/
 	for (int i = 0; i < 3; i++) {
-		if (ignoreResolutionMask == i) {
+		if (i == colliding->ignoreResolutionMask && i != 2) {
 			axis[i] = 0;
 		}
-	}
-	contact.penetration = axis.length(); // 2.0f;
-	contact.axis = glm::normalize(axis);
-
-	vector3 translation = colliding->GetCenterGlobal() - GetCenterGlobal();
-	for (int i = 0; i < 3; i++) {
-		if (translation[i] < 0) {
-			contact.axis[i] *= -1;
+		if (colliding->ignoreResolutionMask == 8) {
+			//axis[2] = 0;
 		}
 	}
+	contact.penetration = axis.length()  / 4.0f;
+	contact.axis = glm::normalize(axis);
+
+	/*if (colliding->ignoreResolutionMask == 2) {
+		contact.axis *= -1;
+	}*/
+	vector3 translation = colliding->GetGameObject()->GetTransform().GetPosition() - GetGameObject()->GetTransform().GetPosition();
+	vector3 one = REAXISX;
+	vector3 to = REAXISX;
+	one = colliding->GetGameObject()->GetTransform().GetPosition();
+	to = GetGameObject()->GetTransform().GetPosition();
+
+	/*std::cout << "\n\n\n";
+	std::cout << one.x << " " << one.y << " " << one.z << "\n";
+	std::cout << to.x << " " << to.y << " " << to.z << "\n";*/
+
+	vector3 color = REWHITE;
+	/*if (glm::dot(translation, vector3(-contact.axis.y, contact.axis.x, contact.axis.z)) < 0) {
+		color = RERED;
+		contact.axis *= -1;
+	}*/
+	if (colliding->ignoreResolutionMask == 2 || colliding->ignoreResolutionMask == 8) {
+		color = RERED;
+		contact.axis *= -1;
+	}
+	if (one.x != to.x && one.y != to.y && one.z != to.z) {
+		MeshManagerSingleton::GetInstance()->AddLineToRenderList(one, to, color, color);
+	}
+
 	/*if (ignoreResolutionMask == 2) {
 		if (glm::dot(, contact.axis) < 0) {//if (translation[i] > 0) {
 			contact.axis *= -1;
@@ -250,7 +257,6 @@ void BoundingBox::CalculateAABBOverlap(BoundingBox* const colliding, ContactMani
 			contact.axis *= -1;
 		}
 	}*/
-
 }
 
 
@@ -299,8 +305,8 @@ bool BoundingBox::CheckSATCollision(BoundingBox* const colliding, ContactManifol
 			overlap = std::abs(dist - ra - rb);
 			if (overlap < contact.penetration) {
 				contact.penetration = overlap;
-				contact.axis = glm::normalize(objectANormals[i]);
-				if (glm::dot(translation, contact.axis) < 0) {//if (translation[i] > 0) {
+				contact.axis = -glm::normalize(objectANormals[i]);
+				if (dist < 0) {//if (translation[i] > 0) {
 					contact.axis *= -1;
 				}
 				//std::cout << translation[i] << "\n";
@@ -317,9 +323,9 @@ bool BoundingBox::CheckSATCollision(BoundingBox* const colliding, ContactManifol
 			overlap = std::abs(dist - ra - rb);
 			if (overlap < contact.penetration) {
 				contact.penetration = overlap;
-				contact.axis = glm::normalize(objectBNormals[i]);
+				contact.axis = -glm::normalize(objectBNormals[i]);
 				
-				if (glm::dot(translation, contact.axis) < 0) {//if (translation[i] > 0) {
+				if (dist < 0) {//if (translation[i] > 0) {//glm::dot(translation, contact.axis)
 					contact.axis *= -1;
 				}
 				//std::cout << dist << "\n";

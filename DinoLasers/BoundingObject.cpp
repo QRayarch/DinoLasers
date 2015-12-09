@@ -108,7 +108,9 @@ bool BoundingObject::IsColliding(BoundingObject* other, ContactManifold& contact
 	if (!other->realign->IsColliding(realign)) return false;
 	if (!other->IsMoveable()) {
 		bool colliding = other->ob->CheckSATCollision(ob, contact);
-		realign->CalculateAABBOverlap(other->realign, contact);
+		if (colliding) {
+			realign->CalculateAABBOverlap(other->realign, contact);
+		}
 		return colliding;
 	}
 	return other->ob->CheckSATCollision(ob, contact);
