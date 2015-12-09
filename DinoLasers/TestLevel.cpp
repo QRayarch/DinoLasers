@@ -52,7 +52,7 @@ void TestLevel::Load() {
 	GameObjectManager::GetInstance()->AddGameObject(dino);
 
 	crateDropper = new GameObject();
-	crateDropper->AddComponent(new CrateDropper(1.0f, 20));
+	crateDropper->AddComponent(new CrateDropper(1.0f, 2));
 	GameObjectManager::GetInstance()->AddGameObject(crateDropper);
 	
 	/*Component* testModel = new ModelRender("DinoLasers\\SpaghettiMine.obj", "Mine");
@@ -109,22 +109,25 @@ void TestLevel::LoadLevelFromFile() {
 						wallBO->SetIsMoveable(false);
 						wall->AddComponent(wallBO);
 						if (!wasLast && (levelInfo[c - 1] == '#' || levelInfo[c + 1] == '#')) {
-							wallBO->SetIgnoreAxis(0);
+							//wallBO->SetIgnoreAxis(0);
 							//wall->GetTransform().SetScale(vector3(0.8f));
 						} else  {
-							wallBO->SetIgnoreAxis(2);
+							//wallBO->SetIgnoreAxis(2);
 						}
 						gridSize = wallBO->GetHalfWidth()[0] * 2;
 						wall->GetTransform().SetPosition(vector3(static_cast<float>(x)* gridSize, 0.0f, static_cast<float>(z)* gridSize));
 						//wall->GetTransform().SetOrentation(quaternion(vector3(0.0f, (rand() % 4) * glm::pi<float>() / 2, 0.0f)));
+						wallBO->SetIgnoreAxis(0);
 						if (levelInfo[c] == 'N') {
 
 						}
 						else if (levelInfo[c] == 'E') {
 						}
 						else if (levelInfo[c] == 'S') {
+							wallBO->SetIgnoreAxis(2);
 						}
 						else if (levelInfo[c] == 'W') {
+							wallBO->SetIgnoreAxis(2);
 						}
 						GameObjectManager::GetInstance()->AddGameObject(wall);
 					}

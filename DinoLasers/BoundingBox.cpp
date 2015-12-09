@@ -174,6 +174,85 @@ bool BoundingBox::CheckAABBCollision(BoundingBox* const colliding) {
 
 	return bColliding;
 }
+void BoundingBox::CalculateAABBOverlap(BoundingBox* const colliding, ContactManifold& contact) {
+	vector3 axis = vector3(0.0f, 0.0f, 0.0f);
+	//Bounds of this collider
+
+	float left = colliding->GetMin().x - GetMax().x; //minBX - maxX;
+	float right = colliding->GetMax().x - GetMin().x; //maxBX - minX;
+	float up = colliding->GetMin().y - GetMax().y; //minBY - maxY;
+	float down = colliding->GetMax().y - GetMin().y; //maxBY - minY;
+	float in = colliding->GetMin().z - GetMax().z; //minBZ - maxZ;
+	float out = colliding->GetMax().z - GetMin().z; //maxBZ - minZ;
+
+	if (glm::abs(left) < right)
+	{
+		axis.x = left;
+	}
+	else
+	{
+		axis.x = right;
+	}
+	if (glm::abs(up) < down)
+	{
+		axis.y = up;
+	}
+	else
+	{
+		axis.y = down;
+	}
+	if (glm::abs(in) < out)
+	{
+		axis.z = in;
+	}
+	else
+	{
+		axis.y = out;
+	}
+	
+	/*if (glm::abs(axis.x) < glm::abs(axis.y))
+	{
+		if (glm::abs(axis.y) < glm::abs(axis.z))
+		{
+			axis.z = 0;
+		}
+		axis.y = 0;
+	}
+	else
+	{
+		if (glm::abs(axis.x) < glm::abs(axis.z))
+		{
+			axis.z = 0;
+		}
+		axis.x = 0;
+	}*/
+	for (int i = 0; i < 3; i++) {
+		if (ignoreResolutionMask == i) {
+			axis[i] = 0;
+		}
+	}
+	contact.penetration = axis.length(); // 2.0f;
+	contact.axis = glm::normalize(axis);
+
+	vector3 translation = colliding->GetCenterGlobal() - GetCenterGlobal();
+	for (int i = 0; i < 3; i++) {
+		if (translation[i] < 0) {
+			contact.axis[i] *= -1;
+		}
+	}
+	/*if (ignoreResolutionMask == 2) {
+		if (glm::dot(, contact.axis) < 0) {//if (translation[i] > 0) {
+			contact.axis *= -1;
+		}
+	}
+	else {
+		if (glm::dot(colliding->GetCenterGlobal() - GetCenterGlobal(), contact.axis) > 0) {//if (translation[i] > 0) {
+			contact.axis *= -1;
+		}
+	}*/
+
+}
+
 
 bool BoundingBox::CheckSATCollision(BoundingBox* const colliding, ContactManifold& contact) {
 	contact.penetration = 1000000;
@@ -210,9 +289,6 @@ bool BoundingBox::CheckSATCollision(BoundingBox* const colliding, ContactManifol
 	float dist;
 	float overlap;
 
-
-	vector3 pos = GetCenterGlobal();
-
 	//std::cout << "\n\n\n";
 	for (int i = 0; i < 3; i++) {
 		ra = m_v3HalfWidth[i];
@@ -223,7 +299,7 @@ bool BoundingBox::CheckSATCollision(BoundingBox* const colliding, ContactManifol
 			overlap = std::abs(dist - ra - rb);
 			if (overlap < contact.penetration) {
 				contact.penetration = overlap;
-				contact.axis = objectANormals[i];
+				contact.axis = glm::normalize(objectANormals[i]);
 				if (glm::dot(translation, contact.axis) < 0) {//if (translation[i] > 0) {
 					contact.axis *= -1;
 				}
@@ -241,7 +317,7 @@ bool BoundingBox::CheckSATCollision(BoundingBox* const colliding, ContactManifol
 			overlap = std::abs(dist - ra - rb);
 			if (overlap < contact.penetration) {
 				contact.penetration = overlap;
-				contact.axis = objectBNormals[i];
+				contact.axis = glm::normalize(objectBNormals[i]);
 				
 				if (glm::dot(translation, contact.axis) < 0) {//if (translation[i] > 0) {
 					contact.axis *= -1;

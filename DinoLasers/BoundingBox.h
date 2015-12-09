@@ -101,10 +101,13 @@ public:
 	vector3 GetMin();
 	vector3 GetMax();
 
+	void CalculateAABBOverlap(BoundingBox* const, ContactManifold&);
 	bool CheckSATCollision(BoundingBox* const, ContactManifold&);
 	void GetLocalNormals(std::vector<vector3>&);
 
 	void SetIgnoreAxis(uint);
+
+
 private:
 	/*
 	Method: Release

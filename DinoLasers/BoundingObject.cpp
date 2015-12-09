@@ -106,6 +106,11 @@ bool BoundingObject::IsColliding(BoundingObject* other, ContactManifold& contact
 		other->hasAlignedThisFrame = true;
 	}
 	if (!other->realign->IsColliding(realign)) return false;
+	if (!other->IsMoveable()) {
+		bool colliding = other->ob->CheckSATCollision(ob, contact);
+		realign->CalculateAABBOverlap(other->realign, contact);
+		return colliding;
+	}
 	return other->ob->CheckSATCollision(ob, contact);
 }
 
@@ -133,5 +138,6 @@ void BoundingObject::SetLayer(uint newLayer) { layer = newLayer; }
 uint BoundingObject::GetLayer() { return layer; }
 
 void BoundingObject::SetIgnoreAxis(uint newAxis) {
+	realign->SetIgnoreAxis(newAxis);
 	ob->SetIgnoreAxis(newAxis);
 }

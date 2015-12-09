@@ -17,7 +17,6 @@ private:
 
 	SpatialPartition* spatialPartition;
 	std::vector<std::vector<ContactManifold>> collInd;
-	std::vector<vector3> oldPos;
 	float groundY;
 public:
 	static BoundingObjectManager* instance;
