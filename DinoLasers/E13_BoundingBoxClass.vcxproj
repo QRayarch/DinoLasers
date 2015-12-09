@@ -135,6 +135,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="ModelRender.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Octant.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="PlayerMovement.cpp" />
@@ -143,6 +144,8 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="SATBoundingBox.cpp" />
+    <ClCompile Include="Score.cpp" />
+    <ClCompile Include="Spaghetti.cpp" />
     <ClCompile Include="SpatialPartition.cpp" />
     <ClCompile Include="SPBruteForce.cpp" />
     <ClCompile Include="TestLevel.cpp" />
@@ -177,6 +180,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClInclude Include="LandMine.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="ModelRender.h" />
+    <ClInclude Include="Octant.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="PlayerMovement.h" />
@@ -185,6 +189,8 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="SATBoundingBox.h" />
+    <ClInclude Include="Score.h" />
+    <ClInclude Include="Spaghetti.h" />
     <ClInclude Include="SpatialPartition.h" />
     <ClInclude Include="SPBruteForce.h" />
     <ClInclude Include="TestLevel.h" />

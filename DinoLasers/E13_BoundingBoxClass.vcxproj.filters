@@ -42,6 +42,9 @@
     <ClCompile Include="TimeRemover.cpp" />
     <ClCompile Include="CrateDropper.cpp" />
     <ClCompile Include="TitleScreen.cpp" />
+    <ClCompile Include="Octant.cpp" />
+    <ClCompile Include="Spaghetti.cpp" />
+    <ClCompile Include="Score.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\res\Resource.h" />
@@ -84,6 +87,9 @@
     <ClInclude Include="TimeRemover.h" />
     <ClInclude Include="CrateDropper.h" />
     <ClInclude Include="TitleScreen.h" />
+    <ClInclude Include="Octant.h" />
+    <ClInclude Include="Spaghetti.h" />
+    <ClInclude Include="Score.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\res\BTO.rc" />

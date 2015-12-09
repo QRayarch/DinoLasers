@@ -5,6 +5,7 @@
 #include "Level.h"
 #include "CollisionDebug.h"
 #include "Health.h"
+#include "Score.h"
 #include "CrateDropper.h"
 #include "ProjectileLauncher.h"
 
@@ -23,7 +24,8 @@ private :
 	GameObject* dino;
 	GameObject* crateDropper;
 	std::vector<vector3> groundPoints;
-
+	float gameTimer = 3 * 60;
+	float maxGameTimer = 3 * 60;
 	void LoadLevelFromFile(void);
 };
 
