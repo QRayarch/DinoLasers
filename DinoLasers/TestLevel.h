@@ -5,6 +5,7 @@
 #include "Level.h"
 #include "CollisionDebug.h"
 #include "Health.h"
+#include "Score.h"
 #include "CrateDropper.h"
 #include "ProjectileLauncher.h"
 

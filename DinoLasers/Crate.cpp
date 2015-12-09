@@ -16,12 +16,12 @@ void Crate::OnDeath()
 		//Spaghetti
 		case 0:
 			spawned->AddComponent(new ModelRender("DinoLasers\\Spaghetti.obj", "Spaghetti"));
-			boundingOb->SetIsTrigger(true);
+			//boundingOb->SetIsTrigger(true);
 			boundingOb->SetLayer(8);
 			spawned->AddComponent(new AnimateRotation(vector3(0.0f, 1.0f, 0.0f)));
-			//spawned->AddComponent(new Rigidbody());
+			spawned->AddComponent(new Rigidbody());
 			//spawned->AddComponent(new RandomMove(s));
-			spawned->AddComponent(new Spaghetti());
+			spawned->AddComponent(new Spaghetti(25));
 			break;
 		//Landmine
 		case 1:
