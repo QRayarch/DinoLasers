@@ -164,7 +164,7 @@ void TestLevel::LoadLevelFromFile() {
 void TestLevel::Update(float dt) {
 	Level::Update(dt);
 
-	if (gameTimer >= maxGameTimer)
+	if (gameTimer <= 0)
 	{
 		//game ends
 	}
@@ -184,10 +184,10 @@ void TestLevel::Update(float dt) {
 	ProgressBar* tBar = GetUIElement<ProgressBar>("Timer");
 	if (tBar != nullptr)
 	{
-		bar->SetCurrentValue(gameTimer);
+		tBar->SetCurrentValue(gameTimer);
 	}
 	
-	gameTimer += dt;
+	gameTimer -= dt;
 
 	/*
 	Score* playerScore = dino->GetComponent<Score>();
