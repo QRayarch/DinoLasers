@@ -21,6 +21,7 @@ void Crate::OnDeath()
 			spawned->AddComponent(new AnimateRotation(vector3(0.0f, 1.0f, 0.0f)));
 			//spawned->AddComponent(new Rigidbody());
 			//spawned->AddComponent(new RandomMove(s));
+			spawned->AddComponent(new Spaghetti());
 			break;
 		//Landmine
 		case 1:
