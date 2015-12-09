@@ -13,6 +13,6 @@ public:
 	Score();
 	Score(float);
 	~Score();
-	float GetHealth();
+	float GetScore();
 	void AddScore(float);
 };

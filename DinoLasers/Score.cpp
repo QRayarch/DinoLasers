@@ -9,7 +9,7 @@ Score::Score(float _score)
 	score = _score;
 }
 
-float Score::GetHealth()
+float Score::GetScore()
 {
 	return score;
 }
