@@ -6,6 +6,7 @@
 #include "RandomMove.h"
 #include "Rigidbody.h"
 #include "LandMine.h"
+#include "Spaghetti.h"
 
 class Crate : public DeathHandler
 {

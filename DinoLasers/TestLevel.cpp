@@ -47,6 +47,7 @@ void TestLevel::Load() {
 	dino->AddComponent(new PlayerMovement());
 	dino->AddComponent(new Rigidbody());
 	dino->AddComponent(new Health());
+	dino->AddComponent(new Score());
 	dino->GetTransform().SetPosition(vector3(0.0f, 5.0f, 0.0f));
 	//dino->AddComponent(new CollisionDebug());
 	GameObjectManager::GetInstance()->AddGameObject(dino);
@@ -66,6 +67,11 @@ void TestLevel::Load() {
 	ProgressBar* healthBar = new ProgressBar("Health", 100.0f);
 	healthBar->SetFillColor(RERED);
 	AddUIElement(healthBar);
+
+	//maxGameTimer = gameTimer;
+	ProgressBar* timerBar = new ProgressBar("Timer", maxGameTimer);
+	timerBar->SetFillColor(REBLUE);
+	AddUIElement(timerBar);
 
 	//Load Level
 	LoadLevelFromFile();
@@ -158,6 +164,10 @@ void TestLevel::LoadLevelFromFile() {
 void TestLevel::Update(float dt) {
 	Level::Update(dt);
 
+	if (gameTimer <= 0)
+	{
+		//game ends
+	}
 
 	MeshManagerSingleton::GetInstance()->AddPlaneToQueue(glm::rotate(glm::translate(vector3(0.0f, BoundingObjectManager::GetInstance()->GetGroundY() - 1 - 0.2f, 0.0f)) * glm::scale(vector3(1000.0f)), 90.0f, vector3(1.0f, 0.0f, 0.0f)), REGRAY);
 //	test->GetTransform().SetOrentation(test->GetTransform().GetOrientation() * quaternion(vector3(0.00f, 0.01f, 0.00f)));
@@ -170,6 +180,23 @@ void TestLevel::Update(float dt) {
 			bar->SetCurrentValue(dinoHealth->GetHealth());
 		}
 	}
+	
+	ProgressBar* tBar = GetUIElement<ProgressBar>("Timer");
+	if (tBar != nullptr)
+	{
+		tBar->SetCurrentValue(gameTimer);
+	}
+	
+	gameTimer -= dt;
+
+	/*
+	Score* playerScore = dino->GetComponent<Score>();
+	if (playerScore != nullptr)
+	{
+		MeshManagerSingleton::GetInstance()->Print("Score: ");
+		MeshManagerSingleton::GetInstance()->Print(std::to_string(playerScore->GetScore()));
+	}
+	*/
 }
 
 void TestLevel::Render() {
