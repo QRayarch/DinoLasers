@@ -24,7 +24,8 @@ private :
 	GameObject* dino;
 	GameObject* crateDropper;
 	std::vector<vector3> groundPoints;
-
+	float gameTimer = 0;
+	float maxGameTimer = 3* 60;
 	void LoadLevelFromFile(void);
 };
 
