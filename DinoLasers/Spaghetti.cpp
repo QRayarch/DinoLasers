@@ -9,7 +9,7 @@ Spaghetti::~Spaghetti()
 {
 }
 
-void Spaghetti::OnTrigger(CollisionInfo info) {
+void Spaghetti::OnCollision(CollisionInfo info) {
 	Score* score = info.GetChecked()->GetGameObject()->GetComponent<Score>();
 	if (score != nullptr)
 	{

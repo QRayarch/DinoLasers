@@ -171,6 +171,15 @@ void TestLevel::Update(float dt) {
 			bar->SetCurrentValue(dinoHealth->GetHealth());
 		}
 	}
+
+	/*
+	Score* playerScore = dino->GetComponent<Score>();
+	if (playerScore != nullptr)
+	{
+		MeshManagerSingleton::GetInstance()->Print("Score: ");
+		MeshManagerSingleton::GetInstance()->Print(std::to_string(playerScore->GetScore()));
+	}
+	*/
 }
 
 void TestLevel::Render() {
