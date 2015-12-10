@@ -6,6 +6,7 @@
 #include "SPBruteForce.h"
 #include "Rigidbody.h"
 #include "ContactManifold.h"
+#include "SPOctree.h"
 
 class BoundingObjectManager
 {

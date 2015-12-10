@@ -8,7 +8,7 @@ void Octant::Init(void)
 
 	size = 0.0f;
 
-	meshManager = MeshManagerSingleton::GetInstance();
+//	meshManager = MeshManagerSingleton::GetInstance();
 
 	parent = nullptr;
 
@@ -38,6 +38,8 @@ Octant::Octant(vector3 _center, float _size)
 	Init();
 	center = _center;
 	size = _size;
+
+	//meshManager = MeshManagerSingleton::GetInstance();
 }
 Octant::Octant(Octant const& other)
 {
@@ -46,6 +48,7 @@ Octant::Octant(Octant const& other)
 	size = other.size;
 	numChildren = other.numChildren;
 	meshManager = other.meshManager;
+
 }
 Octant& Octant::operator=(Octant const& other)
 {
@@ -66,7 +69,7 @@ void Octant::Display(vector3 color)
 	{
 		children[nChild]->Display(color);
 	}
-	meshManager->AddCubeToQueue(glm::translate(center) * glm::scale(vector3(size * 2.0f)), color, WIRE);
+	MeshManagerSingleton::GetInstance()->AddCubeToQueue(glm::translate(center) * glm::scale(vector3(size * 2.0f)), color, WIRE);
 }
 
 void Octant::Subdivide(void)

@@ -11,6 +11,8 @@ class SPOctree : public SpatialPartition
 private:
 	float size;
 	vector3 center;
+	vector3 min;
+	vector3 max;
 	Octant* root;
 public:
 	SPOctree();
@@ -18,5 +20,6 @@ public:
 
 	std::vector<std::vector<ContactManifold>> CalculateColisions(std::vector<BoundingObject*>);
 	void SetSize(std::vector<BoundingObject*>);
+	void FindWithin(std::vector<BoundingObject*>, Octant*);
 };
 

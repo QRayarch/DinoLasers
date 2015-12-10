@@ -17,9 +17,7 @@ class AppClass : public ReEngAppClass
 {
 	Level* oldLevel;
 	Level* level;
-	Octant* root = nullptr;
 public:
-	static bool isPaused;
 	typedef ReEngAppClass super;
 
 	/* Constructor */

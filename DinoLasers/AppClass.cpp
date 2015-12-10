@@ -3,7 +3,6 @@
 BoundingObjectManager* BoundingObjectManager::instance = nullptr;
 GameObjectManager* GameObjectManager::instance = nullptr;
 
-bool AppClass::isPaused = false;
 void AppClass::InitWindow(String a_sWindowName)
 {
 	super::InitWindow("DINO LASERS"); // Window Name
@@ -19,18 +18,7 @@ void AppClass::InitWindow(String a_sWindowName)
 void AppClass::InitVariables(void)
 {
 	srand(time(NULL));
-	root = new Octant(vector3(0.0f), 20.0f);
-	root->Subdivide();
-
-	Octant* pChild = root->GetChild(0);
-	pChild->Subdivide();
-
-	for (uint n = 0; n < 3; n++)
-	{
-		pChild = pChild->GetChild(0);
-		pChild->Subdivide();
-	}
-
+	
 	level = new TitleScreen();
 	level->Load();
 	//Initialize positions
@@ -63,7 +51,6 @@ void AppClass::Update(void)
 
 	float dt = m_pSystem->LapClock();
 
-	root->Display(RERED);
 	oldLevel = level->NextLevel();
 	if (oldLevel != level) {
 		if (level != nullptr) {
@@ -76,7 +63,7 @@ void AppClass::Update(void)
 		level = oldLevel;
 		level->Load();
 	}
-	if (!isPaused) {
+	if (!false) {
 		level->Update(dt);
 	}
 	else {
@@ -123,12 +110,6 @@ void AppClass::Display(void)
 void AppClass::Release(void)
 {
 	SafeDelete(level);
-
-	if (root != nullptr)
-	{
-		delete root;
-		root = nullptr;
-	}
 
 	super::Release(); //release the memory of the inherited fields
 	BoundingObjectManager::Release();
