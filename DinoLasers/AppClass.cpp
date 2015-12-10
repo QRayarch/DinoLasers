@@ -18,18 +18,7 @@ void AppClass::InitWindow(String a_sWindowName)
 void AppClass::InitVariables(void)
 {
 	srand(time(NULL));
-	root = new Octant(vector3(0.0f), 20.0f);
-	root->Subdivide();
-
-	Octant* pChild = root->GetChild(0);
-	pChild->Subdivide();
-
-	for (uint n = 0; n < 3; n++)
-	{
-		pChild = pChild->GetChild(0);
-		pChild->Subdivide();
-	}
-
+	
 	level = new TestLevel();
 	level->Load();
 	//Initialize positions
@@ -61,8 +50,6 @@ void AppClass::Update(void)
 	m_pMeshMngr->Update(false);
 
 	float dt = m_pSystem->LapClock();
-
-	root->Display(RERED);
 
 	level->Update(dt);
 
@@ -105,12 +92,6 @@ void AppClass::Display(void)
 void AppClass::Release(void)
 {
 	SafeDelete(level);
-
-	if (root != nullptr)
-	{
-		delete root;
-		root = nullptr;
-	}
 
 	super::Release(); //release the memory of the inherited fields
 	BoundingObjectManager::Release();

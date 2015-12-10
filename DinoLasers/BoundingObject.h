@@ -48,6 +48,8 @@ public:
 	vector3 GetGlobalCenter();
 	vector3 GetMin();
 	vector3 GetMax();
+	vector3 GetMinGlobal();
+	vector3 GetMaxGlobal();
 	vector3 GetHalfWidth();
 	void SetColor(vector3);
 
