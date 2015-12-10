@@ -59,7 +59,6 @@ Octant& Octant::operator=(Octant const& other)
 	return *this;
 }
 Octant::~Octant(void){ Release(); }
-float Octant::GetSize(void) { return size; }
 void Octant::Display(vector3 color)
 {
 
@@ -151,3 +150,7 @@ void Octant::KillBranch(void)
 		}
 	}
 }
+float Octant::GetSize(void) { return size; }
+void Octant::SetSize(float s) { size = s; }
+vector3 Octant::GetCenter(void) { return center; }
+void Octant::SetCenter(vector3 c) { center = c; }
