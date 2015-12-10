@@ -45,8 +45,7 @@
     <ClCompile Include="Octant.cpp" />
     <ClCompile Include="Spaghetti.cpp" />
     <ClCompile Include="Score.cpp" />
-    <ClCompile Include="UIButton.cpp" />
-    <ClCompile Include="EndScreen.cpp" />
+    <ClCompile Include="SPOctree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\res\Resource.h" />
@@ -92,8 +91,7 @@
     <ClInclude Include="Octant.h" />
     <ClInclude Include="Spaghetti.h" />
     <ClInclude Include="Score.h" />
-    <ClInclude Include="UIButton.h" />
-    <ClInclude Include="EndScreen.h" />
+    <ClInclude Include="SPOctree.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\res\BTO.rc" />

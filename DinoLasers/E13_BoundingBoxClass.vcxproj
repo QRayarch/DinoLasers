@@ -149,6 +149,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClCompile Include="Spaghetti.cpp" />
     <ClCompile Include="SpatialPartition.cpp" />
     <ClCompile Include="SPBruteForce.cpp" />
+    <ClCompile Include="SPOctree.cpp" />
     <ClCompile Include="TestLevel.cpp" />
     <ClCompile Include="TimeRemover.cpp" />
     <ClCompile Include="TitleScreen.cpp" />
@@ -196,6 +197,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClInclude Include="Spaghetti.h" />
     <ClInclude Include="SpatialPartition.h" />
     <ClInclude Include="SPBruteForce.h" />
+    <ClInclude Include="SPOctree.h" />
     <ClInclude Include="TestLevel.h" />
     <ClInclude Include="TimeRemover.h" />
     <ClInclude Include="TitleScreen.h" />
