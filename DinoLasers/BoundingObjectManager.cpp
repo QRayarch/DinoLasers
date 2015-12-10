@@ -9,13 +9,7 @@ BoundingObjectManager::BoundingObjectManager()
 }
 
 BoundingObjectManager::~BoundingObjectManager() {
-	std::map<uint, BoundingObject*>::iterator iterator;
-	for (int b = 0; b < boundingObjs.size(); b++) {
-		if (boundingObjs[b] != nullptr) {
-			delete boundingObjs[b];
-			boundingObjs[b] = nullptr;
-		}
-	}
+	Clear();
 
 	if (spatialPartition != nullptr) {
 		delete spatialPartition;
@@ -137,3 +131,14 @@ void BoundingObjectManager::SetGroundY(float _groundY)
 }
 
 float BoundingObjectManager::GetGroundY() { return groundY; }
+
+void BoundingObjectManager::Clear(){
+	boundingObjs.clear();
+	std::map<uint, BoundingObject*>::iterator iterator;
+	for (int b = 0; b < boundingObjs.size(); b++) {
+		if (boundingObjs[b] != nullptr) {
+			delete boundingObjs[b];
+			boundingObjs[b] = nullptr;
+		}
+	}
+}

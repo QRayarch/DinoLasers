@@ -8,7 +8,7 @@
 #include "Score.h"
 #include "CrateDropper.h"
 #include "ProjectileLauncher.h"
-
+#include "EndScreen.h"
 #include "ProgressBar.h"
 
 class TestLevel : public Level
@@ -17,10 +17,13 @@ public:
 	TestLevel();
 	~TestLevel();
 
+	Level* NextLevel();
+
 	void Load();
 	void Update(float);
 	void Render();
 private :
+	bool needLoad;
 	GameObject* dino;
 	GameObject* crateDropper;
 	std::vector<vector3> groundPoints;

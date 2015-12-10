@@ -3,6 +3,7 @@
 BoundingObjectManager* BoundingObjectManager::instance = nullptr;
 GameObjectManager* GameObjectManager::instance = nullptr;
 
+bool AppClass::isPaused = false;
 void AppClass::InitWindow(String a_sWindowName)
 {
 	super::InitWindow("DINO LASERS"); // Window Name
@@ -30,7 +31,7 @@ void AppClass::InitVariables(void)
 		pChild->Subdivide();
 	}
 
-	level = new TestLevel();
+	level = new TitleScreen();
 	level->Load();
 	//Initialize positions
 	/*m_v3O1 = vector3(-2.5f, 0.0f, 0.0f);
@@ -63,8 +64,25 @@ void AppClass::Update(void)
 	float dt = m_pSystem->LapClock();
 
 	root->Display(RERED);
-
-	level->Update(dt);
+	oldLevel = level->NextLevel();
+	if (oldLevel != level) {
+		if (level != nullptr) {
+			delete level;
+			level = nullptr;
+			std::cout << "NEW LEVEL\n";
+		}
+		GameObjectManager::GetInstance()->Clear();
+		BoundingObjectManager::GetInstance()->Clear();
+		level = oldLevel;
+		level->Load();
+	}
+	if (!isPaused) {
+		level->Update(dt);
+	}
+	else {
+		level->PausedUpdate(dt);
+		MeshManagerSingleton::GetInstance()->PrintLine("PAUSED!!");
+	}
 
 	/*steve->GetTransform().SetOrentation(playerRotation);
 

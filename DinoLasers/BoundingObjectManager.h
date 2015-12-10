@@ -36,5 +36,6 @@ public:
 	void SetGroundY(float);
 	float GetGroundY();
 	bool IsInBounds(uint);
+	void Clear();
 };
 

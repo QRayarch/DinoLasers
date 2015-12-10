@@ -21,6 +21,10 @@ void Level::AddUIElement(UI* newElement) {
 	uiElements.push_back(newElement);
 }
 
+Level* Level::NextLevel() {
+	return this;
+}
+
 
 
 void Level::Update(float dt) {
@@ -29,6 +33,10 @@ void Level::Update(float dt) {
 	}
 	GameObjectManager::GetInstance()->Update(dt);
 	BoundingObjectManager::GetInstance()->CheckCollisions();
+}
+
+void Level::PausedUpdate(float dt) {
+
 }
 
 void Level::Render() {

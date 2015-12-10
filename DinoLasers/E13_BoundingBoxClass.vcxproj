@@ -128,6 +128,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClCompile Include="Crate.cpp" />
     <ClCompile Include="CrateDropper.cpp" />
     <ClCompile Include="DeathHandler.cpp" />
+    <ClCompile Include="EndScreen.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="Health.cpp" />
@@ -153,6 +154,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClCompile Include="TitleScreen.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="Updateable.cpp" />
     <ClCompile Include="Utility.cpp" />
   </ItemGroup>
@@ -174,6 +176,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClInclude Include="Crate.h" />
     <ClInclude Include="CrateDropper.h" />
     <ClInclude Include="DeathHandler.h" />
+    <ClInclude Include="EndScreen.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="Health.h" />
@@ -198,6 +201,7 @@ xcopy "$(SolutionDir)_Binary\Shaders" "$(SolutionDir)include\RE\Shaders" /y</Com
     <ClInclude Include="TitleScreen.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="UI.h" />
+    <ClInclude Include="UIButton.h" />
     <ClInclude Include="Updateable.h" />
     <ClInclude Include="Utility.h" />
   </ItemGroup>

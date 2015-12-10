@@ -17,8 +17,9 @@ class Level
 {
 public:
 	Level();
-	~Level();
+	virtual ~Level();
 
+	virtual Level* NextLevel();
 	void AddUIElement(UI*);
 	template<class T>
 	T* GetUIElement(String name) {
@@ -36,6 +37,7 @@ public:
 
 	virtual void Load() = 0;
 	virtual void Update(float);
+	virtual void PausedUpdate(float);
 	virtual void Render();
 private:
 	std::vector<UI*> uiElements;

@@ -27,6 +27,8 @@ public:
 	void Update(float);
 	void Render();
 
+	void Clear();
+
 	std::vector<GameObject*> GetObjectsWithTag(String);
 };
 

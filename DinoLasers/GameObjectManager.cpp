@@ -7,26 +7,7 @@ GameObjectManager::GameObjectManager()
 
 GameObjectManager::~GameObjectManager()
 {
-	for (int g = 0; g < gameObjects.size(); g++) {
-		if (gameObjects[g] != nullptr) {
-			delete gameObjects[g];
-			gameObjects[g] = nullptr;
-		}
-	}
-
-	for (int u = 0; u < updateables.size(); u++) {
-		if (updateables[u] != nullptr) {
-			delete updateables[u];
-			updateables[u] = nullptr;
-		}
-	}
-
-	for (int v = 0; v < renderables.size(); v++) {
-		if (renderables[v] != nullptr) {
-			delete renderables[v];
-			renderables[v] = nullptr;
-		}
-	}
+	Clear();
 }
 
 void GameObjectManager::Update(float dt) {
@@ -127,6 +108,33 @@ std::vector<GameObject*> GameObjectManager::GetObjectsWithTag(String tag) {
 	}
 	return tagged;
 }
+
+void GameObjectManager::Clear() {
+	gameObjects.clear();
+	updateables.clear();
+	renderables.clear();
+	for (int g = 0; g < gameObjects.size(); g++) {
+		if (gameObjects[g] != nullptr) {
+			delete gameObjects[g];
+			gameObjects[g] = nullptr;
+		}
+	}
+
+	/*for (int u = 0; u < updateables.size(); u++) {
+		if (updateables[u] != nullptr) {
+			delete updateables[u];
+			updateables[u] = nullptr;
+		}
+	}
+
+	for (int v = 0; v < renderables.size(); v++) {
+		if (renderables[v] != nullptr) {
+			delete renderables[v];
+			renderables[v] = nullptr;
+		}
+	}*/
+}
+
 
 GameObjectManager* GameObjectManager::GetInstance()
 {

@@ -10,7 +10,7 @@ public:
 	Spaghetti(float);
 	~Spaghetti();
 
-	void OnCollision(CollisionInfo);
+	void OnTrigger(CollisionInfo);
 private:
 	float points;
 };

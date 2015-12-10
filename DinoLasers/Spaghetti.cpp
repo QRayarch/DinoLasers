@@ -9,11 +9,12 @@ Spaghetti::~Spaghetti()
 {
 }
 
-void Spaghetti::OnCollision(CollisionInfo info) {
+void Spaghetti::OnTrigger(CollisionInfo info) {
 	Score* score = info.GetChecked()->GetGameObject()->GetComponent<Score>();
 	if (score != nullptr)
 	{
 		score->AddScore(points);
+		GameObjectManager::GetInstance()->RemoveGameObject(GetGameObject());
+		std::cout << "Score: " << score->GetScore() << "\n";
 	}
-	GameObjectManager::GetInstance()->RemoveGameObject(GetGameObject());
 }

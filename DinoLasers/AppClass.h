@@ -8,16 +8,18 @@ Date: 2015/09
 #include "RE\ReEngAppClass.h"
 #include <SFML\Graphics.hpp>
 #include "Level.h"
-#include "TestLevel.h"
+#include "TitleScreen.h"
 #include "Octant.h"
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
 class AppClass : public ReEngAppClass
 {
+	Level* oldLevel;
 	Level* level;
 	Octant* root = nullptr;
 public:
+	static bool isPaused;
 	typedef ReEngAppClass super;
 
 	/* Constructor */

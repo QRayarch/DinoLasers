@@ -3,14 +3,26 @@
 
 TestLevel::TestLevel()
 {
+	needLoad = false;
 }
 
 
 TestLevel::~TestLevel()
 {
-	
+	Level::~Level();
 }
 
+Level* TestLevel::NextLevel() {
+	if (needLoad) {
+		int s = 0;
+		Score* score = dino->GetComponent<Score>();
+		if (score != nullptr) {
+			s = score->GetScore();
+		}
+		return new EndScreen(s);
+	}
+	return this;
+}
 
 void TestLevel::Load() {
 	//TEMP STUFF TO AVOID LAG
@@ -168,6 +180,7 @@ void TestLevel::Update(float dt) {
 	if (gameTimer <= 0)
 	{
 		//game ends
+		needLoad = true;
 	}
 
 	MeshManagerSingleton::GetInstance()->AddPlaneToQueue(glm::rotate(glm::translate(vector3(0.0f, BoundingObjectManager::GetInstance()->GetGroundY() - 1 - 0.2f, 0.0f)) * glm::scale(vector3(1000.0f)), 90.0f, vector3(1.0f, 0.0f, 0.0f)), REGRAY);
@@ -179,6 +192,9 @@ void TestLevel::Update(float dt) {
 		Health* dinoHealth = dino->GetComponent<Health>();
 		if (dinoHealth != nullptr) {
 			bar->SetCurrentValue(dinoHealth->GetHealth());
+		}
+		if (dinoHealth->GetHealth() == 0) {
+			needLoad = true;
 		}
 	}
 	
