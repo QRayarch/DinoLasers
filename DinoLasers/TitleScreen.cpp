@@ -22,6 +22,7 @@ Level* TitleScreen::NextLevel() {
 }
 
 void TitleScreen::Load() {
+	CameraManagerSingleton::GetInstance()->SetPositionTargetAndView(vector3(0.0f, 0.0f, 10.0f), vector3(0.0f, 0.0f, -1.0f), REAXISY);
 	BoundingObjectManager::GetInstance()->SetGroundY(-10.0f);
 	GameObject* dino = new GameObject();
 	dino->AddComponent(new ModelRender("DinoLasers\\Dino.obj", "Dino"));

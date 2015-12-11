@@ -30,6 +30,7 @@ std::vector<std::vector<ContactManifold>> SPOctree::CalculateColisions(std::vect
 
 void SPOctree::SetSize(std::vector<BoundingObject*> bos)
 {
+	if (bos.size() == 0) return;
 	min = bos[0]->GetMinGlobal();
 	max = bos[0]->GetMaxGlobal();
 	for (int i = 1; i < bos.size(); i++)

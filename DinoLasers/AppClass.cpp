@@ -19,26 +19,8 @@ void AppClass::InitVariables(void)
 {
 	srand(time(NULL));
 	
-	level = new TestLevel();
+	level = new TitleScreen();
 	level->Load();
-	//Initialize positions
-	/*m_v3O1 = vector3(-2.5f, 0.0f, 0.0f);
-	m_v3O2 = vector3(2.5f, 0.0f, 1.0f);
-	playerRotation = quaternion(vector3(0.0f));
-	playerPosition = vector3(0.0f, 0.0f, 0.0f);
-	forward = vector3(0.0f, 0.0f, 0.1f);
-
-	groundPoints.push_back(vector3(100.0f, 0.0f, 100.0f));
-	groundPoints.push_back(vector3(-100.0f, 0.0f, 100.0f));
-	groundPoints.push_back(vector3(-100.0f, 0.0f, -100.0f));
-	groundPoints.push_back(vector3(100.0f, 0.0f, -100.0f));
-
-
-	spacing = 5.0f;
-	cameraTarget = playerPosition;
-	cameraPosition = vector3(cameraTarget.x, cameraTarget.y + spacing, cameraTarget.z - spacing);
-	
-	m_pCameraMngr->SetPositionTargetAndView(cameraPosition, cameraTarget, vector3(0.0f, 1.0f, 0.0f));*/
 }
 
 void AppClass::Update(void)
@@ -70,21 +52,6 @@ void AppClass::Update(void)
 		level->PausedUpdate(dt);
 		MeshManagerSingleton::GetInstance()->PrintLine("PAUSED!!");
 	}
-
-	/*steve->GetTransform().SetOrentation(playerRotation);
-
-	creeper->GetTransform().SetPosition(m_v3O2);
-	creeper->GetTransform().SetOrentation(m_qArcBall);
-	
-	cameraTarget = static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 0.8f, 0))[3]);
-	cameraPosition = static_cast<vector3>(glm::translate(m_pMeshMngr->GetModelMatrix("Steve"), vector3(0, 2, -spacing))[3]);
-	
-	m_pCameraMngr->SetPositionTargetAndView(cameraPosition, cameraTarget, vector3(0, 1, 0));*/
-
-	//Add a representation of the Spheres to the render list
-
-	//Adds all loaded instance to the render list
-	//m_pMeshMngr->AddInstanceToRenderList("ALL");
 
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();

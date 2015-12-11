@@ -25,7 +25,7 @@ void EndScreen::Load() {
 	restartButton = new UIButton("Replay?", REWHITE, RERED);
 	restartButton->SetPaddingX(30);
 	restartButton->SetPaddingY(10);
-	restartButton->SetInvisiblePaddingY(1);
+	restartButton->SetInvisiblePaddingY(4);
 	AddUIElement(restartButton);
 	MeshManagerSingleton::GetInstance()->SetFont("Font.png");
 }
@@ -35,7 +35,7 @@ void EndScreen::Update(float dt) {
 	if (restartButton->IsPressed()) {
 		needLoad = true;
 	}
-	MeshManagerSingleton::GetInstance()->PrintLine("Dino Score: " + std::to_string(score), REMAGENTA);
+	MeshManagerSingleton::GetInstance()->PrintLine("\n\n\n\n                       Dino Score: " + std::to_string(score), REBLACK);
 }
 
 void EndScreen::Render() {
