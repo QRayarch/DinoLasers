@@ -17,10 +17,14 @@ SPOctree::~SPOctree()
 std::vector<std::vector<ContactManifold>> SPOctree::CalculateColisions(std::vector<BoundingObject*> bos)
 {
 	std::vector<std::vector<ContactManifold>> collInd;
-	
+	std::vector<uint> indexs = std::vector<uint>(bos.size());
+	for (int i = 0; i < bos.size(); i++) {
+		indexs.push_back(i);
+		collInd.push_back(std::vector<ContactManifold>());
+	}
 	SetSize(bos);	
-	CalculateOctant(collInd,root,bos);
-	root->Display(REWHITE);
+	CalculateOctant(collInd,root,bos, indexs);
+	//root->Display(REWHITE);
 	return collInd;
 }
 
@@ -89,45 +93,59 @@ void SPOctree::SetSize(std::vector<BoundingObject*> bos)
 	root->SetCenter(center);
 }
 
-void SPOctree::CalculateOctant(std::vector<std::vector<ContactManifold>>& collInd, Octant* octant, std::vector<BoundingObject*>& bos)
+void SPOctree::CalculateOctant(std::vector<std::vector<ContactManifold>>& collInd, Octant* octant, std::vector<BoundingObject*>& bos, std::vector<uint>& indexs)
 {
 	if (octant == nullptr) return;
-	if (octant->CanSubDivide() && bos.size() > maxBOPerOctant) {
+	if (octant->CanSubDivide() && indexs.size() > maxBOPerOctant) {
 		octant->Subdivide();
 		for (int o = 0; o < 8; o++){
-			std::vector<BoundingObject*> newBos = std::vector<BoundingObject*>();
+			//std::vector<BoundingObject*> newBos = std::vector<BoundingObject*>();
+			std::vector<uint> newIndexs = std::vector<uint>();
 			vector3 octMax = vector3(octant->GetChild(o)->GetSize()) + octant->GetChild(o)->GetCenter();
 			vector3 octMin = vector3(-(octant->GetChild(o)->GetSize())) + octant->GetChild(o)->GetCenter();
 			//octant->GetChild(o)->Display(REMAGENTA);
-			for (int b = 0; b < bos.size(); b++) {
-				if (bos[b]->GetMinGlobal().x < octMax.x && bos[b]->GetMaxGlobal().x > octMin.x &&
-					bos[b]->GetMinGlobal().y < octMax.y && bos[b]->GetMaxGlobal().y > octMin.y &&
-					bos[b]->GetMinGlobal().z < octMax.z && bos[b]->GetMaxGlobal().z > octMin.z)
+			for (int b = 0; b < indexs.size(); b++) {
+				if (bos[indexs[b]]->GetMinGlobal().x < octMax.x && bos[indexs[b]]->GetMaxGlobal().x > octMin.x &&
+					bos[indexs[b]]->GetMinGlobal().y < octMax.y && bos[indexs[b]]->GetMaxGlobal().y > octMin.y &&
+					bos[indexs[b]]->GetMinGlobal().z < octMax.z && bos[indexs[b]]->GetMaxGlobal().z > octMin.z)
 				{
-					newBos.push_back(bos[b]);
+					newIndexs.push_back(indexs[b]);
 				}
 			}
-			CalculateOctant(collInd, octant->GetChild(o), newBos);
+			CalculateOctant(collInd, octant->GetChild(o), bos, newIndexs);
 		}
 	} else if(octant->IsLeaf()) {
 		//Look for collisions
-		for (int i = 0; i < bos.size(); i++) {
-			collInd.push_back(std::vector<ContactManifold>());
-
-			for (int j = i + 1; j < bos.size(); j++)
+		for (int i = 0; i < indexs.size(); i++) {
+			uint a = indexs[i];
+			for (int j = i + 1; j < indexs.size(); j++)
 			{
-				ContactManifold contact;
-				if (bos[i]->IsColliding(bos[j], contact))//HOT
-				{
+				uint b = indexs[j];
+				if (b != a) {
+					bool isNoDup = true;
+					for (int c = 0; c < collInd[a].size(); c++) {
+						if (collInd[a][c].index == b) {
+							isNoDup = false;
+							c = collInd[a].size();
+						}
+					}
+					if (isNoDup) {
+						ContactManifold contact;
+						if (bos[a]->IsColliding(bos[b], contact))//HOT
+						{
 
-					contact.index = j;
-					collInd[i].push_back(contact);
+							contact.index = b;
+							collInd[a].push_back(contact);
 
-					SpatialPartition::SendCollisionInfoBoth(bos[i], bos[j]);
+							SpatialPartition::SendCollisionInfoBoth(bos[a], bos[b]);
+						}
+						else {
+							SendCollisionInfoBothExit(bos[a], bos[b]);
+						}
+					}
+					
 				}
-				else {
-					SendCollisionInfoBothExit(bos[i], bos[j]);
-				}
+				
 			}
 		}
 	}

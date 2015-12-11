@@ -21,6 +21,6 @@ public:
 
 	std::vector<std::vector<ContactManifold>> CalculateColisions(std::vector<BoundingObject*>);
 	void SetSize(std::vector<BoundingObject*>);
-	void CalculateOctant(std::vector<std::vector<ContactManifold>>&, Octant*, std::vector<BoundingObject*>&);
+	void CalculateOctant(std::vector<std::vector<ContactManifold>>&, Octant*, std::vector<BoundingObject*>&, std::vector<uint>&);
 };
 
