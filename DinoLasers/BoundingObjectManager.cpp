@@ -4,7 +4,7 @@
 BoundingObjectManager::BoundingObjectManager()
 {
 	boundingObjs = std::vector<BoundingObject*>();
-	spatialPartition = new SPBruteForce();
+	spatialPartition = new SPOctree();
 
 	groundY = 0.0f;
 }

@@ -1,5 +1,5 @@
 #include "Octant.h"
-uint Octant::maxSubLevel = 3;
+uint Octant::maxSubLevel = 5;
 void Octant::Init(void)
 {
 	level = 0;
@@ -68,6 +68,9 @@ void Octant::Display(vector3 color)
 	for (uint nChild = 0; nChild < numChildren; nChild++)
 	{
 		children[nChild]->Display(color);
+	}
+	if (IsLeaf()) {
+		color = REMAGENTA;
 	}
 	MeshManagerSingleton::GetInstance()->AddCubeToQueue(glm::translate(center) * glm::scale(vector3(size * 2.0f)), color, WIRE);
 }
@@ -153,6 +156,13 @@ void Octant::KillBranch(void)
 		}
 	}
 }
+
+bool Octant::CanSubDivide()
+{
+	return level < maxSubLevel;
+}
+bool Octant::IsLeaf() { return numChildren == 0; }
+
 float Octant::GetSize(void) { return size; }
 void Octant::SetSize(float s) { size = s; }
 vector3 Octant::GetCenter(void) { return center; }

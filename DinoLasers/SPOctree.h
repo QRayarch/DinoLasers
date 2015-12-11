@@ -14,12 +14,13 @@ private:
 	vector3 min;
 	vector3 max;
 	Octant* root;
+	uint maxBOPerOctant;
 public:
 	SPOctree();
 	~SPOctree();
 
 	std::vector<std::vector<ContactManifold>> CalculateColisions(std::vector<BoundingObject*>);
 	void SetSize(std::vector<BoundingObject*>);
-	void FindWithin(std::vector<BoundingObject*>, Octant*);
+	void CalculateOctant(std::vector<std::vector<ContactManifold>>&, Octant*, std::vector<BoundingObject*>&);
 };
 

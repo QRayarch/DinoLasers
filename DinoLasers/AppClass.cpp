@@ -19,7 +19,7 @@ void AppClass::InitVariables(void)
 {
 	srand(time(NULL));
 	
-	level = new TitleScreen();
+	level = new TestLevel();
 	level->Load();
 	//Initialize positions
 	/*m_v3O1 = vector3(-2.5f, 0.0f, 0.0f);

@@ -19,7 +19,8 @@ public:
 	void Subdivide(void);
 	Octant* GetChild(uint);
 	void KillBranch(void);
-
+	bool CanSubDivide();
+	bool IsLeaf();
 private:
 	uint level = 0;
 	uint numChildren = 0;
